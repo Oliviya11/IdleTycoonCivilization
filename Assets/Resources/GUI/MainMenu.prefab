@@ -456,19 +456,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_SizeDelta.x
@@ -476,7 +476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 77.33
+      value: 77.33002
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_LocalPosition.x
@@ -508,11 +508,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 188.66
+      value: 43.167
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -496
+      value: 43.3
       objectReference: {fileID: 0}
     - target: {fileID: 7753170393439626400, guid: caa95350182d5704f818137e28b10469, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -1,4 +1,7 @@
-﻿using Assets.Scripts.Services;
+﻿using Assets.Scripts.Infrastracture.AssetManagement;
+using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Services;
+using Assets.Scripts.Services.StaticData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +38,13 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void RegisterServices()
         {
+            IAssetProvider assetProvider = new AssetProvider();
+            _services.RegisterSingle<IAssetProvider>(assetProvider);
 
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
+            IStaticDataService staticData = new StaticDataService();
+            staticData.Load();
+            _services.RegisterSingle<IStaticDataService>(staticData);
         }
 
         private void EnterMainMenu()

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Services;
+using Assets.Scripts.Services.StaticData;
+using Assets.Scripts.Sources;
+using Assets.Scripts.StaticData;
+using UnityEngine;
 
 namespace Assets.Scripts.Infrastracture.States
 {
@@ -27,9 +28,20 @@ namespace Assets.Scripts.Infrastracture.States
             
         }
 
-        private async void OnLoaded()
+        private void OnLoaded()
         {
+            LevelStaticData levelStaticData = AllServices.Container.Single<IStaticDataService>().ForLevel(1);
+            SourcesCollection sources = CreateSources(1, levelStaticData);
+            Source source = sources.sources[0];
+            source.EnableAccordingToState(source.InitialState);
+            GameObject producer = AllServices.Container.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
+            AllServices.Container.Single<IGameFactory>().CreateHud();
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private SourcesCollection CreateSources(int level, LevelStaticData levelStaticData)
+        {
+            return AllServices.Container.Single<IGameFactory>().CreateSourcesCollection(level);
         }
     }
 }

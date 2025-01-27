@@ -36,5 +36,15 @@ namespace Assets.Scripts.Infrastracture.Factory
         {
             return _assetProvider.Instantiate(AssetPath.ProducerPath, at, angle);
         }
+
+        public GameObject CreatePopUp(string name)
+        {
+            return _assetProvider.Instantiate($"{AssetPath.PopUpPath}{name}");
+        }
+
+        public GameObject CreatePopUp(string name, Vector3 at)
+        {
+            return _assetProvider.Instantiate($"{AssetPath.PopUpPath}{name}", at);
+        }
     }
 }

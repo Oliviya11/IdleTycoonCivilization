@@ -11,6 +11,11 @@ namespace Assets.Scripts.Infrastracture.Factory
         GameObject CreateProducer(Vector3 at, float angle);
 
         GameObject CreateHud();
+
         GameObject CreatePumpkin(Vector3 at);
+
+        GameObject CreatePopUp(string name);
+
+        GameObject CreatePopUp(string name, Vector3 at);
     }
 }

@@ -32,7 +32,7 @@ namespace Assets.Scripts.Infrastracture.States
         {
             LevelStaticData levelStaticData = AllServices.Container.Single<IStaticDataService>().ForLevel(1);
             SourcesCollection sources = CreateSources(1, levelStaticData);
-            Source source = sources.sources[0];
+            SourceState source = sources.sources[0].state;
             source.EnableAccordingToState(source.InitialState);
             GameObject producer = AllServices.Container.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
             AllServices.Container.Single<IGameFactory>().CreateHud();

@@ -2,11 +2,6 @@
 using Assets.Scripts.Infrastracture.States;
 using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastracture
@@ -23,6 +18,19 @@ namespace Assets.Scripts.Infrastracture
             AllServices.Container.RegisterSingle<IInputService>(new InputService());
 
             _game.StateMachine.Enter<BootstrapState>();
+
+            /*
+            BigNumber a = new BigNumber("60.5M");
+            BigNumber b = new BigNumber("1.2B");
+
+            Debug.LogError($"a = {a}");   // 2.50M
+            Debug.LogError($"b = {b}");   // 1.20B
+            Debug.LogError($"a + b = {a + b}");  // 1.20B
+            Debug.LogError($"b - a = {b - a}");  // 1.20B - 2.5M = 1.1975B
+            Debug.LogError($"a * b = {a * b}");  // 2.5M * 1.2B = 3.00Qa
+            Debug.LogError($"b / a = {b / a}");  // 
+            */
+            
 
             DontDestroyOnLoad(this);
         }

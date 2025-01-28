@@ -9,6 +9,7 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
     public static class AssetPath
     {
         public const string SourcesCollectionPath = "Levels/Prefab/LevelSources";
+        public const string OrdersCollectionPath = "Levels/Prefab/LevelOrders";
         public const string HudPath = "GUI/Hud";
         public const string ProducerPath = "Easy Primitive Animals/FarmEdition/Prefabs/Props/Farmer";
         public const string PumpkinPath = "Easy Primitive People/Prefab/Pumpkin";

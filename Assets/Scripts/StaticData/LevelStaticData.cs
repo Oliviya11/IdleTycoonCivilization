@@ -11,7 +11,8 @@ namespace Assets.Scripts.StaticData
     [CreateAssetMenu(fileName = "LevelData", menuName = "Static Data/Level")]
     public class LevelStaticData : ScriptableObject
     {
-        public SourcesCollection sources;
+        public SourcesCollection sourcesPrefab;
+        public List<SourceStaticData> sourcesData;
         public Vector3 producerPosition;
         public float producerRotationAngle;
     }

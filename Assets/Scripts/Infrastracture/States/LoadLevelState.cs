@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastracture.Factory;
+﻿using Assets.Scripts.Core.Orders;
+using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services.StaticData;
@@ -39,6 +40,9 @@ namespace Assets.Scripts.Infrastracture.States
             SourceState source = sources.sources[0].state;
             source.Construct(_services);
             source.EnableAccordingToState(source.InitialState);
+
+            OrdersCollection ordersCollection = CreateOrders(1);
+
             GameObject producer = _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
             _services.Single<IGameFactory>().CreateHud(); 
             _gameStateMachine.Enter<GameLoopState>();
@@ -47,6 +51,11 @@ namespace Assets.Scripts.Infrastracture.States
         SourcesCollection CreateSources(int level, LevelStaticData levelStaticData)
         {
             return _services.Single<IGameFactory>().CreateSourcesCollection(level);
+        }
+
+        OrdersCollection CreateOrders(int level)
+        {
+            return _services.Single<IGameFactory>().CreateOrdersCollection(level);
         }
     }
 }

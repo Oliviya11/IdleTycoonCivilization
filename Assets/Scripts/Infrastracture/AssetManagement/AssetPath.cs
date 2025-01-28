@@ -13,5 +13,6 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
         public const string ProducerPath = "Easy Primitive Animals/FarmEdition/Prefabs/Props/Farmer";
         public const string PumpkinPath = "Easy Primitive People/Prefab/Pumpkin";
         public const string PopUpPath = "GUI/PopUp/";
+        public const string ProductIcon = "Product/Icon/";
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.GUI;
 using Assets.Scripts.Infrastracture.States;
+using Assets.Scripts.Services.Inputs;
+using Assets.Scripts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +19,17 @@ namespace Assets.Scripts.Infrastracture
         public void Awake()
         {
             _game = new Game(this, mainMenuPrefab);
+
+            AllServices.Container.RegisterSingle<IInputService>(new InputService());
+
             _game.StateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(this);
+        }
+
+        public void Update()
+        {
+            AllServices.Container.Single<IInputService>().ProcessInput();
         }
     }
 }

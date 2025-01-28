@@ -15,5 +15,7 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
         public GameObject Instantiate(string path, Vector3 at);
 
         public GameObject Instantiate(string path, Vector3 at, float angle);
+
+        Sprite LoadProductIcon(string name);
     }
 }

@@ -21,7 +21,7 @@ namespace Assets.Scripts.Infrastracture.States
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
                 [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, mainMenuPrefab),
                 [typeof(LoadProgressState)] = new LoadProgressState(this),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services),
                 [typeof(GameLoopState)] = new GameLoopState(),
             };
         }

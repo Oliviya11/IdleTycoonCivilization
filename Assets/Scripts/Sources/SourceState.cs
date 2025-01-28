@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastracture.Factory;
+﻿using Assets.Scripts.Infrastracture.AssetManagement;
+using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Sources
     {
         [SerializeField] State initialState;
         [SerializeField] Product product;
+        [SerializeField] Image productIcon;
         [SerializeField] Transform blank;
         [SerializeField] Transform arrow;
         [SerializeField] Transform icon;
@@ -79,15 +81,12 @@ namespace Assets.Scripts.Sources
             }
             else
             {
-                EnableBlank(false);
-                EnableArrow(false);
-                EnableIcon(true);
-                ProduceProduct(0);
+                SetProduct1State();
+
                 if (currentState == State.Product2)
                 {
-                    ProduceProduct(1);
+                    SetProduct2State();
                 }
-                HideUpgrade();
             }
         }
 
@@ -97,6 +96,7 @@ namespace Assets.Scripts.Sources
             EnableArrow(false);
             EnableIcon(true);
             ProduceProduct(0);
+            SetIcon();
             HideUpgrade();
         }
 
@@ -113,6 +113,11 @@ namespace Assets.Scripts.Sources
                 position.y += 0.3f;
                 AllServices.Container.Single<IGameFactory>().CreatePumpkin(position);
             }
+        }
+
+        void SetIcon()
+        {
+            productIcon.sprite = AllServices.Container.Single<IAssetProvider>().LoadProductIcon(product.ToString());
         }
     }
 }

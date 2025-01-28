@@ -29,5 +29,10 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
             gameObject.transform.rotation = Quaternion.Euler(0, angle, 0);
             return gameObject;
         }
+
+        public Sprite LoadProductIcon(string name)
+        {
+            return Resources.Load<Sprite>($"{AssetPath.ProductIcon}{name}");
+        }
     }
 }

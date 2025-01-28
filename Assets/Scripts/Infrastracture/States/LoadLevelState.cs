@@ -14,11 +14,11 @@ namespace Assets.Scripts.Infrastracture.States
         SceneLoader _sceneLoader;
         readonly AllServices _services;
 
-        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices service)
+        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
-            _services = service;
+            _services = services;
         }
 
         void IPayloadedState<string>.Enter(string sceneName)
@@ -35,16 +35,18 @@ namespace Assets.Scripts.Infrastracture.States
         {
             LevelStaticData levelStaticData = AllServices.Container.Single<IStaticDataService>().ForLevel(1);
             SourcesCollection sources = CreateSources(1, levelStaticData);
+            sources.click.Construct(_services);
             SourceState source = sources.sources[0].state;
+            source.Construct(_services);
             source.EnableAccordingToState(source.InitialState);
-            GameObject producer = AllServices.Container.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
-            AllServices.Container.Single<IGameFactory>().CreateHud(); 
+            GameObject producer = _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
+            _services.Single<IGameFactory>().CreateHud(); 
             _gameStateMachine.Enter<GameLoopState>();
         }
 
         SourcesCollection CreateSources(int level, LevelStaticData levelStaticData)
         {
-            return AllServices.Container.Single<IGameFactory>().CreateSourcesCollection(level);
+            return _services.Single<IGameFactory>().CreateSourcesCollection(level);
         }
     }
 }

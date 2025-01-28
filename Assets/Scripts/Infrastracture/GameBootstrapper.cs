@@ -29,6 +29,7 @@ namespace Assets.Scripts.Infrastracture
 
         public void Update()
         {
+            if (AllServices.Container.Single<IInputService>() == null) return;
             AllServices.Container.Single<IInputService>().ProcessInput();
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Infrastracture.Factory
 {
-    internal interface IGameFactory : IService
+    public interface IGameFactory : IService
     {
         SourcesCollection CreateSourcesCollection(int level);
 

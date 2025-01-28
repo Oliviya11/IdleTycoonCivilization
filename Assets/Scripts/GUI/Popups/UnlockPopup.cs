@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.GUI.Popups;
+using Assets.Scripts.Infrastracture.Factory;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,11 +40,12 @@ namespace Assets.Scripts.GUI
             return "UnlockPopup";
         }
 
-        public static void OpenLevelPopUp(IParams p, Vector3 at)
+        public static void OpenLevelPopUp(IParams p, IGameFactory gameFactory, Vector3 at, Action<UnlockPopup> onPopupCreated)
         {
-            Popup.LoadPopUp(UnlockPopup.popupName, delegate (Popup popUp) {
+            Popup.LoadPopUp(gameFactory, UnlockPopup.popupName, delegate (Popup popUp) {
                 UnlockPopup unlockPopup = popUp as UnlockPopup;
                 unlockPopup.Init((Params)p);
+                onPopupCreated(unlockPopup);
             }, false, at);
         }
     }

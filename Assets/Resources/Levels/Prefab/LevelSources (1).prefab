@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sources:
   - {fileID: 5300616956970793236}
+  click: {fileID: 1789915319496667317}
 --- !u!114 &1789915319496667317
 MonoBehaviour:
   m_ObjectHideFlags: 0

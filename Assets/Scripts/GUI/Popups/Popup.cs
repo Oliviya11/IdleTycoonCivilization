@@ -47,7 +47,7 @@ namespace Assets.Scripts.GUI.Popups
             }
         }
 
-        public static void LoadPopUp(string name, Action<Popup> callback, bool isPoolable, Vector3 at)
+        public static void LoadPopUp(IGameFactory gameFactory, string name, Action<Popup> callback, bool isPoolable, Vector3 at)
         {
             cachedCallbacks[name] = callback;
             nameToIsPoolable[name] = isPoolable;
@@ -58,7 +58,7 @@ namespace Assets.Scripts.GUI.Popups
             }
             else
             {
-                AllServices.Container.Single<IGameFactory>().CreatePopUp(name, at);
+                gameFactory.CreatePopUp(name, at);
             }
         }
 

@@ -28,12 +28,19 @@ namespace Assets.Scripts.Sources
 
         public State InitialState => initialState;
 
+        AllServices _services;
+
         public enum State
         {
             Blank = 0,
             BlankWithArrow = 1,
             Product1 = 2,
             Product2 = 3,
+        }
+
+        public void Construct(AllServices services)
+        {
+            _services = services;
         }
 
         public void EnableArrow(bool enabled)
@@ -111,7 +118,7 @@ namespace Assets.Scripts.Sources
             {
                 Vector3 position = productPlaces[index].position;
                 position.y += 0.3f;
-                AllServices.Container.Single<IGameFactory>().CreatePumpkin(position);
+                _services.Single<IGameFactory>().CreatePumpkin(position);
             }
         }
 

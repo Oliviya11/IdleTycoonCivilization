@@ -1200,6 +1200,7 @@ GameObject:
   - component: {fileID: 2837418748259512443}
   - component: {fileID: 227139432619281287}
   - component: {fileID: 3219494352036812142}
+  - component: {fileID: 4753351091042712165}
   m_Layer: 0
   m_Name: Source
   m_TagString: Untagged
@@ -1246,6 +1247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 227139432619281287}
   click: {fileID: 3219494352036812142}
+  places: {fileID: 4753351091042712165}
 --- !u!114 &227139432619281287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1289,6 +1291,22 @@ MonoBehaviour:
   blankButton: {fileID: 5709740681660065001}
   sourceIconButton: {fileID: 2867267074252652404}
   upgradeButton: {fileID: 4831610336679503255}
+--- !u!114 &4753351091042712165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415157546410240612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f97b2b0d670c4941b591a31e6264040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  places:
+  - {fileID: 486629807802013665}
+  - {fileID: 3038529287660856700}
+  - {fileID: 5662275791117079949}
 --- !u!1 &8408029364885876244
 GameObject:
   m_ObjectHideFlags: 0

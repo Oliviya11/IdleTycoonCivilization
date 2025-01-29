@@ -7,10 +7,10 @@ namespace Assets.Scripts.Core.Sources.Services
 {
     public interface ISourcesManager : IService
     {
-        void OpenSource(Product product, Vector3 position);
+        void OpenSource(Product product, Source position);
 
         bool IsProductOpened(Product product);
 
-        Vector3 GetSourcePosition(Product product);
+        Source GetSource(Product product);
     }
 }

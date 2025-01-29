@@ -7,15 +7,15 @@ namespace Assets.Scripts.Core.Sources.Services
 {
     public class SourcesManager : ISourcesManager
     {
-        Dictionary<Product, Vector3> _sources = new();
+        Dictionary<Product, Source> _sources = new();
 
-        public void OpenSource(Product product, Vector3 position)
+        public void OpenSource(Product product, Source source)
         {
-            _sources[product] = position;
+            _sources[product] = source;
         }
 
         public bool IsProductOpened(Product product) => _sources.ContainsKey(product);
 
-        public Vector3 GetSourcePosition(Product product) => _sources[product];
+        public Source GetSource(Product product) => _sources[product];
     }
 }

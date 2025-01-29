@@ -1,27 +1,31 @@
 ﻿using Assets.Scripts.Core.Orders;
 using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.Infrastracture.Factory;
-using Assets.Scripts.Sources;
 using Assets.Scripts.Utils;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using static Assets.Scripts.Core.Orders.OrderPlaces;
+using Product = Assets.Scripts.Sources.Product;
 
 namespace Assets.Scripts.Core.ClientsNPCMechanics
 {
-    public class ClientsNPCSpawner : MonoBehaviour
+    public class ClientsNPCManager : MonoBehaviour
     {
         [SerializeField] int maxClients;
         [SerializeField] float processWithProducer;
         [SerializeField] List<Transform> spawnPoints;
+
+        const float clientTargetAngle = 180f;
+
         public int MaxClients
         {
             get => maxClients;
             set => maxClients = value;
         }
 
-        public List<ClientNPC> readyClients = new();
+        public List<ClientNPC> Clients => _clients;
 
         bool _collectionChecks = true;
         int _maxPoolSize = 10;
@@ -29,7 +33,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         OrderPlaces _places;
         IGameFactory _gameFactory;
         ISourcesManager _sourcesManager;
-        Dictionary<int, Transform> _clientToPlace = new();
+        Dictionary<int, PlacesPair> _clientToPlace = new();
         List<ClientNPC> _clients = new();
         bool _isConstructed;
 
@@ -43,9 +47,14 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             if (!_isConstructed) return;
 
             Rotate();
+            Despawn();
 
             if (!_places.AreFreePlaces()) return;
+            SpawnClient();
+        }
 
+        private void SpawnClient()
+        {
             Product p = GetRandomProduct();
 
             if (p == Product.None) return;
@@ -53,9 +62,9 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             if (_clients.Count < maxClients)
             {
                 var client = _pool.Get();
-                Transform tr = _clientToPlace[client.gameObject.GetInstanceID()];
-                client.Destination = tr.position;
-                client.Move(client.Destination);
+                int id = client.gameObject.GetInstanceID();
+                PlacesPair pair = _clientToPlace[id];
+                client.Move(pair.clientPlace.position);
                 client.Product = p;
                 _clients.Add(client);
             }
@@ -69,14 +78,47 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             _isConstructed = true;
         }
 
+        public Vector3 GetProducerPlace(int clientId)
+        {
+            return _clientToPlace[clientId].producerPlace.position;
+        }
+
+        public void WaitForOrder(ClientNPC clientNPC)
+        {
+            clientNPC.CurrentState = ClientNPC.State.WaitingForOrder;
+        }
+
+        public void Leave(ClientNPC clientNPC)
+        {
+            clientNPC.CurrentState = ClientNPC.State.Leave;
+            clientNPC.Move(ChooseRandomStartPosition());
+        }
+
+        void Despawn()
+        {
+            List<ClientNPC> clientsToIterate = new List<ClientNPC>(Clients);
+            foreach (ClientNPC client in clientsToIterate)
+            {
+                if (!client.IsMoving() && client.CurrentState == ClientNPC.State.Leave)
+                {
+                    _pool.Release(client);
+                }
+            }
+        }
+
         ClientNPC CreatePooledItem()
         {
             var go = _gameFactory.CreateClient(ChooseRandomStartPosition());
-            var returnToPool = go.AddComponent<ReturnToPool>();
-            returnToPool.pool = _pool;
-            Transform tr = _places.Occupy();
-            _clientToPlace[go.GetInstanceID()] = tr;
+            OnCreate(go.GetComponent<ClientNPC>());
             return go.GetComponent<ClientNPC>();
+        }
+
+        private void OnCreate(ClientNPC client)
+        {
+            PlacesPair pair = _places.Occupy();
+            client.CurrentState = ClientNPC.State.Come;
+            _clientToPlace[client.gameObject.GetInstanceID()] = pair;
+            client.CurrentState = ClientNPC.State.Come;
         }
 
         void OnReturnedToPool(ClientNPC client)
@@ -88,7 +130,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         void OnTakeFromPool(ClientNPC client)
         {
-            _clients.Remove(client);
+            OnCreate(client);
             client.gameObject.SetActive(true);
         }
 
@@ -106,9 +148,9 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         void RemoveFromClientToPlace(ClientNPC client)
         {
             int id = client.gameObject.GetInstanceID();
-            Transform tr = _clientToPlace[id];
+            PlacesPair pair = _clientToPlace[id];
             _clientToPlace.Remove(id);
-            _places.Deoccupy(tr);
+            _places.Deoccupy(pair);
         }
 
         Product GetRandomProduct()
@@ -131,10 +173,10 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             for (int i = 0; i < _clients.Count; ++i)
             {
                 var client = _clients[i];
-                if (!client.IsMoving() && !readyClients.Contains(client))
+                if (!client.IsMoving() && client.CurrentState == ClientNPC.State.Come)
                 {
-                    client.Rotate();
-                    readyClients.Add(client);
+                    client.Rotate(clientTargetAngle);
+                    client.CurrentState = ClientNPC.State.ReadyToOrder;
                 }
             }
         }

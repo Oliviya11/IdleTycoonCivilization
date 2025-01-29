@@ -28,8 +28,10 @@ namespace Assets.Scripts.Sources
 
         public State InitialState => initialState;
         public Product Product => product;
+        public int MaxPlacesCount => _maxPlacesCount;
 
         AllServices _services;
+        int _maxPlacesCount;
 
         public enum State
         {
@@ -106,21 +108,30 @@ namespace Assets.Scripts.Sources
             ProduceProduct(0);
             SetIcon();
             HideUpgrade();
+            ++_maxPlacesCount;
         }
 
         public void SetProduct2State()
         {
             ProduceProduct(1);
+            ++_maxPlacesCount;
         }
 
         void ProduceProduct(int index)
         {
+            ProduceProduct(productPlaces[index].position);
+        }
+
+        public GameObject ProduceProduct(Vector3 position)
+        {
+            GameObject go = null;
             if (product == Product.Pumpkin)
             {
-                Vector3 position = productPlaces[index].position;
                 position.y += 0.3f;
-                _services.Single<IGameFactory>().CreatePumpkin(position);
+                go = _services.Single<IGameFactory>().CreatePumpkin(position);
             }
+
+            return go;
         }
 
         void SetIcon()

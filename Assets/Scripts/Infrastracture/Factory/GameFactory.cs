@@ -33,9 +33,14 @@ namespace Assets.Scripts.Infrastracture.Factory
             return _assetProvider.Instantiate(AssetPath.ClientPath, at);
         }
 
-        public GameObject CreateClientsSpawner()
+        public GameObject CreateClientsManager()
         {
-            return _assetProvider.Instantiate(AssetPath.ClientsSpawnerPath);
+            return _assetProvider.Instantiate(AssetPath.ClientsManagerPath);
+        }
+
+        public GameObject CreateProducersManager()
+        {
+            return _assetProvider.Instantiate(AssetPath.ProducersManagerPath);
         }
 
         public GameObject CreateHud()

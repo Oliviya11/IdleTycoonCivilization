@@ -72,7 +72,7 @@ namespace Assets.Scripts.Sources
         {
             SetProductState(source);
             _lastPopup = null;
-            _services.Single<ISourcesManager>().OpenSource(source.state.Product, source.transform.position);
+            _services.Single<ISourcesManager>().OpenSource(source.state.Product, source);
         }
 
         void HidePopup()

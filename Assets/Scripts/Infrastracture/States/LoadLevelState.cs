@@ -7,6 +7,7 @@ using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services.StaticData;
 using Assets.Scripts.Sources;
 using Assets.Scripts.StaticData;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastracture.States
@@ -36,7 +37,8 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void OnLoaded()
         {
-            _services.RegisterSingle<ISourcesManager>(new SourcesManager());
+            ISourcesManager sourcesManager = new SourcesManager();
+            _services.RegisterSingle<ISourcesManager>(sourcesManager);
 
             LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(1);
             SourcesCollection sources = CreateSources(1, levelStaticData);
@@ -49,8 +51,12 @@ namespace Assets.Scripts.Infrastracture.States
 
             GameObject producer = _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
 
-            GameObject clientSpawner = _services.Single<IGameFactory>().CreateClientsSpawner();
-            clientSpawner.GetComponent<ClientsNPCSpawner>().Construct(ordersCollection.places, _services.Single<IGameFactory>(), _services.Single<ISourcesManager>());
+            GameObject clientsSpawner = _services.Single<IGameFactory>().CreateClientsManager();
+            ClientsNPCManager clientsNPCManager = clientsSpawner.GetComponent<ClientsNPCManager>();
+            clientsNPCManager.Construct(ordersCollection.places, _services.Single<IGameFactory>(), _services.Single<ISourcesManager>());
+
+            GameObject producersSpawner = _services.Single<IGameFactory>().CreateProducersManager();
+            producersSpawner.GetComponent<ProducersNPCManager>().Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, sourcesManager);
 
             _services.Single<IGameFactory>().CreateHud(); 
             _gameStateMachine.Enter<GameLoopState>();

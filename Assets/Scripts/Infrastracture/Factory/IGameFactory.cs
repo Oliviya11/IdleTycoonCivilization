@@ -15,7 +15,9 @@ namespace Assets.Scripts.Infrastracture.Factory
 
         GameObject CreateClient(Vector3 at);
 
-        GameObject CreateClientsSpawner();
+        GameObject CreateClientsManager();
+
+        GameObject CreateProducersManager();
 
         GameObject CreateHud();
 

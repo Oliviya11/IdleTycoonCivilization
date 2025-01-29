@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Core.Sources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace Assets.Scripts.Sources
     {
         public SourceState state;
         public SourceClick click;
+        public SourcePlaces places;
     }
 }

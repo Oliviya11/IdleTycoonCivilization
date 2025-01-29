@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3943195828764369745}
-  - component: {fileID: 5693761469509906047}
+  - component: {fileID: 3032141500328577318}
   m_Layer: 0
-  m_Name: ClientNPCSpawner
+  m_Name: ClientsNPCManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 2017720937044666875}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5693761469509906047
+--- !u!114 &3032141500328577318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2403737637401818196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0ac076d866ba614f8e0d70f73779bbf, type: 3}
+  m_Script: {fileID: 11500000, guid: 5aea9b2f52263994a9514d44a2ae1c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxClients: 1
@@ -53,7 +53,6 @@ MonoBehaviour:
   - {fileID: 6773132785598335016}
   - {fileID: 820153193810658649}
   - {fileID: 2017720937044666875}
-  readyClients: []
 --- !u!1 &3076193876231633121
 GameObject:
   m_ObjectHideFlags: 0

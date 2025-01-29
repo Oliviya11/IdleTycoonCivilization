@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Core.ClientsNPCMechanics;
 using Assets.Scripts.Core.Orders;
+using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
@@ -35,7 +36,9 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void OnLoaded()
         {
-            LevelStaticData levelStaticData = AllServices.Container.Single<IStaticDataService>().ForLevel(1);
+            _services.RegisterSingle<ISourcesManager>(new SourcesManager());
+
+            LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(1);
             SourcesCollection sources = CreateSources(1, levelStaticData);
             sources.click.Construct(_services);
             SourceState source = sources.sources[0].state;
@@ -47,7 +50,7 @@ namespace Assets.Scripts.Infrastracture.States
             GameObject producer = _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
 
             GameObject clientSpawner = _services.Single<IGameFactory>().CreateClientsSpawner();
-            clientSpawner.GetComponent<ClientsNPCSpawner>().Construct(ordersCollection.places, _services.Single<IGameFactory>());
+            clientSpawner.GetComponent<ClientsNPCSpawner>().Construct(ordersCollection.places, _services.Single<IGameFactory>(), _services.Single<ISourcesManager>());
 
             _services.Single<IGameFactory>().CreateHud(); 
             _gameStateMachine.Enter<GameLoopState>();

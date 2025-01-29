@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GUI;
+﻿using Assets.Scripts.Core.Sources.Services;
+using Assets.Scripts.GUI;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
@@ -58,14 +59,20 @@ namespace Assets.Scripts.Sources
             position.y += 2;
             UnlockPopup.Params @params = new UnlockPopup.Params(delegate ()
             {
-                SetProductState(source);
-                _lastPopup = null;
+                OpenSource(source);
             });
             UnlockPopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
             delegate (UnlockPopup p)
             {
                 _lastPopup = p;
             });
+        }
+
+        void OpenSource(Source source)
+        {
+            SetProductState(source);
+            _lastPopup = null;
+            _services.Single<ISourcesManager>().OpenSource(source.state.Product, source.transform.position);
         }
 
         void HidePopup()

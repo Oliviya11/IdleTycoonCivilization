@@ -26,7 +26,17 @@ namespace Assets.Scripts.Infrastracture.Factory
         public GameObject CreateProducer(Vector3 at)
         {
             return _assetProvider.Instantiate(AssetPath.ProducerPath, at);
-        } 
+        }
+
+        public GameObject CreateClient(Vector3 at)
+        {
+            return _assetProvider.Instantiate(AssetPath.ClientPath, at);
+        }
+
+        public GameObject CreateClientsSpawner()
+        {
+            return _assetProvider.Instantiate(AssetPath.ClientsSpawnerPath);
+        }
 
         public GameObject CreateHud()
         {

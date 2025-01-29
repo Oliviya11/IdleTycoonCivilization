@@ -5,6 +5,6 @@ namespace Assets.Scripts.Core.Orders
 {
     public class OrdersCollection : MonoBehaviour
     {
-        public List<Order> orders;
+        public OrderPlaces places;
     }
 }

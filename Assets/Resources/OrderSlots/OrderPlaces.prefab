@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7811460869211517592}
-  - component: {fileID: -718669990875219413}
-  - component: {fileID: 7228863268142995611}
   m_Layer: 0
   m_Name: OrderPlaces
   m_TagString: Untagged
@@ -34,32 +32,6 @@ Transform:
   - {fileID: 1190683301665787670}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-718669990875219413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5119960025567024725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8770825592b821043affb2b5ae32cfef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  places: {fileID: 0}
---- !u!114 &7228863268142995611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5119960025567024725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3022f96bb1e417468a1e783fb71d172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  places: {fileID: 0}
 --- !u!1001 &3006330538481280199
 PrefabInstance:
   m_ObjectHideFlags: 0

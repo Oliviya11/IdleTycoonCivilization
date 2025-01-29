@@ -13,6 +13,10 @@ namespace Assets.Scripts.Infrastracture.Factory
 
         GameObject CreateProducer(Vector3 at, float angle);
 
+        GameObject CreateClient(Vector3 at);
+
+        GameObject CreateClientsSpawner();
+
         GameObject CreateHud();
 
         GameObject CreatePumpkin(Vector3 at);

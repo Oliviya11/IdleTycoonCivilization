@@ -12,6 +12,8 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
         public const string OrdersCollectionPath = "Levels/Prefab/LevelOrders";
         public const string HudPath = "GUI/Hud";
         public const string ProducerPath = "Easy Primitive Animals/FarmEdition/Prefabs/Props/Farmer";
+        public const string ClientPath = "Easy Primitive People/Prefab/Patient";
+        public const string ClientsSpawnerPath = "NPC/Clients/ClientNPCSpawner";
         public const string PumpkinPath = "Easy Primitive People/Prefab/Pumpkin";
         public const string PopUpPath = "GUI/PopUp/";
         public const string ProductIcon = "Product/Icon/";

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.Orders;
+﻿using Assets.Scripts.Core.ClientsNPCMechanics;
+using Assets.Scripts.Core.Orders;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
@@ -44,6 +45,10 @@ namespace Assets.Scripts.Infrastracture.States
             OrdersCollection ordersCollection = CreateOrders(1);
 
             GameObject producer = _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
+
+            GameObject clientSpawner = _services.Single<IGameFactory>().CreateClientsSpawner();
+            clientSpawner.GetComponent<ClientsNPCSpawner>().Construct(ordersCollection.places, _services.Single<IGameFactory>());
+
             _services.Single<IGameFactory>().CreateHud(); 
             _gameStateMachine.Enter<GameLoopState>();
         }

@@ -27,6 +27,7 @@ namespace Assets.Scripts.Sources
         State currentState;
 
         public State InitialState => initialState;
+        public Product Product => product;
 
         AllServices _services;
 

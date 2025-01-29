@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Sources;
+using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 
@@ -8,6 +9,8 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
     {
         [SerializeField] NavMeshAgent agent;
         [SerializeField] float targetAngle = 180;
+        public Product Product { get; set; }
+
         enum State
         {
             None,

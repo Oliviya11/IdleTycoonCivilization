@@ -6,30 +6,31 @@ namespace Assets.Scripts.Core.Orders
     public class OrderPlaces : MonoBehaviour
     {
         [SerializeField] List<Transform> places;
-        List<bool> _isOccupied;
+        List<Transform> freePlaces = new List<Transform>();
 
         private void Awake()
         {
-            _isOccupied = new();
-            for (int i = 0; i < places.Count; i++)
-            {
-                _isOccupied.Add(false);
-            }
+            freePlaces = new List<Transform>(places);
         }
 
-        public int Occupy()
+        public Transform Occupy()
         {
-            int placeIndex = Random.Range(0, places.Count);
-            _isOccupied[placeIndex] = true;
+            int placeIndex = Random.Range(0, freePlaces.Count);
 
-            return placeIndex;
+            Transform tr = GetPlace(placeIndex);
+
+            freePlaces.RemoveAt(placeIndex);
+
+            return tr;
         }
 
-        public void Deoccupy(int placeIndex)
+        public void Deoccupy(Transform tr)
         {
-            _isOccupied[placeIndex] = false;
+            freePlaces.Add(tr);
         }
 
-        public Transform GetPlace(int index) => places[index];
+        public Transform GetPlace(int index) => freePlaces[index];
+
+        public bool AreFreePlaces() => freePlaces.Count > 0;
     }
 }

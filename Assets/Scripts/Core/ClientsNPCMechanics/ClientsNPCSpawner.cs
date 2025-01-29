@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.Core.Orders;
+using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Sources;
+using Assets.Scripts.Utils;
 using System;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Pool;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Core.ClientsNPCMechanics
 {
@@ -14,7 +15,6 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         [SerializeField] int maxClients;
         [SerializeField] float processWithProducer;
         [SerializeField] List<Transform> spawnPoints;
-        const float SlightlyOutside = 0.1f;
         public int MaxClients
         {
             get => maxClients;
@@ -28,9 +28,9 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         IObjectPool<ClientNPC> _pool;
         OrderPlaces _places;
         IGameFactory _gameFactory;
-        Dictionary<int, int> _clientToPlace = new();
+        ISourcesManager _sourcesManager;
+        Dictionary<int, Transform> _clientToPlace = new();
         List<ClientNPC> _clients = new();
-        int _clientsOnScene;
         bool _isConstructed;
 
         void Awake()
@@ -42,15 +42,92 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         {
             if (!_isConstructed) return;
 
-            if (_clientsOnScene < maxClients)
+            Rotate();
+
+            if (!_places.AreFreePlaces()) return;
+
+            Product p = GetRandomProduct();
+
+            if (p == Product.None) return;
+
+            if (_clients.Count < maxClients)
             {
                 var client = _pool.Get();
-                int index = _clientToPlace[client.gameObject.GetInstanceID()];
-                client.Destination = _places.GetPlace(index).position;
+                Transform tr = _clientToPlace[client.gameObject.GetInstanceID()];
+                client.Destination = tr.position;
                 client.Move(client.Destination);
+                client.Product = p;
                 _clients.Add(client);
             }
+        }
 
+        public void Construct(OrderPlaces places, IGameFactory gameFactory, ISourcesManager sourcesManager)
+        {
+            _places = places;
+            _gameFactory = gameFactory;
+            _sourcesManager = sourcesManager;
+            _isConstructed = true;
+        }
+
+        ClientNPC CreatePooledItem()
+        {
+            var go = _gameFactory.CreateClient(ChooseRandomStartPosition());
+            var returnToPool = go.AddComponent<ReturnToPool>();
+            returnToPool.pool = _pool;
+            Transform tr = _places.Occupy();
+            _clientToPlace[go.GetInstanceID()] = tr;
+            return go.GetComponent<ClientNPC>();
+        }
+
+        void OnReturnedToPool(ClientNPC client)
+        {
+            _clients.Remove(client);
+            RemoveFromClientToPlace(client);
+            client.gameObject.SetActive(false);
+        }
+
+        void OnTakeFromPool(ClientNPC client)
+        {
+            _clients.Remove(client);
+            client.gameObject.SetActive(true);
+        }
+
+        void OnDestroyPoolObject(ClientNPC client)
+        {
+            RemoveFromClientToPlace(client);
+            Destroy(client.gameObject);
+        }
+
+        Vector3 ChooseRandomStartPosition()
+        {
+            return spawnPoints.GetRandomElement().position;
+        }
+
+        void RemoveFromClientToPlace(ClientNPC client)
+        {
+            int id = client.gameObject.GetInstanceID();
+            Transform tr = _clientToPlace[id];
+            _clientToPlace.Remove(id);
+            _places.Deoccupy(tr);
+        }
+
+        Product GetRandomProduct()
+        {
+            Product product = Product.None;
+
+            Array products = Enum.GetValues(typeof(Product));
+            products.Shuffle();
+
+            foreach (Product p in products)
+            {
+                if (_sourcesManager.IsProductOpened(p)) { product = p; break; }
+            }
+
+            return product;
+        }
+
+        void Rotate()
+        {
             for (int i = 0; i < _clients.Count; ++i)
             {
                 var client = _clients[i];
@@ -60,89 +137,6 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     readyClients.Add(client);
                 }
             }
-        }
-
-        public void Construct(OrderPlaces places, IGameFactory gameFactory)
-        {
-            _places = places;
-            _gameFactory = gameFactory;
-            _isConstructed = true;
-        }
-
-        ClientNPC CreatePooledItem()
-        {
-            var go = _gameFactory.CreateClient(ChooseRandomStartPosition());
-            var returnToPool = go.AddComponent<ReturnToPool>();
-            returnToPool.pool = _pool;
-            int index = _places.Occupy();
-            _clientToPlace[go.GetInstanceID()] = index;
-            ++_clientsOnScene;
-            return go.GetComponent<ClientNPC>();
-        }
-
-        void OnReturnedToPool(ClientNPC client)
-        {
-            --_clientsOnScene;
-            _clients.Remove(client);
-            RemoveFromClientToPlace(client);
-            client.gameObject.SetActive(false);
-        }
-
-        void OnTakeFromPool(ClientNPC client)
-        {
-            ++_clientsOnScene;
-            _clients.Remove(client);
-            client.gameObject.SetActive(true);
-        }
-
-        void OnDestroyPoolObject(ClientNPC client)
-        {
-            --_clientsOnScene;
-            RemoveFromClientToPlace(client);
-            Destroy(client.gameObject);
-        }
-
-        Vector3 ChooseRandomStartPosition()
-        {
-            int index = Random.Range(0, spawnPoints.Count);
-            return spawnPoints[index].position;
-        }
-
-        public static Vector3 GetRandomPositionOutOfView()
-        {
-            Camera mainCamera = Camera.main;
-            if (mainCamera == null) return Vector3.zero;
-
-            float x, z;
-            float y = 1;
-
-            int edge = Random.Range(0, 3);
-            if (edge == 0) // Left
-            {
-                x = -0.1f;
-                z = Random.Range(0f, 1f);
-            }
-            else if (edge == 1) // Right
-            {
-                x = 1.1f;
-                z = Random.Range(0f, 1f);
-            }
-            else // Top
-            {
-                x = Random.Range(0f, 1f);
-                z = 1.1f;
-            }
-
-            Vector3 viewportPosition = new Vector3(x, y, z);
-            return mainCamera.ViewportToWorldPoint(viewportPosition);
-        }
-
-        void RemoveFromClientToPlace(ClientNPC client)
-        {
-            int id = client.gameObject.GetInstanceID();
-            int index = _clientToPlace[id];
-            _clientToPlace.Remove(id);
-            _places.Deoccupy(index);
         }
     }
 }

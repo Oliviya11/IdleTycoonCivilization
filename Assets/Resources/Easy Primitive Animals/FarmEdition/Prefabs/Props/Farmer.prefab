@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 8806819849670629035}
   - component: {fileID: 6763347549369624272}
   - component: {fileID: 1323432132636705983}
+  - component: {fileID: 9085744760338900559}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -533,6 +534,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 7613418732567823398}
+--- !u!114 &9085744760338900559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011635816736263825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4acab7f9748edb4bb4840821348c8dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1726022791246769527
 GameObject:
   m_ObjectHideFlags: 0

@@ -140,7 +140,7 @@ namespace Assets.Scripts.Core
         public static BigNumber FromFloat(float logValue)
         {
             int exponent = Mathf.FloorToInt(logValue);
-            double value = Math.Pow(10, logValue - exponent);
+            double value = Math.Pow(10, exponent);
             return new BigNumber(value, exponent);
         }
 

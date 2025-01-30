@@ -81,7 +81,7 @@ namespace Assets.Scripts.Services.Inputs
             return false;
         }
 
-        bool IsPointerOverUI()
+        public static bool IsPointerOverUI()
         {
             return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
         }

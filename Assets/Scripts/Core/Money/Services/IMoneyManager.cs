@@ -3,7 +3,7 @@ using System;
 
 namespace Assets.Scripts.Core.Money.Services
 {
-    internal interface IMoneyManager : IService
+    public interface IMoneyManager : IService
     {
         public string Money { get; }
 

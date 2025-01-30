@@ -22,7 +22,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         void IState.Enter()
         {
-            IMoneyManager moneyManager = new MoneyManager("5");
+            IMoneyManager moneyManager = new MoneyManager("500");
             _services.RegisterSingle<IMoneyManager>(moneyManager);
             _gameStateMachine.Enter<LoadLevelState, string>("Main");
         }

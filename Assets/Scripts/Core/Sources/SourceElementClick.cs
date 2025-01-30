@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Sources;
+﻿using Assets.Scripts.Services.Inputs;
+using Assets.Scripts.Sources;
 using System;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Core.Sources
 
         public void OnMouseDown()
         {
+            if (InputService.IsPointerOverUI()) return;
             OnSourceElementClick?.Invoke(source);
         }
     }

@@ -1,11 +1,14 @@
-﻿using Assets.Scripts.Core.Sources;
+﻿using Assets.Scripts.Core.Money.Services;
+using Assets.Scripts.Core.Sources;
 using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.GUI;
 using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
+using System;
 using UnityEngine;
+using BigNumber = Assets.Scripts.Core.BigNumber;
 
 namespace Assets.Scripts.Sources
 {
@@ -76,7 +79,7 @@ namespace Assets.Scripts.Sources
             UnlockPopup.Params @params = new UnlockPopup.Params(delegate ()
             {
                 OpenSource(source);
-            }, "5");
+            }, source.upgrade.CurrentPrice);
             UnlockPopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
             delegate (UnlockPopup p)
             {
@@ -100,16 +103,45 @@ namespace Assets.Scripts.Sources
             Vector3 position = source.transform.position;
             position.y += 2;
 
-            UpgradeSourcePopup.Params @params = new UpgradeSourcePopup.Params(delegate ()
-            {
+            SourceUpgrade u = source.upgrade;
 
-            }, 1, 10, "7", 0.5f, 2, 0, true);
+            UpgradeSourcePopup.Params @params = GetUpgradeSourcePopup(u, false);
 
             UpgradeSourcePopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
             delegate (UpgradeSourcePopup p)
             {
                 _lastPopup = p;
             });
+        }
+
+        private UpgradeSourcePopup.Params GetUpgradeSourcePopup(SourceUpgrade u, bool isUpgradeNone)
+        {
+            Func<bool> isUpdateAvailable = delegate () { return IsUpdateAvailable(u); };
+
+            Action<UpgradeSourcePopup> onUpgrade = (UpgradeSourcePopup popup) =>
+            {
+
+            };
+
+            if (!isUpgradeNone)
+            {
+                onUpgrade = (UpgradeSourcePopup popup) =>
+                {
+                    u.Upgrade();
+                    popup.Init(GetUpgradeSourcePopup(u, true));
+                };
+            }
+
+            Debug.LogError(u.CurrentPrice);
+
+            return new UpgradeSourcePopup.Params(onUpgrade, u.CurrentLevel, u.MaxLevels(), u.CurrentProfit, u.CurrentPrice, u.ProductionTime, u.MaxUpgrades, u.CurrentUpgrade, isUpdateAvailable);
+        }
+
+        bool IsUpdateAvailable(SourceUpgrade upgradeSource)
+        {
+            BigNumber number = new BigNumber(_services.Single<IMoneyManager>().Money.ToString());
+            BigNumber currentNumber = new BigNumber(upgradeSource.CurrentPrice);
+            return number >= currentNumber;
         }
 
         void OpenSource(Source source)

@@ -66,7 +66,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    levelsToNextUpgrade: 0
+    levelsToNextUpgrade: 10
   - priceCurve:
       serializedVersion: 2
       m_Curve:
@@ -115,4 +115,4 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    levelsToNextUpgrade: 0
+    levelsToNextUpgrade: 10

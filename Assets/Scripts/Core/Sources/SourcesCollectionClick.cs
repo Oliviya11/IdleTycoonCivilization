@@ -132,8 +132,6 @@ namespace Assets.Scripts.Sources
                 };
             }
 
-            Debug.LogError(u.CurrentPrice);
-
             return new UpgradeSourcePopup.Params(onUpgrade, u.CurrentLevel, u.MaxLevels(), u.CurrentProfit, u.CurrentPrice, u.ProductionTime, u.MaxUpgrades, u.CurrentUpgrade, isUpdateAvailable);
         }
 

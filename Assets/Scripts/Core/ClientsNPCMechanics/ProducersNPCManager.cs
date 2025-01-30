@@ -87,6 +87,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                 {
                     clientNPC.CurrentState = ClientNPC.State.WaitingForProducer;
                     ProducerNPC producer = GetSleepingProducer();
+                    producer.sleepingParticles.Hide();
                     Vector3 destination = _clientsNPCManager.GetProducerPlace(clientNPC.gameObject.GetInstanceID());
                     producer.CurrentState = ProducerNPC.State.MoveToClientForOrder;
                     producer.Move(destination);
@@ -105,8 +106,10 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             {
                 producerNPC.CurrentState = ProducerNPC.State.SleepWithOrder;
                 producerNPC.Stop();
+                producerNPC.sleepingParticles.Show();
                 return;
             }
+            producerNPC.sleepingParticles.Hide();
             Transform tr = source.places.Occupy(source.state.MaxPlacesCount - 1);
             _producerToPlace[id] = tr;
             producerNPC.Move(tr.position);
@@ -132,6 +135,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     ClientNPC clientNPC = _producersToClients[id];
                     _clientsNPCManager.Leave(clientNPC);
                     producerNPC.CurrentState = ProducerNPC.State.Sleep;
+                    producerNPC.sleepingParticles.Show();
 
                     Product product = _producersToProduct[id];
                     Source source = _sourcesManager.GetSource(product);

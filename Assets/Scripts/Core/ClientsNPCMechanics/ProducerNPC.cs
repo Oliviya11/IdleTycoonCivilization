@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Particles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
     public class ProducerNPC : NPC
     {
         public Timer timer;
+        public ParticleController sleepingParticles;
         public Transform productPlace;
 
         public enum State {
@@ -32,6 +34,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             base.Awake();
             CurrentState = State.Sleep;
             timer.Hide();
+            //sleepingParticles.Hide();
         }
     }
 }

@@ -14,8 +14,6 @@ namespace Assets.Scripts.StaticData
     {
         public Product product;
         public SourceState.State initialState;
-        public string initialPrice;
-        public string initialProfit;
         public float productionTime;
 
         [Serializable]

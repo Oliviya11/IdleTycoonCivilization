@@ -9,8 +9,6 @@ namespace Assets.Scripts.Core.Sources
     {
         const float STEP = 0.1f;
         public Product Product {  get; private set; }
-        public string InitialPrice { get; private set; }
-        public string InitialProfit { get; private set; }
         public float ProductionTime { get; private set; }
         public List<Upgrade> Upgrades { get; private set; }
 
@@ -29,25 +27,20 @@ namespace Assets.Scripts.Core.Sources
         float priceTime;
         float profitTime;
 
-        public SourceUpgrade(string initialPrice, string initialProfit, float productionTime, List<Upgrade> upgrades,
+        public SourceUpgrade(float profitTime, float priceTime, float productionTime, List<Upgrade> upgrades,
             int currentUpgrade, int currentLevel, Product product)
         {
-            InitialPrice = initialPrice;
-            InitialProfit = initialProfit;
             ProductionTime = productionTime;
             Upgrades = upgrades;
             CurrentUpgrade = currentUpgrade;
             CurrentLevel = currentLevel;
             Product = product;
+            this.priceTime = priceTime;
+            this.profitTime = profitTime;
         }
 
         public void UpgradeTill(int upgrade, int level)
         {
-            CurrentPrice = InitialPrice;
-            CurrentProfit = InitialProfit;
-
-            if (level == 0) return;
-
             for (int i = 0; i < Upgrades.Count; ++i)
             {
                 if (i <= upgrade)
@@ -113,8 +106,15 @@ namespace Assets.Scripts.Core.Sources
         private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, ref float time)
         {
             time += STEP;
+            number = CalculateBigNumber(curve, time);
+        }
+
+        private static string CalculateBigNumber(AnimationCurve curve, float time)
+        {
+            string number;
             float nextNumber = curve.Evaluate(time);
             number = BigNumber.FromFloat(nextNumber).ToString();
+            return number;
         }
     }
 }

@@ -154,7 +154,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             Product product = _producersToProduct[producer.gameObject.GetInstanceID()];
             Source source = _sourcesManager.GetSource(product);
             GameObject go = source.state.ProduceProduct(producer.productPlace.position);
-            go.transform.localScale = new Vector3(0.3f, 0.1f, 0.3f);
+            go.transform.localScale = new Vector3(0.5f, 0.3f, 0.5f);
             go.transform.SetParent(producer.productPlace);
         }
 

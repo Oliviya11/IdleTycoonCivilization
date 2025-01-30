@@ -23,6 +23,7 @@ namespace Assets.Scripts.Sources
 
         [SerializeField] List<Transform> productPlaces;
         [SerializeField] List<Transform> poducerPlaces;
+        [SerializeField] List<GameObject> elements;
 
         State currentState;
         public int MaxPlacesCount => _maxPlacesCount;
@@ -36,6 +37,14 @@ namespace Assets.Scripts.Sources
             BlankWithArrow = 1,
             ProductPlace1 = 2,
             ProductPlace2 = 3,
+        }
+
+        private void Awake()
+        {
+            foreach(var element in elements)
+            {
+                element.SetActive(false);
+            }
         }
 
         public void Construct(AllServices services)
@@ -116,6 +125,7 @@ namespace Assets.Scripts.Sources
 
         void ProduceProductPlace(int index)
         {
+            elements[index].gameObject.SetActive(true);
             ProduceProductPlace(productPlaces[index].position);
         }
 
@@ -124,7 +134,6 @@ namespace Assets.Scripts.Sources
             GameObject go = null;
             if (Product == Product.Pumpkin)
             {
-                position.y += 0.3f;
                 go = _services.Single<IGameFactory>().CreatePumpkin(position);
             }
 

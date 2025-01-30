@@ -9,7 +9,7 @@ namespace Assets.Scripts.Services.Inputs
 {
     public interface IInputService : IService
     {
-        public event Action<Vector2> OnClick;
+        public event Action<Vector2, string> OnClick;
         public event Action<float> OnDrag;
         public void ProcessInput();
     }

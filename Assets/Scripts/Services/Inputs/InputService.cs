@@ -7,12 +7,13 @@ namespace Assets.Scripts.Services.Inputs
 {
     internal class InputService : IInputService
     {
-        public event Action<Vector2> OnClick;
+        public event Action<Vector2, string> OnClick;
         public event Action<float> OnDrag;
 
         private Vector2 _startPosition;
         private bool _isDragging = false;
         private float _dragThreshold = 10f; // Minimum distance to consider a drag
+        private string _colliderName;
 
         public void ProcessInput()
         {
@@ -50,9 +51,10 @@ namespace Assets.Scripts.Services.Inputs
         {
             float dragDistance = endPosition.y - _startPosition.y;
 
-            if (IsPositionInCollider(endPosition) || IsPointerOverUI()) return;
+            if (IsPointerOverUI()) return;
 
-            if (IsPositionInCollider(_startPosition) || IsPointerOverUI()) return;
+            IsPositionInCollider(endPosition);
+            IsPositionInCollider(_startPosition);
 
             if (Mathf.Abs(dragDistance) >= _dragThreshold)
             {
@@ -60,7 +62,7 @@ namespace Assets.Scripts.Services.Inputs
             }
             else
             {
-                OnClick?.Invoke(_startPosition);
+                OnClick?.Invoke(_startPosition, _colliderName);
             }
         }
 
@@ -70,9 +72,11 @@ namespace Assets.Scripts.Services.Inputs
             Debug.DrawRay(ray.origin, ray.direction.normalized * 1000, Color.blue, 2);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.collider.name == "Plane") return false;
+                _colliderName = hit.collider.name;
                 return true;
             }
+
+            _colliderName = null;
 
             return false;
         }

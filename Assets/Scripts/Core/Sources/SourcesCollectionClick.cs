@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.Sources.Services;
+﻿using Assets.Scripts.Core.Sources;
+using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.GUI;
 using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
@@ -29,6 +30,10 @@ namespace Assets.Scripts.Sources
             {
                 source.click.OnBlankClick += OpenUnlockPopup;
                 source.click.OnSourceIconClick += OpenSourceUpgradePopUp;
+                foreach (SourceElementClick sourceElementClick in source.sourceElementClicks)
+                {
+                    sourceElementClick.OnSourceElementClick += OpenSourceUpgradePopUp;
+                }
             }
 
             _services.Single<IInputService>().OnClick += OnMapClick;
@@ -40,6 +45,10 @@ namespace Assets.Scripts.Sources
             {
                 source.click.OnBlankClick -= OpenUnlockPopup;
                 source.click.OnSourceIconClick -= OpenSourceUpgradePopUp;
+                foreach (SourceElementClick sourceElementClick in source.sourceElementClicks)
+                {
+                    sourceElementClick.OnSourceElementClick -= OpenSourceUpgradePopUp;
+                }
             }
 
             _services.Single<IInputService>().OnClick -= OnMapClick;
@@ -119,7 +128,7 @@ namespace Assets.Scripts.Sources
             }
         }
 
-        void OnMapClick(Vector2 v)
+        void OnMapClick(Vector2 v, string name)
         {
             _lastClickedSourceId = 0;
             HidePopup();

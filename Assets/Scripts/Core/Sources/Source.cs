@@ -14,5 +14,6 @@ namespace Assets.Scripts.Sources
         public SourceClick click;
         public SourcePlaces places;
         public SourceUpgrade upgrade;
+        public List<SourceElementClick> sourceElementClicks;
     }
 }

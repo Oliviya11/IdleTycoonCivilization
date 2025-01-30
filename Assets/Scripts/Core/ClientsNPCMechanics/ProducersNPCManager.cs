@@ -4,7 +4,6 @@ using Assets.Scripts.Sources;
 using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using UnityEngine;
-using static Assets.Scripts.Core.Orders.OrderPlaces;
 using Product = Assets.Scripts.Sources.Product;
 
 namespace Assets.Scripts.Core.ClientsNPCMechanics
@@ -12,6 +11,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
     public class ProducersNPCManager : MonoBehaviour
     {
         const float producerTargetAngle = 0f;
+        private const float OrderProcessingTime = 0.5f;
         List<ProducerNPC> _producers;
         ClientsNPCManager _clientsNPCManager;
         bool _isConstructed;
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                         _clientsNPCManager.WaitForOrder(client);
                         producerNPC.timer.Hide();
                     };
-                    producerNPC.timer.Duration = 0.5f;
+                    producerNPC.timer.Duration = OrderProcessingTime;
                     producerNPC.timer.Show();
                 }
             }
@@ -75,7 +75,11 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                         producerNPC.timer.Hide();
                         CreateProduct(producerNPC);
                     };
-                    producerNPC.timer.Duration = 0.5f;
+
+                    Product product = _producersToProduct[producerNPC.gameObject.GetInstanceID()];
+                    Source source = _sourcesManager.GetSource(product);
+
+                    producerNPC.timer.Duration = source.upgrade.ProductionTime;
                     producerNPC.timer.Show();
                 }
             }

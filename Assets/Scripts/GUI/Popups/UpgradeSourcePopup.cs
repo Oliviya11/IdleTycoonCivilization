@@ -98,7 +98,7 @@ namespace Assets.Scripts.GUI.Popups
 
             upgradeBar.SetValue(p.currentLevel, p.maxLevel);
             profit.text = p.profit;
-            duration.text = p.duration.ToString();
+            duration.text = $"{p.duration.ToString()} s";
             level.text = $"Level {(p.currentLevel + 1).ToString()}";
             buttonText.text = p.price;
             titleText.text = p.title;

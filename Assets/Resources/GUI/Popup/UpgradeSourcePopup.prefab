@@ -2581,6 +2581,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5793197528298244836}
     m_Modifications:
+    - target: {fileID: 1396130290679101587, guid: eacf745f3606e3c438fbc28834405fa2, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396130290679101587, guid: eacf745f3606e3c438fbc28834405fa2, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396130290679101587, guid: eacf745f3606e3c438fbc28834405fa2, type: 3}
+      propertyPath: m_Color.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
     - target: {fileID: 7977889891009482056, guid: eacf745f3606e3c438fbc28834405fa2, type: 3}
       propertyPath: m_Name
       value: Button

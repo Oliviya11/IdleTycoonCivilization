@@ -76,11 +76,14 @@ namespace Assets.Scripts.Sources
             _lastClickedSourceId = source.gameObject.GetInstanceID();
             Vector3 position = source.transform.position;
             position.y += 2;
+
+            Func<bool> isUpdateAvailable = delegate () { return IsUpdateAvailable(source.upgrade); };
+
             UnlockPopup.Params @params = new UnlockPopup.Params(delegate ()
             {
                 OpenSource(source);
                 source.upgrade.SubtractMoney();
-            }, source.upgrade.CurrentPrice);
+            }, source.upgrade.CurrentPrice, isUpdateAvailable);
             UnlockPopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
             delegate (UnlockPopup p)
             {

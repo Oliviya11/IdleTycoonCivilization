@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9343357d4c301054d84b7ed2ab4bfdf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnlockButton: {fileID: 8429181758779292907}
+  unlockButton: {fileID: 8429181758779292907}
   price: {fileID: 6321302251137912443}
 --- !u!1 &3695334621656048639
 GameObject:

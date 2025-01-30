@@ -4,41 +4,65 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Colors = Assets.Scripts.GUI.Clolors;
 
 namespace Assets.Scripts.GUI
 {
     public class UnlockPopup : Popup
     {
-        [SerializeField] Button UnlockButton;
+        [SerializeField] Button unlockButton;
         [SerializeField] TextMeshProUGUI price;
         const string popupName = "UnlockPopup";
 
         public class Params : IParams
         {
             public Action OnUnlockClick;
-            public string _price;
-            public Params(Action onUnlockClick, string price)
+            public string price;
+            public Func<bool> IsUpdateAvailable;
+            public Params(Action onUnlockClick, string price, Func<bool> isUpdateAvailable)
             {
                 OnUnlockClick = onUnlockClick;
-                _price = price;
+                this.price = price;
+                IsUpdateAvailable = isUpdateAvailable;
             }
         }
 
+        Params @params;
+
         public override void OnDestroy()
         {
-            UnlockButton.onClick.RemoveAllListeners();
+            unlockButton.onClick.RemoveAllListeners();
             base.OnDestroy();
+        }
+
+        private void Update()
+        {
+            if (@params.IsUpdateAvailable == null) return;
+
+            unlockButton.enabled = @params.IsUpdateAvailable();
+            if (unlockButton.enabled)
+            {
+                unlockButton.image.color = Colors.enabledButtonColor;
+                price.color = Colors.enabledButtonTextColor;
+            }
+            else
+            {
+                unlockButton.image.color = Colors.disabledButtonColor;
+                price.color = Colors.disabledButtonTextColor;
+            }
         }
 
         public void Init(Params p)
         {
-            UnlockButton.onClick.AddListener(delegate()
+            @params = p;
+
+            unlockButton.onClick.AddListener(delegate()
             {
                 p.OnUnlockClick.Invoke();
                 Hide();
             });
 
-            price.text = p._price;
+            price.text = p.price;
         }
 
         protected override string GetPrefabName()

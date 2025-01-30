@@ -12,8 +12,8 @@ namespace Assets.Scripts.Sources
         [SerializeField] Button upgradeButton;
 
         public event Action<Source> OnBlankClick;
-        public event Action OnSourceIconClick;
-        public event Action OnUpgradeClick;
+        public event Action<Source> OnSourceIconClick;
+        public event Action<Source> OnUpgradeClick;
 
         public void Awake()
         {
@@ -31,17 +31,17 @@ namespace Assets.Scripts.Sources
 
         void InvokeOnBlankClick()
         {
-            OnBlankClick.Invoke(source);
+            OnBlankClick?.Invoke(source);
         }
 
         void InvokeOnSourceIconClick()
         {
-            OnSourceIconClick.Invoke();
+            OnSourceIconClick?.Invoke(source);
         }
 
         void InvokeOnUpgradeClick()
         {
-            OnUpgradeClick.Invoke();
+            OnUpgradeClick?.Invoke(source);
         }
     }
 }

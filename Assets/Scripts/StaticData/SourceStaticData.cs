@@ -12,16 +12,18 @@ namespace Assets.Scripts.StaticData
     [CreateAssetMenu(fileName = "SourceData", menuName = "Static Data/Source")]
     public class SourceStaticData : ScriptableObject
     {
+        public Product product;
         public SourceState.State initialState;
         public string initialPrice;
+        public string initialProfit;
+        public float productionTime;
 
         [Serializable]
         public struct Upgrade
         {
-            public string price;
-            public string profit;
             public AnimationCurve priceCurve;
             public AnimationCurve profitCurve;
+            public int levelsToNextUpgrade;
         }
 
         public List<Upgrade> upgrades;

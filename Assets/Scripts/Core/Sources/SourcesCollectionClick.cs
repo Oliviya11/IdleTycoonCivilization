@@ -1,13 +1,9 @@
 ﻿using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.GUI;
+using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Sources
@@ -16,14 +12,23 @@ namespace Assets.Scripts.Sources
     {
         [SerializeField] SourcesCollection sourcesCollection;
         int _lastClickedSourceId;
-        UnlockPopup _lastPopup;
+        Popup _lastPopup;
         AllServices _services;
+        ClickId _clickId;
+
+        enum ClickId
+        {
+            None,
+            Unlock,
+            Upgrade,
+        }
 
         void Start()
         {
             foreach (var source in sourcesCollection.sources)
             {
                 source.click.OnBlankClick += OpenUnlockPopup;
+                source.click.OnSourceIconClick += OpenSourceUpgradePopUp;
             }
 
             _services.Single<IInputService>().OnClick += OnMapClick;
@@ -34,6 +39,7 @@ namespace Assets.Scripts.Sources
             foreach (var source in sourcesCollection.sources)
             {
                 source.click.OnBlankClick -= OpenUnlockPopup;
+                source.click.OnSourceIconClick -= OpenSourceUpgradePopUp;
             }
 
             _services.Single<IInputService>().OnClick -= OnMapClick;
@@ -48,21 +54,50 @@ namespace Assets.Scripts.Sources
         {
             HidePopup();
 
-            if (source.gameObject.GetInstanceID() == _lastClickedSourceId)
+            if (source.gameObject.GetInstanceID() == _lastClickedSourceId && _clickId == ClickId.Unlock)
             {
                 _lastClickedSourceId = 0;
                 return;
             }
 
+            _clickId = ClickId.Unlock;
             _lastClickedSourceId = source.gameObject.GetInstanceID();
             Vector3 position = source.transform.position;
             position.y += 2;
             UnlockPopup.Params @params = new UnlockPopup.Params(delegate ()
             {
                 OpenSource(source);
-            });
+            }, "5");
             UnlockPopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
             delegate (UnlockPopup p)
+            {
+                _lastPopup = p;
+            });
+        }
+
+        void OpenSourceUpgradePopUp(Source source)
+        {
+            HidePopup();
+
+            if (source.gameObject.GetInstanceID() == _lastClickedSourceId && _clickId == ClickId.Upgrade)
+            {
+                _lastClickedSourceId = 0;
+                return;
+            }
+
+            _clickId = ClickId.Upgrade;
+
+            _lastClickedSourceId = source.gameObject.GetInstanceID();
+            Vector3 position = source.transform.position;
+            position.y += 2;
+
+            UpgradeSourcePopup.Params @params = new UpgradeSourcePopup.Params(delegate ()
+            {
+
+            }, 1, 10, "7", 0.5f, 2, 0, true);
+
+            UpgradeSourcePopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
+            delegate (UpgradeSourcePopup p)
             {
                 _lastPopup = p;
             });
@@ -92,7 +127,7 @@ namespace Assets.Scripts.Sources
 
         void SetProductState(Source source)
         {
-            source.state.EnableAccordingToState(SourceState.State.Product1);
+            source.state.EnableAccordingToState(SourceState.State.ProductPlace1);
         }
     }
 }

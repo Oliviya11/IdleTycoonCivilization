@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Core.ClientsNPCMechanics;
 using Assets.Scripts.Core.Orders;
+using Assets.Scripts.Core.Sources;
 using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
@@ -37,29 +38,62 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void OnLoaded()
         {
-            ISourcesManager sourcesManager = new SourcesManager();
-            _services.RegisterSingle<ISourcesManager>(sourcesManager);
+            ISourcesManager sourcesManager = CreateSourcesManager();
+            LevelStaticData levelStaticData = CreateSources();
 
+            OrdersCollection ordersCollection = CreateOrders(1);
+            GameObject producer = PlaceProducers(levelStaticData);
+
+            ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
+            CreateProducersManager(sourcesManager, producer, clientsNPCManager);
+
+            _services.Single<IGameFactory>().CreateHud();
+            _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private void CreateProducersManager(ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
+        {
+            GameObject producersManager = _services.Single<IGameFactory>().CreateProducersManager();
+            producersManager.GetComponent<ProducersNPCManager>().Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, sourcesManager);
+        }
+
+        private ClientsNPCManager CreateSourcesManager(OrdersCollection ordersCollection)
+        {
+            GameObject clientsManager = _services.Single<IGameFactory>().CreateClientsManager();
+            ClientsNPCManager clientsNPCManager = clientsManager.GetComponent<ClientsNPCManager>();
+            clientsNPCManager.Construct(ordersCollection.places, _services.Single<IGameFactory>(), _services.Single<ISourcesManager>());
+            return clientsNPCManager;
+        }
+
+        private GameObject PlaceProducers(LevelStaticData levelStaticData)
+        {
+            return _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
+        }
+
+        private LevelStaticData CreateSources()
+        {
             LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(1);
             SourcesCollection sources = CreateSources(1, levelStaticData);
             sources.click.Construct(_services);
-            SourceState source = sources.sources[0].state;
-            source.Construct(_services);
-            source.EnableAccordingToState(source.InitialState);
 
-            OrdersCollection ordersCollection = CreateOrders(1);
+            for (int i = 0; i < levelStaticData.sourcesData.Count; ++i) {
+                SourceStaticData sourceStaticData = levelStaticData.sourcesData[i];
+                Source source = sources.sources[i];
+                SourceState sourceState = source.state;
+                sourceState.Construct(_services);
+                sourceState.EnableAccordingToState(sourceStaticData.initialState);
+                sourceState.Product = sourceStaticData.product;
+                source.upgrade = new SourceUpgrade(sourceStaticData.initialPrice, sourceStaticData.initialProfit,
+                    sourceStaticData.productionTime, sourceStaticData.upgrades);
+            }
+            return levelStaticData;
+        }
 
-            GameObject producer = _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
-
-            GameObject clientsSpawner = _services.Single<IGameFactory>().CreateClientsManager();
-            ClientsNPCManager clientsNPCManager = clientsSpawner.GetComponent<ClientsNPCManager>();
-            clientsNPCManager.Construct(ordersCollection.places, _services.Single<IGameFactory>(), _services.Single<ISourcesManager>());
-
-            GameObject producersSpawner = _services.Single<IGameFactory>().CreateProducersManager();
-            producersSpawner.GetComponent<ProducersNPCManager>().Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, sourcesManager);
-
-            _services.Single<IGameFactory>().CreateHud(); 
-            _gameStateMachine.Enter<GameLoopState>();
+        private ISourcesManager CreateSourcesManager()
+        {
+            ISourcesManager sourcesManager = new SourcesManager();
+            _services.RegisterSingle<ISourcesManager>(sourcesManager);
+            return sourcesManager;
         }
 
         SourcesCollection CreateSources(int level, LevelStaticData levelStaticData)

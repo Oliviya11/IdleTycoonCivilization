@@ -13,8 +13,8 @@ namespace Assets.Scripts.Sources
 {
     public class SourceState : MonoBehaviour
     {
-        [SerializeField] State initialState;
-        [SerializeField] Product product;
+        public Product Product { get; set; }
+
         [SerializeField] Image productIcon;
         [SerializeField] Transform blank;
         [SerializeField] Transform arrow;
@@ -25,9 +25,6 @@ namespace Assets.Scripts.Sources
         [SerializeField] List<Transform> poducerPlaces;
 
         State currentState;
-
-        public State InitialState => initialState;
-        public Product Product => product;
         public int MaxPlacesCount => _maxPlacesCount;
 
         AllServices _services;
@@ -37,8 +34,8 @@ namespace Assets.Scripts.Sources
         {
             Blank = 0,
             BlankWithArrow = 1,
-            Product1 = 2,
-            Product2 = 3,
+            ProductPlace1 = 2,
+            ProductPlace2 = 3,
         }
 
         public void Construct(AllServices services)
@@ -93,7 +90,7 @@ namespace Assets.Scripts.Sources
             {
                 SetProduct1State();
 
-                if (currentState == State.Product2)
+                if (currentState == State.ProductPlace2)
                 {
                     SetProduct2State();
                 }
@@ -105,7 +102,7 @@ namespace Assets.Scripts.Sources
             EnableBlank(false);
             EnableArrow(false);
             EnableIcon(true);
-            ProduceProduct(0);
+            ProduceProductPlace(0);
             SetIcon();
             HideUpgrade();
             ++_maxPlacesCount;
@@ -113,19 +110,19 @@ namespace Assets.Scripts.Sources
 
         public void SetProduct2State()
         {
-            ProduceProduct(1);
+            ProduceProductPlace(1);
             ++_maxPlacesCount;
         }
 
-        void ProduceProduct(int index)
+        void ProduceProductPlace(int index)
         {
-            ProduceProduct(productPlaces[index].position);
+            ProduceProductPlace(productPlaces[index].position);
         }
 
         public GameObject ProduceProduct(Vector3 position)
         {
             GameObject go = null;
-            if (product == Product.Pumpkin)
+            if (Product == Product.Pumpkin)
             {
                 position.y += 0.3f;
                 go = _services.Single<IGameFactory>().CreatePumpkin(position);
@@ -134,9 +131,18 @@ namespace Assets.Scripts.Sources
             return go;
         }
 
+        public void ProduceProductPlace(Vector3 position)
+        {
+            if (Product == Product.Pumpkin)
+            {
+                position.y += 0.3f;
+                _services.Single<IGameFactory>().CreatePumpkin(position);
+            }
+        }
+
         void SetIcon()
         {
-            productIcon.sprite = AllServices.Container.Single<IAssetProvider>().LoadProductIcon(product.ToString());
+            productIcon.sprite = AllServices.Container.Single<IAssetProvider>().LoadProductIcon(Product.ToString());
         }
     }
 }

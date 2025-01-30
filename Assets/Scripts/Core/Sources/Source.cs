@@ -13,5 +13,6 @@ namespace Assets.Scripts.Sources
         public SourceState state;
         public SourceClick click;
         public SourcePlaces places;
+        public SourceUpgrade upgrade;
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Core
 {
@@ -88,6 +86,62 @@ namespace Assets.Scripts.Core
         public static BigNumber operator /(BigNumber a, BigNumber b)
         {
             return new BigNumber(a.Value / b.Value, a.Exponent - b.Exponent);
+        }
+
+        public static bool operator >(BigNumber a, BigNumber b)
+        {
+            if (a.Exponent != b.Exponent)
+                return a.Exponent > b.Exponent;
+            return a.Value > b.Value;
+        }
+
+        public static bool operator <(BigNumber a, BigNumber b)
+        {
+            if (a.Exponent != b.Exponent)
+                return a.Exponent < b.Exponent;
+            return a.Value < b.Value;
+        }
+
+        public static bool operator >=(BigNumber a, BigNumber b)
+        {
+            return a > b || a.Equals(b);
+        }
+
+        public static bool operator <=(BigNumber a, BigNumber b)
+        {
+            return a < b || a.Equals(b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is BigNumber other)
+                return this.Exponent == other.Exponent && Math.Abs(this.Value - other.Value) < 1e-9;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Value, Exponent);
+        }
+
+        public int CompareTo(BigNumber other)
+        {
+            if (this > other) return 1;
+            if (this < other) return -1;
+            return 0;
+        }
+
+        public float ToFloat()
+        {
+            if (Value == 0) return 0f;
+            return (float)(Math.Log10(Value) + Exponent);
+        }
+
+        public static BigNumber FromFloat(float logValue)
+        {
+            int exponent = Mathf.FloorToInt(logValue);
+            double value = Math.Pow(10, logValue - exponent);
+            return new BigNumber(value, exponent);
         }
 
         public override string ToString()

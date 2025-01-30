@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.Sources.Services;
+﻿using Assets.Scripts.Core.Money.Services;
+using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.Sources;
 using Assets.Scripts.Utils;
 using System.Collections.Generic;
@@ -18,13 +19,15 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         Dictionary<int, Product> _producersToProduct = new();
         Dictionary<int, Transform> _producerToPlace = new();
         ISourcesManager _sourcesManager;
+        IMoneyManager moneyManager;
 
-        public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager)
+        public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager, IMoneyManager moneyManager)
         {
             _clientsNPCManager = clientsNPCManager;
             _producers = producers;
             _isConstructed = true;
             _sourcesManager = sourcesManager;
+            this.moneyManager = moneyManager;
         }
 
         void Update()
@@ -139,6 +142,8 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
                     Product product = _producersToProduct[id];
                     Source source = _sourcesManager.GetSource(product);
+
+                    moneyManager.AddMoney(source.upgrade.CurrentProfit);
 
                     source.places.Deoccupy(_producerToPlace[id]);
 

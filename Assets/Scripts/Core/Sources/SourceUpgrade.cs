@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Sources;
+﻿using Assets.Scripts.Core.Money.Services;
+using Assets.Scripts.Services;
+using Assets.Scripts.Sources;
 using System.Collections.Generic;
 using UnityEngine;
 using static Assets.Scripts.StaticData.SourceStaticData;
@@ -26,9 +28,10 @@ namespace Assets.Scripts.Core.Sources
         public int MaxUpgrades => Upgrades.Count;
         float priceTime;
         float profitTime;
+        IMoneyManager moneyManager;
 
         public SourceUpgrade(float profitTime, float priceTime, float productionTime, List<Upgrade> upgrades,
-            int currentUpgrade, int currentLevel, Product product)
+            int currentUpgrade, int currentLevel, Product product, IMoneyManager moneyManager)
         {
             ProductionTime = productionTime;
             Upgrades = upgrades;
@@ -37,10 +40,15 @@ namespace Assets.Scripts.Core.Sources
             Product = product;
             this.priceTime = priceTime;
             this.profitTime = profitTime;
+            this.moneyManager = moneyManager;
         }
 
         public void UpgradeTill(int upgrade, int level)
         {
+            CurrentLevel = level;
+
+            int l = 0;
+
             for (int i = 0; i < Upgrades.Count; ++i)
             {
                 if (i <= upgrade)
@@ -48,22 +56,27 @@ namespace Assets.Scripts.Core.Sources
                     Upgrade u = Upgrades[i];
                     for (int j = 0; j < u.levelsToNextUpgrade; ++j)
                     {
-                        ++CurrentLevel;
-
                         // price
                         CalculateNewBigNumber(u, u.priceCurve, ref currentPrice, ref priceTime);
 
                         // profit
                         CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref profitTime);
 
-                        if (CurrentLevel >= level) return;
+                        if (l >= level) return;
                     }
                 }
             }
         }
 
+        public void SubtractMoney()
+        {
+            moneyManager.SubtractMoney(CurrentPrice);
+        }
+
         public void Upgrade()
         {
+            SubtractMoney();
+
             if (CurrentUpgrade >= Upgrades.Count) return;
 
             ++CurrentLevel;

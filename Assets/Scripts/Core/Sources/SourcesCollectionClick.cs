@@ -79,6 +79,7 @@ namespace Assets.Scripts.Sources
             UnlockPopup.Params @params = new UnlockPopup.Params(delegate ()
             {
                 OpenSource(source);
+                source.upgrade.SubtractMoney();
             }, source.upgrade.CurrentPrice);
             UnlockPopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
             delegate (UnlockPopup p)
@@ -137,7 +138,6 @@ namespace Assets.Scripts.Sources
 
         bool IsUpdateAvailable(SourceUpgrade upgradeSource)
         {
-            return true;
             BigNumber number = new BigNumber(_services.Single<IMoneyManager>().Money.ToString());
             BigNumber currentNumber = new BigNumber(upgradeSource.CurrentPrice);
             return number >= currentNumber;

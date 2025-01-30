@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019e75a6e136cc2449701445d54c7d3f, type: 3}
   m_Name: LevelData1
   m_EditorClassIdentifier: 
+  initialMoney: 6
   sourcesData:
   - {fileID: 11400000, guid: 418978be3400c7847b329cd639d6b450, type: 2}
   producerPosition: {x: 0, y: 1, z: 50}

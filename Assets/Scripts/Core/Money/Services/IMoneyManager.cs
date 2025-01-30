@@ -11,6 +11,6 @@ namespace Assets.Scripts.Core.Money.Services
 
         public void AddMoney(string money);
 
-        public void SubstructMoney(string money);
+        public void SubtractMoney(string money);
     }
 }

@@ -19,7 +19,7 @@ namespace Assets.Scripts.Core.Money.Services
             OnMoneyChanged?.Invoke(_money.ToString());
         }
 
-        public void SubstructMoney(string money)
+        public void SubtractMoney(string money)
         {
             _money = _money - new BigNumber(money);
             OnMoneyChanged?.Invoke(_money.ToString());

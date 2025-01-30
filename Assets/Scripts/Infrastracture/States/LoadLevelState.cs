@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Core.ClientsNPCMechanics;
+using Assets.Scripts.Core.Money.Services;
 using Assets.Scripts.Core.Orders;
 using Assets.Scripts.Core.Sources;
 using Assets.Scripts.Core.Sources.Services;
@@ -39,7 +40,13 @@ namespace Assets.Scripts.Infrastracture.States
         private void OnLoaded()
         {
             ISourcesManager sourcesManager = CreateSourcesManager();
-            LevelStaticData levelStaticData = CreateSources();
+
+            LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(1);
+
+            IMoneyManager moneyManager = new MoneyManager(levelStaticData.initialMoney);
+            _services.RegisterSingle<IMoneyManager>(moneyManager);
+
+           CreateSources(levelStaticData);
 
             OrdersCollection ordersCollection = CreateOrders(1);
             GameObject producer = PlaceProducers(levelStaticData);
@@ -54,7 +61,8 @@ namespace Assets.Scripts.Infrastracture.States
         private void CreateProducersManager(ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
         {
             GameObject producersManager = _services.Single<IGameFactory>().CreateProducersManager();
-            producersManager.GetComponent<ProducersNPCManager>().Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, sourcesManager);
+            producersManager.GetComponent<ProducersNPCManager>().Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, 
+                sourcesManager, _services.Single<IMoneyManager>());
         }
 
         private ClientsNPCManager CreateSourcesManager(OrdersCollection ordersCollection)
@@ -70,9 +78,8 @@ namespace Assets.Scripts.Infrastracture.States
             return _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
         }
 
-        private LevelStaticData CreateSources()
+        private void CreateSources(LevelStaticData levelStaticData)
         {
-            LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(1);
             SourcesCollection sources = CreateSources(1, levelStaticData);
             sources.click.Construct(_services);
 
@@ -84,10 +91,10 @@ namespace Assets.Scripts.Infrastracture.States
                 sourceState.EnableAccordingToState(sourceStaticData.initialState);
                 sourceState.Product = sourceStaticData.product;
                 source.upgrade = new SourceUpgrade(0, 0,
-                    sourceStaticData.productionTime, sourceStaticData.upgrades, 0, 0, sourceStaticData.product);
+                    sourceStaticData.productionTime, sourceStaticData.upgrades, 0, 0, sourceStaticData.product,
+                    _services.Single<IMoneyManager>());
                 source.upgrade.UpgradeTill(0, 0);
             }
-            return levelStaticData;
         }
 
         private ISourcesManager CreateSourcesManager()

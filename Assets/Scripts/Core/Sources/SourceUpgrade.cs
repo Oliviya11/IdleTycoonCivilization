@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Sources;
+using System.Collections.Generic;
 using UnityEngine;
 using static Assets.Scripts.StaticData.SourceStaticData;
 
@@ -6,7 +7,8 @@ namespace Assets.Scripts.Core.Sources
 {
     public class SourceUpgrade
     {
-        const float STEP = 1f;
+        const float STEP = 0.1f;
+        public Product Product {  get; private set; }
         public string InitialPrice { get; private set; }
         public string InitialProfit { get; private set; }
         public float ProductionTime { get; private set; }
@@ -24,9 +26,11 @@ namespace Assets.Scripts.Core.Sources
         int currentLevel;
         public int CurrentLevel { get => currentLevel; private set => currentLevel = value; }
         public int MaxUpgrades => Upgrades.Count;
+        float priceTime;
+        float profitTime;
 
         public SourceUpgrade(string initialPrice, string initialProfit, float productionTime, List<Upgrade> upgrades,
-            int currentUpgrade, int currentLevel)
+            int currentUpgrade, int currentLevel, Product product)
         {
             InitialPrice = initialPrice;
             InitialProfit = initialProfit;
@@ -34,6 +38,7 @@ namespace Assets.Scripts.Core.Sources
             Upgrades = upgrades;
             CurrentUpgrade = currentUpgrade;
             CurrentLevel = currentLevel;
+            Product = product;
         }
 
         public void UpgradeTill(int upgrade, int level)
@@ -53,10 +58,10 @@ namespace Assets.Scripts.Core.Sources
                         ++CurrentLevel;
 
                         // price
-                        CalculateNewBigNumber(u, u.priceCurve, ref currentPrice);
+                        CalculateNewBigNumber(u, u.priceCurve, ref currentPrice, ref priceTime);
 
                         // profit
-                        CalculateNewBigNumber(u, u.profitCurve, ref currentProfit);
+                        CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref profitTime);
 
                         if (CurrentLevel >= level) return;
                     }
@@ -79,10 +84,10 @@ namespace Assets.Scripts.Core.Sources
             Upgrade u = Upgrades[CurrentUpgrade];
 
             // price
-            CalculateNewBigNumber(u, u.priceCurve, ref currentPrice);
+            CalculateNewBigNumber(u, u.priceCurve, ref currentPrice, ref priceTime);
 
             // profit
-            CalculateNewBigNumber(u, u.profitCurve, ref currentProfit);
+            CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref profitTime);
         }
 
         int GetActualLevel(int currentUpgrade)
@@ -105,12 +110,10 @@ namespace Assets.Scripts.Core.Sources
 
             return maxLevel;
         }
-        private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number)
+        private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, ref float time)
         {
-            BigNumber currentNumber = new BigNumber(number);
-            float currentNumberF = currentNumber.ToFloat();
-            currentNumberF += STEP;
-            float nextNumber = curve.Evaluate(currentNumberF);
+            time += STEP;
+            float nextNumber = curve.Evaluate(time);
             number = BigNumber.FromFloat(nextNumber).ToString();
         }
     }

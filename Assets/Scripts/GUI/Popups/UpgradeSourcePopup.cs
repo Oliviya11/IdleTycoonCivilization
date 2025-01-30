@@ -18,6 +18,7 @@ namespace Assets.Scripts.GUI.Popups
         [SerializeField] TextMeshProUGUI duration;
         [SerializeField] TextMeshProUGUI level;
         [SerializeField] TextMeshProUGUI buttonText;
+        [SerializeField] TextMeshProUGUI titleText;
 
         const string popupName = "UpgradeSourcePopup";
         Params @params;
@@ -25,26 +26,28 @@ namespace Assets.Scripts.GUI.Popups
         public class Params : IParams
         {
             public Action<UpgradeSourcePopup> OnUpgradeClick;
-            public int _currentLevel;
-            public int _maxLevel;
-            public string _profit;
-            public string _price;
-            public float _duration;
-            public int _maxUpgrades;
-            public int _currentUpgrades;
+            public int currentLevel;
+            public int maxLevel;
+            public string profit;
+            public string price;
+            public float duration;
+            public int maxUpgrades;
+            public int currentUpgrades;
             public Func<bool> IsUpdateAvailable;
+            public string title;
 
-            public Params(Action<UpgradeSourcePopup> onUpgradeClick, int currentLevel, int maxLevel, string profit, string price, float duration, int maxUpgrades, int currentUpgrades, Func<bool> isUpdateAvailable)
+            public Params(Action<UpgradeSourcePopup> onUpgradeClick, int currentLevel, int maxLevel, string profit, string price, float duration, int maxUpgrades, int currentUpgrades, Func<bool> isUpdateAvailable, string title)
             {
                 OnUpgradeClick = onUpgradeClick;
-                _currentLevel = currentLevel;
-                _maxLevel = maxLevel;
-                _profit = profit;
-                _price = price;
-                _duration = duration;
-                _maxUpgrades = maxUpgrades;
-                _currentUpgrades = currentUpgrades;
+                this.currentLevel = currentLevel;
+                this.maxLevel = maxLevel;
+                this.profit = profit;
+                this.price = price;
+                this.duration = duration;
+                this.maxUpgrades = maxUpgrades;
+                this.currentUpgrades = currentUpgrades;
                 IsUpdateAvailable = isUpdateAvailable;
+                this.title = title; 
             }
         }
 
@@ -72,8 +75,8 @@ namespace Assets.Scripts.GUI.Popups
 
             for (int i = 0; i < stars.Count; ++i)
             {
-                stars[i].gameObject.SetActive(i < p._maxUpgrades);
-                if (i < p._currentUpgrades)
+                stars[i].gameObject.SetActive(i < p.maxUpgrades);
+                if (i < p.currentUpgrades)
                 {
                     stars[i].ShowFull();
                 }
@@ -83,11 +86,12 @@ namespace Assets.Scripts.GUI.Popups
                 }
             }
 
-            upgradeBar.SetValue(p._currentLevel, p._maxLevel);
-            profit.text = p._profit;
-            duration.text = p._duration.ToString();
-            level.text = (p._currentLevel + 1).ToString();
-            buttonText.text = p._price;
+            upgradeBar.SetValue(p.currentLevel, p.maxLevel);
+            profit.text = p.profit;
+            duration.text = p.duration.ToString();
+            level.text = $"Level {(p.currentLevel + 1).ToString()}";
+            buttonText.text = p.price;
+            titleText.text = p.title;
         }
 
         protected override string GetPrefabName()

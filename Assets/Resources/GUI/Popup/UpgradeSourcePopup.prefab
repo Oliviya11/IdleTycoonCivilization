@@ -477,8 +477,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98d7e1466ef04941a6f39118cfdb5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 2794349763666183819}
-  full: {fileID: 7490879238787596516}
+  empty: {fileID: 7490879238787596516}
+  full: {fileID: 2794349763666183819}
 --- !u!1 &2334403692396199605
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,8 +688,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98d7e1466ef04941a6f39118cfdb5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 8043683183712252981}
-  full: {fileID: 4265179480566042703}
+  empty: {fileID: 4265179480566042703}
+  full: {fileID: 8043683183712252981}
 --- !u!1 &2723025780557786105
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,8 +824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98d7e1466ef04941a6f39118cfdb5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 4213046745803836943}
-  full: {fileID: 4567629198060637747}
+  empty: {fileID: 4567629198060637747}
+  full: {fileID: 4213046745803836943}
 --- !u!1 &2943379271957853350
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,8 +960,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98d7e1466ef04941a6f39118cfdb5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 107695301171824821}
-  full: {fileID: 2091188216702018353}
+  empty: {fileID: 2091188216702018353}
+  full: {fileID: 107695301171824821}
 --- !u!1 &3764302311665636240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,8 +1515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98d7e1466ef04941a6f39118cfdb5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 2121403740438838423}
-  full: {fileID: 5162444114587505979}
+  empty: {fileID: 5162444114587505979}
+  full: {fileID: 2121403740438838423}
 --- !u!1 &5538932618040461472
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,8 +1860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98d7e1466ef04941a6f39118cfdb5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 2612474003051401604}
-  full: {fileID: 1319487398300496970}
+  empty: {fileID: 1319487398300496970}
+  full: {fileID: 2612474003051401604}
 --- !u!1 &6003332644488025770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,6 +2044,7 @@ MonoBehaviour:
   duration: {fileID: 1910905724571489099}
   level: {fileID: 1306069444875355975}
   buttonText: {fileID: 916338756791216670}
+  titleText: {fileID: 7647549809783896820}
 --- !u!1 &6543459714637188504
 GameObject:
   m_ObjectHideFlags: 0

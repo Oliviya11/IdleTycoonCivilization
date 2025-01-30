@@ -84,7 +84,7 @@ namespace Assets.Scripts.Infrastracture.States
                 sourceState.EnableAccordingToState(sourceStaticData.initialState);
                 sourceState.Product = sourceStaticData.product;
                 source.upgrade = new SourceUpgrade(sourceStaticData.initialPrice, sourceStaticData.initialProfit,
-                    sourceStaticData.productionTime, sourceStaticData.upgrades, 0, 0);
+                    sourceStaticData.productionTime, sourceStaticData.upgrades, 0, 0, sourceStaticData.product);
                 source.upgrade.UpgradeTill(0, 0);
             }
             return levelStaticData;

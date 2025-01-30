@@ -132,11 +132,12 @@ namespace Assets.Scripts.Sources
                 };
             }
 
-            return new UpgradeSourcePopup.Params(onUpgrade, u.CurrentLevel, u.MaxLevels(), u.CurrentProfit, u.CurrentPrice, u.ProductionTime, u.MaxUpgrades, u.CurrentUpgrade, isUpdateAvailable);
+            return new UpgradeSourcePopup.Params(onUpgrade, u.CurrentLevel, u.MaxLevels(), u.CurrentProfit, u.CurrentPrice, u.ProductionTime, u.MaxUpgrades, u.CurrentUpgrade, isUpdateAvailable, u.Product.ToString());
         }
 
         bool IsUpdateAvailable(SourceUpgrade upgradeSource)
         {
+            return true;
             BigNumber number = new BigNumber(_services.Single<IMoneyManager>().Money.ToString());
             BigNumber currentNumber = new BigNumber(upgradeSource.CurrentPrice);
             return number >= currentNumber;

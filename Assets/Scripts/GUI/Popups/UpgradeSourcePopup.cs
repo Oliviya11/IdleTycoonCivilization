@@ -36,8 +36,11 @@ namespace Assets.Scripts.GUI.Popups
             public int currentUpgrades;
             public Func<bool> IsUpdateAvailable;
             public string title;
+            public int currentUpgradeLevel;
+            public int maxUpgradeLevel;
 
-            public Params(Action<UpgradeSourcePopup> onUpgradeClick, int currentLevel, int maxLevel, string profit, string price, float duration, int maxUpgrades, int currentUpgrades, Func<bool> isUpdateAvailable, string title)
+            public Params(Action<UpgradeSourcePopup> onUpgradeClick, int currentLevel, int maxLevel, string profit, string price,
+                float duration, int maxUpgrades, int currentUpgrades, Func<bool> isUpdateAvailable, string title, int currentUpgradeLevel, int maxUpgradeLevel)
             {
                 OnUpgradeClick = onUpgradeClick;
                 this.currentLevel = currentLevel;
@@ -48,7 +51,9 @@ namespace Assets.Scripts.GUI.Popups
                 this.maxUpgrades = maxUpgrades;
                 this.currentUpgrades = currentUpgrades;
                 IsUpdateAvailable = isUpdateAvailable;
-                this.title = title; 
+                this.title = title;
+                this.currentUpgradeLevel = currentUpgradeLevel;
+                this.maxUpgradeLevel = maxUpgradeLevel;
             }
         }
 
@@ -95,7 +100,7 @@ namespace Assets.Scripts.GUI.Popups
                 }
             }
 
-            upgradeBar.SetValue(p.currentLevel, p.maxLevel);
+            upgradeBar.SetValue(p.currentUpgradeLevel, p.maxUpgradeLevel);
             profit.text = p.profit;
             duration.text = $"{p.duration.ToString()} s";
             level.text = $"Level {(p.currentLevel + 1).ToString()}";

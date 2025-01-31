@@ -25,6 +25,7 @@ namespace Assets.Scripts.Core.Sources
 
         int currentLevel;
         public int CurrentLevel { get => currentLevel; private set => currentLevel = value; }
+        public int CurrentUpgradeLevel { get; private set; }
         public int MaxUpgrades => Upgrades.Count;
         float priceTime;
         float profitTime;
@@ -82,10 +83,13 @@ namespace Assets.Scripts.Core.Sources
             if (CurrentUpgrade >= Upgrades.Count) return;
 
             ++CurrentLevel;
+            ++CurrentUpgradeLevel;
+
             if (CurrentLevel >= GetActualLevel(CurrentUpgrade))
             {
                 ++CurrentUpgrade;
                 sourceState.SetProductPlace(CurrentUpgrade);
+                CurrentUpgradeLevel = 0;
             }
 
             if (CurrentUpgrade >= Upgrades.Count) return;
@@ -119,6 +123,17 @@ namespace Assets.Scripts.Core.Sources
 
             return maxLevel;
         }
+
+        public int GetUpgradeLevels()
+        {
+            for (int i = 0; i < Upgrades.Count; i++)
+            {
+                if (CurrentUpgrade == i) return Upgrades[i].levelsToNextUpgrade;
+            }
+
+            return 0;
+        }
+
         private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, ref float time)
         {
             time += STEP;

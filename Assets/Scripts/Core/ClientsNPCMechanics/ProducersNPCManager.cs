@@ -132,15 +132,27 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             Source source = _sourcesManager.GetSource(product);
             if (source.places.OccupiedPlaces >= source.state.MaxPlacesCount)
             {
-                producerNPC.CurrentState = ProducerNPC.State.SleepWithOrder;
-                producerNPC.Stop();
-                producerNPC.sleepingParticles.Show();
+                MoveToSleepWithOrder(producerNPC);
                 return;
             }
-            producerNPC.sleepingParticles.Hide();
+
             Transform tr = source.places.Occupy(source.state.MaxPlacesCount - 1);
+            if (tr == null)
+            {
+                MoveToSleepWithOrder(producerNPC);
+                return;
+            }
+
+            producerNPC.sleepingParticles.Hide();
             _producerToPlace[id] = tr;
             producerNPC.Move(tr.position);
+        }
+
+        private static void MoveToSleepWithOrder(ProducerNPC producerNPC)
+        {
+            producerNPC.CurrentState = ProducerNPC.State.SleepWithOrder;
+            producerNPC.Stop();
+            producerNPC.sleepingParticles.Show();
         }
 
         void MoveToClient(ProducerNPC producerNPC)

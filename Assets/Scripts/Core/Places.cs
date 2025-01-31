@@ -30,7 +30,11 @@ namespace Assets.Scripts.Core
 
         public T Occupy(int maxPlaces)
         {
-            int placeIndex = UnityEngine.Random.Range(0, maxPlaces);
+            int minValue = Mathf.Min(maxPlaces, _freePlaces.Count);
+
+            int placeIndex = UnityEngine.Random.Range(0, minValue);
+
+            if (placeIndex >= _freePlaces.Count) return default;
 
             T pair = GetPlace(placeIndex);
 

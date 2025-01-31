@@ -152,7 +152,9 @@ namespace Assets.Scripts.Sources
                 };
             }
 
-            return new UpgradeSourcePopup.Params(onUpgrade, u.CurrentLevel, u.MaxLevels(), u.CurrentProfit, u.CurrentPrice, u.ProductionTime, u.MaxUpgrades, u.CurrentUpgrade, isUpdateAvailable, u.Product.ToString());
+            return new UpgradeSourcePopup.Params(onUpgrade, u.CurrentLevel, u.MaxLevels(), u.CurrentProfit, u.CurrentPrice,
+                u.ProductionTime, u.MaxUpgrades, u.CurrentUpgrade, isUpdateAvailable, u.Product.ToString(),
+                u.CurrentUpgradeLevel, u.GetUpgradeLevels());
         }
 
         bool IsUpdateAvailable(SourceUpgrade upgradeSource)

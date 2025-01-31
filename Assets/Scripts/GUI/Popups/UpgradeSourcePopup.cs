@@ -10,6 +10,7 @@ namespace Assets.Scripts.GUI.Popups
 {
     public class UpgradeSourcePopup : Popup
     {
+        [SerializeField] HorizontalLayoutGroup group;
         [SerializeField] Button upgradeButton;
         [SerializeField] List<StarUI> stars;
         [SerializeField] ProgressBar upgradeBar;
@@ -48,6 +49,13 @@ namespace Assets.Scripts.GUI.Popups
                 IsUpdateAvailable = isUpdateAvailable;
                 this.title = title; 
             }
+        }
+
+        void Start()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
+            group.gameObject.SetActive(false);
+            group.gameObject.SetActive(true);
         }
 
         private void Update()

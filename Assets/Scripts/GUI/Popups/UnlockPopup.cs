@@ -10,6 +10,7 @@ namespace Assets.Scripts.GUI
 {
     public class UnlockPopup : Popup
     {
+        [SerializeField] HorizontalLayoutGroup group;
         [SerializeField] Button unlockButton;
         [SerializeField] TextMeshProUGUI price;
         const string popupName = "UnlockPopup";
@@ -33,6 +34,13 @@ namespace Assets.Scripts.GUI
         {
             unlockButton.onClick.RemoveAllListeners();
             base.OnDestroy();
+        }
+
+        void Start()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
+            group.gameObject.SetActive(false);
+            group.gameObject.SetActive(true);
         }
 
         private void Update()

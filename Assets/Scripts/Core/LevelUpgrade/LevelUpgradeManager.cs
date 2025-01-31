@@ -26,10 +26,12 @@ namespace Assets.Scripts.Core.LevelUpgrade
         IMoneyManager moneyManager;
         ClientsNPCManager clientsNPCManager;
         ProducersNPCManager producersNPCManager;
+        SourcesCollectionClick sourcesCollectionClick;
         List<UpgradeItem> items = new List<UpgradeItem>();
 
         public LevelUpgradeManager(LevelUpgradeStaticData upgradeData, ISourcesManager sourcesManager, IGameFactory gameFactory,
-            IMoneyManager moneyManager, ClientsNPCManager clientsNPCManager, ProducersNPCManager producersNPCManager)
+            IMoneyManager moneyManager, ClientsNPCManager clientsNPCManager, ProducersNPCManager producersNPCManager,
+            SourcesCollectionClick sourcesCollectionClick)
         {
             this.upgradeData = upgradeData;
             this.sourcesManager = sourcesManager;
@@ -38,6 +40,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
             this.clientsNPCManager = clientsNPCManager;
             this.producersNPCManager = producersNPCManager;
             items = new List<UpgradeItem>(upgradeData.items);
+            this.sourcesCollectionClick = sourcesCollectionClick;
         }
 
         public void OpenPopup()
@@ -78,6 +81,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
                 if (item.type == LevelUpgradeType.DecreaseProductionTime)
                 {
                     source.upgrade.ProductionTime /= item.multiplier;
+                    sourcesCollectionClick.UpdateUpgradeSourcePopup();
                 }
                 else if (item.type == LevelUpgradeType.IncreaseProfit)
                 {
@@ -85,6 +89,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
                     BigNumber multiplierBN = new BigNumber(item.multiplier.ToString());
                     BigNumber result = currentProfitBN * multiplierBN;
                     source.upgrade.CurrentProfit = result.ToString();
+                    sourcesCollectionClick.UpdateUpgradeSourcePopup();
                 }
             }
         }
@@ -95,6 +100,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
             if (product != Product.None)
             {
                 Source source = sourcesManager.GetSource(product);
+     
                 if (source != null) return true;
                 return false;
             }

@@ -50,7 +50,7 @@ namespace Assets.Scripts.Infrastracture.States
             IMoneyManager moneyManager = new MoneyManager(levelStaticData.initialMoney);
             _services.RegisterSingle<IMoneyManager>(moneyManager);
 
-            CreateSources(levelStaticData);
+            SourcesCollection sources = CreateSources(levelStaticData);
 
             OrdersCollection ordersCollection = CreateOrders(1);
             GameObject producer = PlaceProducers(levelStaticData);
@@ -59,7 +59,7 @@ namespace Assets.Scripts.Infrastracture.States
             ProducersNPCManager producersNPCManager = CreateProducersManager(levelStaticData, sourcesManager, producer, clientsNPCManager);
 
             LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager, 
-                _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager);
+                _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager, sources.click);
 
             InitHud(levelUpgradeManager);
 
@@ -94,7 +94,7 @@ namespace Assets.Scripts.Infrastracture.States
             return _services.Single<IGameFactory>().CreateProducer(levelStaticData.producerPosition, levelStaticData.producerRotationAngle);
         }
 
-        private void CreateSources(LevelStaticData levelStaticData)
+        private SourcesCollection CreateSources(LevelStaticData levelStaticData)
         {
             SourcesCollection sources = CreateSources(1, levelStaticData);
             sources.click.Construct(_services);
@@ -111,6 +111,8 @@ namespace Assets.Scripts.Infrastracture.States
                     _services.Single<IMoneyManager>());
                 source.upgrade.UpgradeTill(0, 0);
             }
+
+            return sources;
         }
 
         private ISourcesManager CreateSourcesManager()

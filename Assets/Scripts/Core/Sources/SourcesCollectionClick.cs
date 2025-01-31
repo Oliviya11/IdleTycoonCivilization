@@ -17,6 +17,7 @@ namespace Assets.Scripts.Sources
         [SerializeField] SourcesCollection sourcesCollection;
         int _lastClickedSourceId;
         Popup _lastPopup;
+        Source lastSource;
         AllServices _services;
         ClickId _clickId;
 
@@ -62,9 +63,21 @@ namespace Assets.Scripts.Sources
             _services = services;
         }
 
+        public void UpdateUpgradeSourcePopup()
+        {
+            if (_lastPopup == null || lastSource == null) return;
+
+            UpgradeSourcePopup upgradeSourcePopup = (UpgradeSourcePopup) _lastPopup;
+            if (upgradeSourcePopup != null) {
+                upgradeSourcePopup.Init(GetUpgradeSourcePopup(lastSource.upgrade, true));
+            }
+        }
+
         void OpenUnlockPopup(Source source)
         {
             HidePopup();
+
+            lastSource = source;
 
             if (source.gameObject.GetInstanceID() == _lastClickedSourceId && _clickId == ClickId.Unlock)
             {
@@ -94,6 +107,8 @@ namespace Assets.Scripts.Sources
         void OpenSourceUpgradePopUp(Source source)
         {
             HidePopup();
+
+            lastSource = source;
 
             if (source.gameObject.GetInstanceID() == _lastClickedSourceId && _clickId == ClickId.Upgrade)
             {

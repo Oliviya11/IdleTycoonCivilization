@@ -75,7 +75,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
                 Source source = sourcesManager.GetSource(item.product);
                 if (item.type == LevelUpgradeType.DecreaseProductionTime)
                 {
-                    source.upgrade.ProductionTime *= item.multiplier;
+                    source.upgrade.ProductionTime /= item.multiplier;
                 }
                 else if (item.type == LevelUpgradeType.IncreaseProfit)
                 {

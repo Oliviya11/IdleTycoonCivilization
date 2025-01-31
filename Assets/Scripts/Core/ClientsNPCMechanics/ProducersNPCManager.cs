@@ -93,8 +93,13 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             {
                 if (clientNPC.CurrentState == ClientNPC.State.ReadyToOrder)
                 {
-                    clientNPC.CurrentState = ClientNPC.State.WaitingForProducer;
                     ProducerNPC producer = GetSleepingProducer();
+                    if (producer == null)
+                    {
+                        return;
+                    }
+
+                    clientNPC.CurrentState = ClientNPC.State.WaitingForProducer;
                     producer.sleepingParticles.Hide();
                     Vector3 destination = _clientsNPCManager.GetProducerPlace(clientNPC.gameObject.GetInstanceID());
                     producer.CurrentState = ProducerNPC.State.MoveToClientForOrder;
@@ -199,6 +204,9 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     sleepingProducers.Add(producer);
                 }
             }
+
+            if (sleepingProducers.Count == 0) return null;
+
             sleepingProducers.Shuffle();
 
             return sleepingProducers[0];

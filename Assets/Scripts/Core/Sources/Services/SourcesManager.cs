@@ -16,6 +16,9 @@ namespace Assets.Scripts.Core.Sources.Services
 
         public bool IsProductOpened(Product product) => _sources.ContainsKey(product);
 
-        public Source GetSource(Product product) => _sources[product];
+        public Source GetSource(Product product) {
+            if (!_sources.ContainsKey(product)) return null;
+            return _sources[product];
+         }
     }
 }

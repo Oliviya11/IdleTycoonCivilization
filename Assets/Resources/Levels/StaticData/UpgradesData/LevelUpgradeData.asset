@@ -23,7 +23,7 @@ MonoBehaviour:
     additiver: 1
   - type: 4
     product: 0
-    price: 60
+    price: 40
     title: More Workers
     description: +1 Worker
     sprite: {fileID: 21300116, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
@@ -31,7 +31,7 @@ MonoBehaviour:
     additiver: 1
   - type: 2
     product: 1
-    price: 1
+    price: 60
     title: Pumpkin Speed
     description: Make x2 faster
     sprite: {fileID: 21300000, guid: 495872c1c0c57254b853548f3e74605f, type: 3}
@@ -39,7 +39,7 @@ MonoBehaviour:
     additiver: 0
   - type: 1
     product: 1
-    price: 1
+    price: 100
     title: Pumpkin Speed
     description: Make x2 as expensive
     sprite: {fileID: 21300000, guid: 495872c1c0c57254b853548f3e74605f, type: 3}

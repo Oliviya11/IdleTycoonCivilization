@@ -1,6 +1,9 @@
 ﻿using Assets.Scripts.Core.Money.Services;
 using Assets.Scripts.Core.Sources.Services;
+using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Services;
 using Assets.Scripts.Sources;
+using Assets.Scripts.StaticData;
 using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,14 +23,21 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         Dictionary<int, Transform> _producerToPlace = new();
         ISourcesManager _sourcesManager;
         IMoneyManager moneyManager;
+        IGameFactory gameFactory;
+        Vector3 producerSpawnPoint;
+        float producerRotationAngle;
 
-        public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager, IMoneyManager moneyManager)
+        public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager,
+            IMoneyManager moneyManager, IGameFactory gameFactory, Vector3 producerSpawnPoint, float producerRotationAngle)
         {
             _clientsNPCManager = clientsNPCManager;
             _producers = producers;
             _isConstructed = true;
             _sourcesManager = sourcesManager;
             this.moneyManager = moneyManager;
+            this.gameFactory = gameFactory;
+            this.producerSpawnPoint = producerSpawnPoint;
+            this.producerRotationAngle = producerRotationAngle;
         }
 
         void Update()
@@ -38,6 +48,11 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             CheckSleepingWithOrderProducers();
             ProduceProduct();
             GiveProduct();
+        }
+        public void SpawnProducer()
+        {
+            ProducerNPC producerNPC = gameFactory.CreateProducer(producerSpawnPoint, producerRotationAngle).GetComponent<ProducerNPC>();
+            _producers.Add(producerNPC);
         }
 
         void ProcessOrder()

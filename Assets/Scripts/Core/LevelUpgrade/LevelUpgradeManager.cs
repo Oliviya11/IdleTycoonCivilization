@@ -68,7 +68,9 @@ namespace Assets.Scripts.Core.LevelUpgrade
             }
             else if (item.type == LevelUpgradeType.IncreaseProducers)
             {
-                // TODO
+                for (int i = 0; i < item.additiver; ++i) {
+                    producersNPCManager.SpawnProducer();
+                }
             }
             else 
             {
@@ -93,7 +95,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
             if (product != Product.None)
             {
                 Source source = sourcesManager.GetSource(product);
-                if (source.state.ProduceProduct()) return true;
+                if (source != null) return true;
                 return false;
             }
             return true;

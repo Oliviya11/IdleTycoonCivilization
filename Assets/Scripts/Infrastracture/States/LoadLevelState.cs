@@ -56,7 +56,7 @@ namespace Assets.Scripts.Infrastracture.States
             GameObject producer = PlaceProducers(levelStaticData);
 
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
-            ProducersNPCManager producersNPCManager = CreateProducersManager(sourcesManager, producer, clientsNPCManager);
+            ProducersNPCManager producersNPCManager = CreateProducersManager(levelStaticData, sourcesManager, producer, clientsNPCManager);
 
             LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager, 
                 _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager);
@@ -72,12 +72,12 @@ namespace Assets.Scripts.Infrastracture.States
             hud.upgradeButton.onClick.AddListener(levelUpgradeManager.OpenPopup);
         }
 
-        private ProducersNPCManager CreateProducersManager(ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
+        private ProducersNPCManager CreateProducersManager(LevelStaticData levelData, ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
         {
             GameObject producersManager = _services.Single<IGameFactory>().CreateProducersManager();
             ProducersNPCManager producersNPCManager = producersManager.GetComponent<ProducersNPCManager>();
             producersNPCManager.Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, 
-                sourcesManager, _services.Single<IMoneyManager>());
+                sourcesManager, _services.Single<IMoneyManager>(), _services.Single<IGameFactory>(), levelData.producerPosition, levelData.producerRotationAngle);
             return producersNPCManager;
         }
 

@@ -63,6 +63,8 @@ namespace Assets.Scripts.Infrastracture.States
 
             InitHud(levelUpgradeManager);
 
+            sources.levelProgress = new SourcesLevelProgress(hud.progressBar, sources);
+
             _gameStateMachine.Enter<GameLoopState>();
         }
 

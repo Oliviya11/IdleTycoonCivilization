@@ -148,6 +148,7 @@ namespace Assets.Scripts.Sources
                 {
                     u.Upgrade();
                     popup.Init(GetUpgradeSourcePopup(u, true));
+                    sourcesCollection.levelProgress.Update();
                 };
             }
 

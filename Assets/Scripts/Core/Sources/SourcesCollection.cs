@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Core.Sources;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Sources
@@ -7,5 +8,6 @@ namespace Assets.Scripts.Sources
     {
         public List<Source> sources;
         public SourcesCollectionClick click;
+        public SourcesLevelProgress levelProgress;
     }
 }

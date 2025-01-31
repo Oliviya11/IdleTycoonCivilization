@@ -31,9 +31,10 @@ namespace Assets.Scripts.Infrastracture.States
 
         public void Exit()
         {
-            
+            _mainMenu.PlayButton.onClick.RemoveAllListeners();
         }
 
+        //TODO redo main menu instantiation
         private void OnLoaded()
         {
             _mainMenu = GameObject.Instantiate(_mainMenuPrefab);

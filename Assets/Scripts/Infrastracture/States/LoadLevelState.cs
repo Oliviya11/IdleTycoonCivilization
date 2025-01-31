@@ -3,6 +3,8 @@ using Assets.Scripts.Core.Money.Services;
 using Assets.Scripts.Core.Orders;
 using Assets.Scripts.Core.Sources;
 using Assets.Scripts.Core.Sources.Services;
+using Assets.Scripts.GUI;
+using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
@@ -19,6 +21,7 @@ namespace Assets.Scripts.Infrastracture.States
         IGameStateMachine _gameStateMachine;
         SceneLoader _sceneLoader;
         readonly AllServices _services;
+        Hud hud;
 
         public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
         {
@@ -34,7 +37,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         void IExitableState.Exit()
         {
-            
+            //hud.upgradeButton.onClick.RemoveAllListeners();
         }
 
         private void OnLoaded()
@@ -46,16 +49,25 @@ namespace Assets.Scripts.Infrastracture.States
             IMoneyManager moneyManager = new MoneyManager(levelStaticData.initialMoney);
             _services.RegisterSingle<IMoneyManager>(moneyManager);
 
-           CreateSources(levelStaticData);
+            CreateSources(levelStaticData);
 
             OrdersCollection ordersCollection = CreateOrders(1);
             GameObject producer = PlaceProducers(levelStaticData);
 
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
             CreateProducersManager(sourcesManager, producer, clientsNPCManager);
+            InitHud();
 
-            _services.Single<IGameFactory>().CreateHud();
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private void InitHud()
+        {
+            hud = _services.Single<IGameFactory>().CreateHud().GetComponent<Hud>();
+            hud.upgradeButton.onClick.AddListener(delegate ()
+            {
+                LevelUpgradePopup.OpenLevelPopUp(new LevelUpgradePopup.Params(), _services.Single<IGameFactory>(), Vector3.zero, delegate (LevelUpgradePopup p) { });
+            });
         }
 
         private void CreateProducersManager(ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Sources;
+﻿using Assets.Scripts.GUI;
+using Assets.Scripts.Sources;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -8,6 +9,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
     public class ClientNPC : NPC
     {
         public Product Product { get; set; }
+        public ProductVisualizer productVisualizer;
 
         public enum State
         {
@@ -21,5 +23,11 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         }
 
         public State CurrentState { get; set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            productVisualizer.Hide();
+        }
     }
 }

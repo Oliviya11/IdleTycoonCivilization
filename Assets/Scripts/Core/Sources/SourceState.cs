@@ -182,7 +182,12 @@ namespace Assets.Scripts.Sources
 
         void SetIcon()
         {
-            productIcon.sprite = AllServices.Container.Single<IAssetProvider>().LoadProductIcon(Product.ToString());
+            productIcon.sprite = GetIcon();
+        }
+
+        public Sprite GetIcon()
+        {
+            return AllServices.Container.Single<IAssetProvider>().LoadProductIcon(Product.ToString());
         }
     }
 }

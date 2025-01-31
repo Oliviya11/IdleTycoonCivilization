@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Core.Orders;
 using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Sources;
 using Assets.Scripts.Utils;
 using System;
 using System.Collections.Generic;
@@ -83,15 +84,18 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             return _clientToPlace[clientId].producerPlace.position;
         }
 
-        public void WaitForOrder(ClientNPC clientNPC)
+        public void WaitForOrder(ClientNPC clientNPC, Sprite sprite)
         {
             clientNPC.CurrentState = ClientNPC.State.WaitingForOrder;
+            clientNPC.productVisualizer.SetSprite(sprite);
+            clientNPC.productVisualizer.Show();
         }
 
         public void Leave(ClientNPC clientNPC)
         {
             clientNPC.CurrentState = ClientNPC.State.Leave;
             clientNPC.Move(ChooseRandomStartPosition());
+            clientNPC.productVisualizer.Hide();
         }
 
         void Despawn()

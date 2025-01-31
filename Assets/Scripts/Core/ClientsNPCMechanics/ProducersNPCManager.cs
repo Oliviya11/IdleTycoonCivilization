@@ -52,9 +52,10 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     ClientNPC client = _producersToClients[id];
                     _producersToProduct[id] = client.Product;
                     client.CurrentState = ClientNPC.State.ProcessOrder;
+                    Source source = _sourcesManager.GetSource(client.Product);
                     producerNPC.timer.Callback = delegate() {
                         MoveToSource(producerNPC);
-                        _clientsNPCManager.WaitForOrder(client);
+                        _clientsNPCManager.WaitForOrder(client, source.state.GetIcon());
                         producerNPC.timer.Hide();
                     };
                     producerNPC.timer.Duration = OrderProcessingTime;

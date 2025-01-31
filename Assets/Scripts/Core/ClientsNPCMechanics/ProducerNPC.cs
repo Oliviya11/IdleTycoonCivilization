@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Particles;
+﻿using Assets.Scripts.GUI;
+using Assets.Scripts.Particles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         public Timer timer;
         public ParticleController sleepingParticles;
         public Transform productPlace;
+        public ProfitVisualizer profitVisualizer;
 
         public enum State {
             None,
@@ -34,7 +36,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             base.Awake();
             CurrentState = State.Sleep;
             timer.Hide();
-            //sleepingParticles.Hide();
+            profitVisualizer.Hide();
         }
     }
 }

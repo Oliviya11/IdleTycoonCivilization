@@ -128,6 +128,9 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             ClientNPC clientNPC = _producersToClients[producerNPC.gameObject.GetInstanceID()];
             Vector3 place = _clientsNPCManager.GetProducerPlace(clientNPC.gameObject.GetInstanceID());
             producerNPC.Move(place);
+            Source source = GetSource(producerNPC.gameObject.GetInstanceID());
+            producerNPC.profitVisualizer.SourceUpgrade = source.upgrade;
+            producerNPC.profitVisualizer.Show();
         }
 
         void GiveProduct()
@@ -142,10 +145,10 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     ClientNPC clientNPC = _producersToClients[id];
                     _clientsNPCManager.Leave(clientNPC);
                     producerNPC.CurrentState = ProducerNPC.State.Sleep;
+                    producerNPC.profitVisualizer.Hide();
+                    producerNPC.profitVisualizer.SourceUpgrade = null;
                     producerNPC.sleepingParticles.Show();
-
-                    Product product = _producersToProduct[id];
-                    Source source = _sourcesManager.GetSource(product);
+                    Source source = GetSource(id);
 
                     moneyManager.AddMoney(source.upgrade.CurrentProfit);
 
@@ -158,10 +161,17 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             }
         }
 
+        private Source GetSource(int id)
+        {
+            Product product = _producersToProduct[id];
+            Source source = _sourcesManager.GetSource(product);
+            return source;
+        }
+
         void CreateProduct(ProducerNPC producer)
         {
-            Product product = _producersToProduct[producer.gameObject.GetInstanceID()];
-            Source source = _sourcesManager.GetSource(product);
+            int id = producer.gameObject.GetInstanceID();
+            Source source = GetSource(id);
             GameObject go = source.state.ProduceProduct(producer.productPlace.position);
             go.transform.localScale = new Vector3(0.5f, 0.3f, 0.5f);
             go.transform.SetParent(producer.productPlace);

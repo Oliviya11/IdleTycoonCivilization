@@ -340,6 +340,7 @@ GameObject:
   - component: {fileID: 519449896676701969}
   - component: {fileID: 8498963884011503886}
   - component: {fileID: 3269577955551206102}
+  - component: {fileID: 69849089233643246}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -438,6 +439,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 2837418748259512443}
+--- !u!208 &69849089233643246
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801488292827270310}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1546400741737284814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1118,7 @@ GameObject:
   - component: {fileID: 7774079377597131626}
   - component: {fileID: 6835546229900258645}
   - component: {fileID: 6775541432251157588}
+  - component: {fileID: 1555082367282046859}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1199,6 +1217,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 2837418748259512443}
+--- !u!208 &1555082367282046859
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5596294679024078320}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5882726874713327412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1276,7 @@ GameObject:
   - component: {fileID: 2876284436085299973}
   - component: {fileID: 2085256878139440610}
   - component: {fileID: 7891083305726819763}
+  - component: {fileID: 4457463745225517159}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -1340,6 +1375,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 2837418748259512443}
+--- !u!208 &4457463745225517159
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6240556030307023823}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7024386028891382988
 GameObject:
   m_ObjectHideFlags: 0

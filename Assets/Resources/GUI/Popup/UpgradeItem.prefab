@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4736719932579380117}
   - component: {fileID: 8468223350637203813}
   - component: {fileID: 2931435299705047744}
+  - component: {fileID: 1595492098027058333}
   m_Layer: 5
   m_Name: UpgradeItem
   m_TagString: Untagged
@@ -94,6 +95,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 1
   m_AspectRatio: 4.648103
+--- !u!114 &1595492098027058333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868406619770720108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e42b94fd7e1ad7478acb5ae5795577a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 8900199851498192489}
+  description: {fileID: 2399032030907302070}
+  title: {fileID: 7095898969758925160}
+  buttonText: {fileID: 3052192826451335683}
+  button: {fileID: 8593856770394303804}
+  image: {fileID: 2582449209041714367}
 --- !u!1 &5370602090673692439
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,12 +206,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.6
+  m_fontSize: 16.55
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 12
+  m_fontSizeMax: 26
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -336,7 +355,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.95
+  m_fontSize: 15.75
   m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -575,12 +594,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 19.2
   m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 12
+  m_fontSizeMax: 26
   m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Core.ClientsNPCMechanics;
+using Assets.Scripts.Core.LevelUpgrade;
 using Assets.Scripts.Core.Money.Services;
 using Assets.Scripts.Core.Orders;
 using Assets.Scripts.Core.Sources;
@@ -55,26 +56,29 @@ namespace Assets.Scripts.Infrastracture.States
             GameObject producer = PlaceProducers(levelStaticData);
 
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
-            CreateProducersManager(sourcesManager, producer, clientsNPCManager);
-            InitHud();
+            ProducersNPCManager producersNPCManager = CreateProducersManager(sourcesManager, producer, clientsNPCManager);
+
+            LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager, 
+                _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager);
+
+            InitHud(levelUpgradeManager);
 
             _gameStateMachine.Enter<GameLoopState>();
         }
 
-        private void InitHud()
+        private void InitHud(LevelUpgradeManager levelUpgradeManager)
         {
             hud = _services.Single<IGameFactory>().CreateHud().GetComponent<Hud>();
-            hud.upgradeButton.onClick.AddListener(delegate ()
-            {
-                LevelUpgradePopup.OpenLevelPopUp(new LevelUpgradePopup.Params(), _services.Single<IGameFactory>(), Vector3.zero, delegate (LevelUpgradePopup p) { });
-            });
+            hud.upgradeButton.onClick.AddListener(levelUpgradeManager.OpenPopup);
         }
 
-        private void CreateProducersManager(ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
+        private ProducersNPCManager CreateProducersManager(ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
         {
             GameObject producersManager = _services.Single<IGameFactory>().CreateProducersManager();
-            producersManager.GetComponent<ProducersNPCManager>().Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, 
+            ProducersNPCManager producersNPCManager = producersManager.GetComponent<ProducersNPCManager>();
+            producersNPCManager.Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, 
                 sourcesManager, _services.Single<IMoneyManager>());
+            return producersNPCManager;
         }
 
         private ClientsNPCManager CreateSourcesManager(OrdersCollection ordersCollection)

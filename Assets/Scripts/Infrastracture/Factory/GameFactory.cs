@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Core.Orders;
+using Assets.Scripts.GUI;
 using Assets.Scripts.Infrastracture.AssetManagement;
 using Assets.Scripts.Sources;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastracture.Factory
@@ -46,6 +48,11 @@ namespace Assets.Scripts.Infrastracture.Factory
         public GameObject CreateHud()
         {
             return _assetProvider.Instantiate(AssetPath.HudPath);
+        }
+
+        public LevelUpgradeItem CreateLevelUpgradeItem(Transform parent)
+        {
+            return _assetProvider.Instantiate(AssetPath.LevelUpgradeItemPath).GetComponent<LevelUpgradeItem>();
         }
 
         public GameObject CreatePumpkin(Vector3 at)

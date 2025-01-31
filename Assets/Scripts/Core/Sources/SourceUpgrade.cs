@@ -11,7 +11,7 @@ namespace Assets.Scripts.Core.Sources
     {
         const float STEP = 0.1f;
         public Product Product {  get; private set; }
-        public float ProductionTime { get; private set; }
+        public float ProductionTime { get; set; }
         public List<Upgrade> Upgrades { get; private set; }
 
 
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Core.Sources
         public string CurrentPrice { get => currentPrice; private set => currentPrice = value; }
 
         string currentProfit;
-        public string CurrentProfit { get => currentProfit; private set => currentProfit = value; }
+        public string CurrentProfit { get => currentProfit; set => currentProfit = value; }
 
         public int CurrentUpgrade { get; private set; }
 

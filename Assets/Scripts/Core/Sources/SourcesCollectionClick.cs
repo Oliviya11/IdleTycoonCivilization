@@ -141,9 +141,7 @@ namespace Assets.Scripts.Sources
 
         bool IsUpdateAvailable(SourceUpgrade upgradeSource)
         {
-            BigNumber number = new BigNumber(_services.Single<IMoneyManager>().Money.ToString());
-            BigNumber currentNumber = new BigNumber(upgradeSource.CurrentPrice);
-            return number >= currentNumber;
+            return _services.Single<IMoneyManager>().IsEnoughMoney(upgradeSource.CurrentPrice);
         }
 
         void OpenSource(Source source)

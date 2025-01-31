@@ -200,6 +200,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                 }
             }
             sleepingProducers.Shuffle();
+
             return sleepingProducers[0];
         }
     }

@@ -4,7 +4,7 @@
     {
         None = 0,
         IncreaseProfit = 1,
-        IncreaseProductionTime = 2,
+        DecreaseProductionTime = 2,
         IncreaseClients = 3,
         IncreaseProducers = 4,
     }

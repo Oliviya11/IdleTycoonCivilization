@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3384e05a960c6d24981f7362280671e4, type: 3}
+  m_Name: LevelUpgradeData
+  m_EditorClassIdentifier: 
+  items:
+  - type: 3
+    product: 0
+    price: 10
+    title: More Customers
+    description: +1 Customer
+    sprite: {fileID: 21300116, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+    multiplier: 0
+    additiver: 1
+  - type: 4
+    product: 0
+    price: 60
+    title: More Workers
+    description: +1 Worker
+    sprite: {fileID: 21300116, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+    multiplier: 0
+    additiver: 1
+  - type: 2
+    product: 1
+    price: 200
+    title: Pumpkin Speed
+    description: Make x2 faster
+    sprite: {fileID: 21300000, guid: 495872c1c0c57254b853548f3e74605f, type: 3}
+    multiplier: 2
+    additiver: 0

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Core.Orders;
+using Assets.Scripts.GUI;
 using Assets.Scripts.Services;
 using Assets.Scripts.Sources;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Assets.Scripts.Infrastracture.Factory
         GameObject CreateProducersManager();
 
         GameObject CreateHud();
+
+        LevelUpgradeItem CreateLevelUpgradeItem(Transform parent);
 
         GameObject CreatePumpkin(Vector3 at);
 

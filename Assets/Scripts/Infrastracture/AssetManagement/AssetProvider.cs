@@ -30,6 +30,12 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
             return gameObject;
         }
 
+        public GameObject Instantiate(string path, Transform parent)
+        {
+            var prefab = Resources.Load<GameObject>(path);
+            return Object.Instantiate(prefab, parent);
+        }
+
         public Sprite LoadProductIcon(string name)
         {
             return Resources.Load<Sprite>($"{AssetPath.ProductIcon}{name}");

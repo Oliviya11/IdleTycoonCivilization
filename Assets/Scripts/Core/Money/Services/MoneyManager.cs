@@ -24,5 +24,12 @@ namespace Assets.Scripts.Core.Money.Services
             _money = _money - new BigNumber(money);
             OnMoneyChanged?.Invoke(_money.ToString());
         }
+
+        public bool IsEnoughMoney(string money)
+        {
+            BigNumber number = new BigNumber(Money);
+            BigNumber currentNumber = new BigNumber(money);
+            return number >= currentNumber;
+        }
     }
 }

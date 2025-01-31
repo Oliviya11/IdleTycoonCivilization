@@ -16,5 +16,6 @@ namespace Assets.Scripts.StaticData
         public List<SourceStaticData> sourcesData;
         public Vector3 producerPosition;
         public float producerRotationAngle;
+        public LevelUpgradeStaticData upgradeData;
     }
 }

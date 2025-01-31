@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Utils;
 using System;
 using TMPro;
 using UnityEngine;
@@ -48,16 +49,7 @@ namespace Assets.Scripts.GUI
             if (@params.IsUpdateAvailable == null) return;
 
             unlockButton.enabled = @params.IsUpdateAvailable();
-            if (unlockButton.enabled)
-            {
-                unlockButton.image.color = Colors.enabledButtonColor;
-                price.color = Colors.enabledButtonTextColor;
-            }
-            else
-            {
-                unlockButton.image.color = Colors.disabledButtonColor;
-                price.color = Colors.disabledButtonTextColor;
-            }
+            unlockButton.UpdateOnState(price);
         }
 
         public void Init(Params p)

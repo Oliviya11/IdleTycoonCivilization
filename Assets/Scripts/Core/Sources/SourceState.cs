@@ -42,7 +42,7 @@ namespace Assets.Scripts.Sources
 
         private void Awake()
         {
-            _maxPlacesCount = 2;
+            _maxPlacesCount = 1;
 
             foreach (var element in elements)
             {
@@ -189,5 +189,7 @@ namespace Assets.Scripts.Sources
         {
             return AllServices.Container.Single<IAssetProvider>().LoadProductIcon(Product.ToString());
         }
+
+        public bool ProduceProduct() => currentState == State.ProductPlace1 || currentState == State.ProductPlace2;
     }
 }

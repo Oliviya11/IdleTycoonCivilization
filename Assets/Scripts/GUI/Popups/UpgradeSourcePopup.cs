@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using Colors = Assets.Scripts.GUI.Clolors;
+using Assets.Scripts.Utils;
 
 namespace Assets.Scripts.GUI.Popups
 {
@@ -63,17 +64,7 @@ namespace Assets.Scripts.GUI.Popups
             if (@params.IsUpdateAvailable == null) return;
 
             upgradeButton.enabled = @params.IsUpdateAvailable();
-
-            if (upgradeButton.enabled)
-            {
-                upgradeButton.image.color = Colors.enabledButtonColor;
-                buttonText.color = Colors.enabledButtonTextColor;
-            }
-            else
-            {
-                upgradeButton.image.color = Colors.disabledButtonColor;
-                buttonText.color = Colors.disabledButtonTextColor;
-            }
+            upgradeButton.UpdateOnState(buttonText);
         }
 
         public override void OnDestroy()

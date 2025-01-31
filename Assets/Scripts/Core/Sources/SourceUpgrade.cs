@@ -28,9 +28,10 @@ namespace Assets.Scripts.Core.Sources
         public int MaxUpgrades => Upgrades.Count;
         float priceTime;
         float profitTime;
+        SourceState sourceState;
         IMoneyManager moneyManager;
 
-        public SourceUpgrade(float profitTime, float priceTime, float productionTime, List<Upgrade> upgrades,
+        public SourceUpgrade(SourceState sourceState, float profitTime, float priceTime, float productionTime, List<Upgrade> upgrades,
             int currentUpgrade, int currentLevel, Product product, IMoneyManager moneyManager)
         {
             ProductionTime = productionTime;
@@ -41,6 +42,7 @@ namespace Assets.Scripts.Core.Sources
             this.priceTime = priceTime;
             this.profitTime = profitTime;
             this.moneyManager = moneyManager;
+            this.sourceState = sourceState;
         }
 
         public void UpgradeTill(int upgrade, int level)
@@ -80,9 +82,10 @@ namespace Assets.Scripts.Core.Sources
             if (CurrentUpgrade >= Upgrades.Count) return;
 
             ++CurrentLevel;
-            if (CurrentLevel > GetActualLevel(CurrentUpgrade))
+            if (CurrentLevel >= GetActualLevel(CurrentUpgrade))
             {
                 ++CurrentUpgrade;
+                sourceState.SetProductPlace(CurrentUpgrade);
             }
 
             if (CurrentUpgrade >= Upgrades.Count) return;

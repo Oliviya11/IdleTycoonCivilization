@@ -90,7 +90,7 @@ namespace Assets.Scripts.Infrastracture.States
                 sourceState.Construct(_services);
                 sourceState.EnableAccordingToState(sourceStaticData.initialState);
                 sourceState.Product = sourceStaticData.product;
-                source.upgrade = new SourceUpgrade(0, 0,
+                source.upgrade = new SourceUpgrade(sourceState, 0, 0,
                     sourceStaticData.productionTime, sourceStaticData.upgrades, 0, 0, sourceStaticData.product,
                     _services.Single<IMoneyManager>());
                 source.upgrade.UpgradeTill(0, 0);

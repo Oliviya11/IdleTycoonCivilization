@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   product: 1
   initialState: 1
-  initialPrice: 5
-  initialProfit: 7
-  productionTime: 0.5
+  productionTime: 1
   upgrades:
   - priceCurve:
       serializedVersion: 2
@@ -66,7 +64,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    levelsToNextUpgrade: 10
+    levelsToNextUpgrade: 9
   - priceCurve:
       serializedVersion: 2
       m_Curve:
@@ -115,4 +113,4 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    levelsToNextUpgrade: 10
+    levelsToNextUpgrade: 9

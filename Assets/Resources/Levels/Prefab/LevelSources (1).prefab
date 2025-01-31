@@ -78,6 +78,18 @@ PrefabInstance:
       propertyPath: initialState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 227139432619281287, guid: 581240df780bca24da806c3ef64bb461, type: 3}
+      propertyPath: elements.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 227139432619281287, guid: 581240df780bca24da806c3ef64bb461, type: 3}
+      propertyPath: productPlaces.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2837418748259512443, guid: 581240df780bca24da806c3ef64bb461, type: 3}
+      propertyPath: sourceElementClicks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4303432964257167251, guid: 581240df780bca24da806c3ef64bb461, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.037
@@ -85,6 +97,10 @@ PrefabInstance:
     - target: {fileID: 4303432964257167251, guid: 581240df780bca24da806c3ef64bb461, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.504
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753351091042712165, guid: 581240df780bca24da806c3ef64bb461, type: 3}
+      propertyPath: places.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7040651887549620770, guid: 581240df780bca24da806c3ef64bb461, type: 3}
       propertyPath: m_LocalPosition.x

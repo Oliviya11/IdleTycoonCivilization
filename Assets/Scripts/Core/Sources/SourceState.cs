@@ -37,11 +37,14 @@ namespace Assets.Scripts.Sources
             BlankWithArrow = 1,
             ProductPlace1 = 2,
             ProductPlace2 = 3,
+            ProductPlace3 = 4,
         }
 
         private void Awake()
         {
-            foreach(var element in elements)
+            _maxPlacesCount = 2;
+
+            foreach (var element in elements)
             {
                 element.SetActive(false);
             }
@@ -103,6 +106,11 @@ namespace Assets.Scripts.Sources
                 {
                     SetProduct2State();
                 }
+                else if (currentState == State.ProductPlace3)
+                {
+                    SetProduct2State();
+                    SetProduct3State();
+                }
             }
         }
 
@@ -115,12 +123,35 @@ namespace Assets.Scripts.Sources
             SetIcon();
             HideUpgrade();
             ++_maxPlacesCount;
+            currentState = State.ProductPlace1;
         }
 
         public void SetProduct2State()
         {
             ProduceProductPlace(1);
             ++_maxPlacesCount;
+            currentState = State.ProductPlace2;
+        }
+
+        public void SetProduct3State()
+        {
+            ProduceProductPlace(2);
+            ++_maxPlacesCount;
+            currentState = State.ProductPlace3;
+        }
+
+        public void SetProductPlace(int upgrade)
+        {
+            if (upgrade >= productPlaces.Count) return;
+
+            if (upgrade == 1)
+            {
+                SetProduct2State();
+            }
+            else if (upgrade == 2)
+            {
+                SetProduct3State();
+            }
         }
 
         void ProduceProductPlace(int index)

@@ -22,17 +22,17 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0.69897
-        inSlope: 0.80103
-        outSlope: 0.80103
+        inSlope: 1.3010299
+        outSlope: 1.3010299
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1.5
-        inSlope: 0.80103
-        outSlope: 0.80103
+        value: 2
+        inSlope: 1.3010299
+        outSlope: 1.3010299
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -46,17 +46,17 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0.8
-        inSlope: 0.19999999
-        outSlope: 0.19999999
+        inSlope: 0.7
+        outSlope: 0.7
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 0.19999999
-        outSlope: 0.19999999
+        value: 1.5
+        inSlope: 0.7
+        outSlope: 0.7
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -66,6 +66,30 @@ MonoBehaviour:
       m_RotationOrder: 4
     levelsToNextUpgrade: 9
   - priceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 2
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2
+        value: 4
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    profitCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
@@ -80,30 +104,6 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 2
         value: 2.5
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    profitCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 2
-        value: 2
         inSlope: 1
         outSlope: 1
         tangentMode: 34

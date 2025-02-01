@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Core
@@ -166,8 +167,12 @@ namespace Assets.Scripts.Core
 
                 int leftover = Exponent % 3;
                 double value = Value * Math.Pow(10, leftover);
-                string result = $"{value:F2}{suffixes[index]}";
-                result = result.Replace(',', '.');
+                //string result = $"{value:F2}{suffixes[index]}";
+                string str = value.ToString("F10");
+                int dotIndex = str.IndexOf(',');
+                if (dotIndex < 0) dotIndex = str.IndexOf('.');
+                string result = dotIndex == -1 ? str : str.Substring(0, dotIndex + 3);
+                result = result.Replace(',', '.') + suffixes[index];
 
                 return result;
             }

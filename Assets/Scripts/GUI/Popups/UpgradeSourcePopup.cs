@@ -20,6 +20,7 @@ namespace Assets.Scripts.GUI.Popups
         [SerializeField] TextMeshProUGUI level;
         [SerializeField] TextMeshProUGUI buttonText;
         [SerializeField] TextMeshProUGUI titleText;
+        [SerializeField] GameObject done;
 
         const string popupName = "UpgradeSourcePopup";
         Params @params;
@@ -82,11 +83,37 @@ namespace Assets.Scripts.GUI.Popups
         {
             @params = p;
 
-            upgradeButton.onClick.AddListener(delegate ()
+            if (p.maxUpgrades == p.currentUpgrades)
             {
-                p.OnUpgradeClick.Invoke(this);
-            });
+                done.SetActive(true);
+                upgradeButton.gameObject.SetActive(false);
+                upgradeBar.gameObject.SetActive(false);
+                UpgradeStars(p);
+            }
+            else
+            {
+                done.SetActive(false);
+                upgradeButton.gameObject.SetActive(true);
+                upgradeBar.gameObject.SetActive(true);
 
+                upgradeButton.onClick.AddListener(delegate ()
+                {
+                    p.OnUpgradeClick.Invoke(this);
+                });
+
+                UpgradeStars(p);
+
+                upgradeBar.SetValue(p.currentUpgradeLevel, p.maxUpgradeLevel);
+                profit.text = p.profit;
+                duration.text = $"{p.duration.ToString()} s";
+                level.text = $"Level {(p.currentLevel + 1).ToString()}";
+                buttonText.text = p.price;
+                titleText.text = p.title;
+            }
+        }
+
+        private void UpgradeStars(Params p)
+        {
             for (int i = 0; i < stars.Count; ++i)
             {
                 stars[i].gameObject.SetActive(i < p.maxUpgrades);
@@ -99,13 +126,6 @@ namespace Assets.Scripts.GUI.Popups
                     stars[i].ShowEmpty();
                 }
             }
-
-            upgradeBar.SetValue(p.currentUpgradeLevel, p.maxUpgradeLevel);
-            profit.text = p.profit;
-            duration.text = $"{p.duration.ToString()} s";
-            level.text = $"Level {(p.currentLevel + 1).ToString()}";
-            buttonText.text = p.price;
-            titleText.text = p.title;
         }
 
         protected override string GetPrefabName()

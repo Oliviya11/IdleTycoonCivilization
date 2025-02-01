@@ -97,7 +97,7 @@ namespace Assets.Scripts.Sources
                 OpenSource(source);
                 source.upgrade.SubtractMoney();
             }, source.upgrade.CurrentPrice, isUpdateAvailable);
-            UnlockPopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
+            UnlockPopup.OpenPopp(@params, _services.Single<IGameFactory>(), position,
             delegate (UnlockPopup p)
             {
                 _lastPopup = p;
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Sources
 
             UpgradeSourcePopup.Params @params = GetUpgradeSourcePopup(u, false);
 
-            UpgradeSourcePopup.OpenLevelPopUp(@params, _services.Single<IGameFactory>(), position,
+            UpgradeSourcePopup.OpenPopup(@params, _services.Single<IGameFactory>(), position,
             delegate (UpgradeSourcePopup p)
             {
                 _lastPopup = p;

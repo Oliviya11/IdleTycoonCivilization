@@ -70,7 +70,7 @@ namespace Assets.Scripts.GUI
             return popupName;
         }
 
-        public static void OpenLevelPopUp(IParams p, IGameFactory gameFactory, Vector3 at, Action<UnlockPopup> onPopupCreated)
+        public static void OpenPopp(IParams p, IGameFactory gameFactory, Vector3 at, Action<UnlockPopup> onPopupCreated)
         {
             Popup.LoadPopUp(gameFactory, UnlockPopup.popupName, delegate (Popup popUp) {
                 UnlockPopup unlockPopup = popUp as UnlockPopup;

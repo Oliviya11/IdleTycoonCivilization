@@ -135,7 +135,7 @@ namespace Assets.Scripts.GUI.Popups
             return popupName;
         }
 
-        public static void OpenLevelPopUp(IParams p, IGameFactory gameFactory, Vector3 at, Action<UpgradeSourcePopup> onPopupCreated)
+        public static void OpenPopup(IParams p, IGameFactory gameFactory, Vector3 at, Action<UpgradeSourcePopup> onPopupCreated)
         {
             Popup.LoadPopUp(gameFactory, UpgradeSourcePopup.popupName, delegate (Popup popUp) {
                 UpgradeSourcePopup upgradePopup = popUp as UpgradeSourcePopup;

@@ -10,6 +10,7 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
         public GameObject Instantiate(string path, Transform parent);
 
         public GameObject Instantiate(string path, Vector3 at);
+        public GameObject Instantiate(string path, Vector3 at, Quaternion rotation);
 
         public GameObject Instantiate(string path, Vector3 at, float angle);
 

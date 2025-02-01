@@ -160,10 +160,13 @@ namespace Assets.Scripts.Core
             else
             {
                 int index = Exponent / 3;
+               
                 if (index >= suffixes.Count)
                     return $"{Value:F2}e{Exponent}";
 
-                string result = $"{Value:F2}{suffixes[index]}";
+                int leftover = Exponent % 3;
+                double value = Value * Math.Pow(10, leftover);
+                string result = $"{value:F2}{suffixes[index]}";
                 result = result.Replace(',', '.');
 
                 return result;

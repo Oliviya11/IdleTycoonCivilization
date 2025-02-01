@@ -26,6 +26,10 @@ namespace Assets.Scripts.Infrastracture.Factory
 
         GameObject CreatePumpkin(Vector3 at);
 
+        GameObject CreateChicken(Vector3 at, Quaternion rotation);
+
+        GameObject CreateEgg(Vector3 at);
+
         GameObject CreatePopUp(string name);
 
         GameObject CreatePopUp(string name, Vector3 at);

@@ -36,6 +36,12 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
             return Object.Instantiate(prefab, parent);
         }
 
+        public GameObject Instantiate(string path, Vector3 at, Quaternion rotation)
+        {
+            var prefab = Resources.Load<GameObject>(path);
+            return Object.Instantiate(prefab, at, rotation);
+        }
+
         public Sprite LoadProductIcon(string name)
         {
             return Resources.Load<Sprite>($"{AssetPath.ProductIcon}{name}");

@@ -16,6 +16,8 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
         public const string ClientsManagerPath = "NPC/Clients/ClientsNPCManager";
         public const string ProducersManagerPath = "NPC/Clients/ProducersNPCManager";
         public const string PumpkinPath = "Easy Primitive People/Prefab/Pumpkin";
+        public const string ChickenPath = "Easy Primitive Animals/FarmEdition/Prefabs/Animals/Chicken";
+        public const string EggPath = "Easy Primitive Animals/FarmEdition/Prefabs/Props/Egg";
         public const string PopUpPath = "GUI/Popup/";
         public const string ProductIcon = "Product/Icon/";
         public const string LevelUpgradeItemPath = "GUI/Popup/UpgradeItem";

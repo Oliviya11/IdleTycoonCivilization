@@ -14,15 +14,29 @@ using Assets.Scripts.Sources;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
 using UnityEngine;
+using static Assets.Scripts.Infrastracture.States.LoadLevelState;
 
 namespace Assets.Scripts.Infrastracture.States
 {
-    public class LoadLevelState : IPayloadedState<string>
+    public class LoadLevelState : IPayloadedState<Params>
     {
         IGameStateMachine _gameStateMachine;
         SceneLoader _sceneLoader;
         readonly AllServices _services;
         Hud hud;
+        Params @params;
+
+        public class Params
+        {
+            public string sceneName;
+            public int level;
+
+            public Params(string sceneName, int level)
+            {
+                this.sceneName = sceneName;
+                this.level = level;
+            }
+        }
 
         public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
         {
@@ -31,9 +45,10 @@ namespace Assets.Scripts.Infrastracture.States
             _services = services;
         }
 
-        void IPayloadedState<string>.Enter(string sceneName)
+        void IPayloadedState<Params>.Enter(Params p)
         {
-            _sceneLoader.Load(sceneName, OnLoaded);
+            @params = p;
+            _sceneLoader.Load(p.sceneName, OnLoaded);
         }
 
         void IExitableState.Exit()
@@ -45,14 +60,14 @@ namespace Assets.Scripts.Infrastracture.States
         {
             ISourcesManager sourcesManager = CreateSourcesManager();
 
-            LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(1);
+            LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(@params.level);
 
             IMoneyManager moneyManager = new MoneyManager(levelStaticData.initialMoney);
             _services.RegisterSingle<IMoneyManager>(moneyManager);
 
             SourcesCollection sources = CreateSources(levelStaticData);
 
-            OrdersCollection ordersCollection = CreateOrders(1);
+            OrdersCollection ordersCollection = CreateOrders(@params.level);
             GameObject producer = PlaceProducers(levelStaticData);
 
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
@@ -98,16 +113,16 @@ namespace Assets.Scripts.Infrastracture.States
 
         private SourcesCollection CreateSources(LevelStaticData levelStaticData)
         {
-            SourcesCollection sources = CreateSources(1, levelStaticData);
+            SourcesCollection sources = CreateSources(@params.level, levelStaticData);
             sources.click.Construct(_services);
 
             for (int i = 0; i < levelStaticData.sourcesData.Count; ++i) {
                 SourceStaticData sourceStaticData = levelStaticData.sourcesData[i];
                 Source source = sources.sources[i];
                 SourceState sourceState = source.state;
+                sourceState.Product = sourceStaticData.product;
                 sourceState.Construct(_services);
                 sourceState.EnableAccordingToState(sourceStaticData.initialState);
-                sourceState.Product = sourceStaticData.product;
                 source.upgrade = new SourceUpgrade(sourceState, 0, 0,
                     sourceStaticData.productionTime, sourceStaticData.upgrades, 0, 0, sourceStaticData.product,
                     _services.Single<IMoneyManager>());

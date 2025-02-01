@@ -17,12 +17,12 @@ namespace Assets.Scripts.Infrastracture.Factory
 
         public SourcesCollection CreateSourcesCollection(int level)
         {
-            return _assetProvider.Instantiate($"{AssetPath.SourcesCollectionPath} ({level})").GetComponent<SourcesCollection>();
+            return _assetProvider.Instantiate($"{AssetPath.SourcesCollectionPath} {level}").GetComponent<SourcesCollection>();
         }
        
         public OrdersCollection CreateOrdersCollection(int level)
         {
-            return _assetProvider.Instantiate($"{AssetPath.OrdersCollectionPath} ({level})").GetComponent<OrdersCollection>();
+            return _assetProvider.Instantiate($"{AssetPath.OrdersCollectionPath} {level}").GetComponent<OrdersCollection>();
         }
 
         public GameObject CreateProducer(Vector3 at)
@@ -60,6 +60,11 @@ namespace Assets.Scripts.Infrastracture.Factory
             return _assetProvider.Instantiate(AssetPath.PumpkinPath, at);
         }
 
+        public GameObject CreateChicken(Vector3 at, Quaternion rotation)
+        {
+            return _assetProvider.Instantiate(AssetPath.ChickenPath, at, rotation);
+        }
+
         public GameObject CreateProducer(Vector3 at, float angle)
         {
             return _assetProvider.Instantiate(AssetPath.ProducerPath, at, angle);
@@ -73,6 +78,11 @@ namespace Assets.Scripts.Infrastracture.Factory
         public GameObject CreatePopUp(string name, Vector3 at)
         {
             return _assetProvider.Instantiate($"{AssetPath.PopUpPath}{name}", at);
+        }
+
+        public GameObject CreateEgg(Vector3 at)
+        {
+            return _assetProvider.Instantiate(AssetPath.EggPath, at);
         }
     }
 }

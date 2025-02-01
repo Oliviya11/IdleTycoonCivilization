@@ -205,8 +205,17 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         {
             int id = producer.gameObject.GetInstanceID();
             Source source = GetSource(id);
-            GameObject go = source.state.ProduceProduct(producer.productPlace.position);
-            go.transform.localScale = new Vector3(0.5f, 0.3f, 0.5f);
+
+            Product product = _producersToProduct[producer.gameObject.GetInstanceID()];
+
+            GameObject go = null;
+            if (product == Product.Pumpkin) {
+                go = source.state.ProduceProduct(producer.productPlace.position, new Vector3(0.5f, 0.3f, 0.5f));
+            }
+            else if (product == Product.Egg)
+            {
+                go = source.state.ProduceProduct(producer.productPlace.position, new Vector3(0.44f, 0.6f, 0.44f));
+            }
             go.transform.SetParent(producer.productPlace);
         }
 

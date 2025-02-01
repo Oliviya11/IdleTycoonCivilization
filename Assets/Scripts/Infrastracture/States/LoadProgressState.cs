@@ -11,6 +11,7 @@ namespace Assets.Scripts.Infrastracture.States
 {
     public class LoadProgressState : IState
     {
+        const string LEVEL_SCENE_NAME = "Main";
         readonly IGameStateMachine _gameStateMachine;
         readonly AllServices _services;
 
@@ -22,7 +23,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         void IState.Enter()
         {
-            _gameStateMachine.Enter<LoadLevelState, string>("Main");
+            _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, 2));
         }
 
         void IExitableState.Exit()

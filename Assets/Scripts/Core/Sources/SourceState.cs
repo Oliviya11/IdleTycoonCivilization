@@ -160,13 +160,18 @@ namespace Assets.Scripts.Sources
             ProduceProductPlace(productPlaces[index].position);
         }
 
-        public GameObject ProduceProduct(Vector3 position)
+        public GameObject ProduceProduct(Vector3 position, Vector3 scale)
         {
             GameObject go = null;
             if (Product == Product.Pumpkin)
             {
                 go = _services.Single<IGameFactory>().CreatePumpkin(position);
             }
+            else if (Product == Product.Egg)
+            {
+                go = _services.Single<IGameFactory>().CreateEgg(position);
+            }
+            go.transform.localScale = scale;
 
             return go;
         }
@@ -177,6 +182,10 @@ namespace Assets.Scripts.Sources
             {
                 position.y += 0.3f;
                 _services.Single<IGameFactory>().CreatePumpkin(position);
+            }
+            else if (Product == Product.Egg)
+            {
+                _services.Single<IGameFactory>().CreateChicken(position, Quaternion.Euler(new Vector3(0, 160, 0)));
             }
         }
 

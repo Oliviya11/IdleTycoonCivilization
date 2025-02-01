@@ -256,15 +256,15 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         public void UpdateProgress(PlayerProgress progress)
         {
-            for (int i = 0; i < progress.producers; ++i)
-            {
-                SpawnProducer();
-            }
+            progress.producers = _producers.Count - 1;
         }
 
         public void LoadProgress(PlayerProgress progress)
         {
-            progress.producers = _producers.Count - 1;
+            for (int i = 0; i < progress.producers; ++i)
+            {
+                SpawnProducer();
+            }
         }
     }
 }

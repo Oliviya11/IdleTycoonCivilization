@@ -1,15 +1,11 @@
 ﻿using Assets.Scripts.Infrastracture.AssetManagement;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
+using Assets.Scripts.Services.Audio;
 using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Services.SaveLoad;
 using Assets.Scripts.Services.StaticData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Scripts.Infrastracture.States
 {
@@ -19,12 +15,14 @@ namespace Assets.Scripts.Infrastracture.States
         private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
+        AudioManager.Settings _soundManagerSettings;
 
-        public BootstrapState(IGameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+        public BootstrapState(IGameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services, AudioManager.Settings soundManagerSettings)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
+            _soundManagerSettings = soundManagerSettings;
 
             RegisterServices();
         }
@@ -41,6 +39,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void RegisterServices()
         {
+            AllServices.Container.RegisterSingle<IAudioManager>(new AudioManager(_soundManagerSettings));
             AllServices.Container.RegisterSingle<IInputService>(new InputService());
 
             IAssetProvider assetProvider = new AssetProvider();

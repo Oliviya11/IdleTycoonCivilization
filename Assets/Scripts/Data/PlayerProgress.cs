@@ -11,5 +11,7 @@ namespace Assets.Scripts.Data
         public int clients = 1;
         public int producers;
         public int level;
+        public bool sound = true;
+        public bool music = true;
     }
 }

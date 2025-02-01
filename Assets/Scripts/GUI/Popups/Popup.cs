@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
+using Assets.Scripts.Services.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,7 @@ namespace Assets.Scripts.GUI.Popups
             else
             {
                 gameFactory.CreatePopUp(name, at);
+                AllServices.Container.Single<IAudioManager>().PlayPopupOpened();
             }
         }
 

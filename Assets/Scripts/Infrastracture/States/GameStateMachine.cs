@@ -15,12 +15,13 @@ namespace Assets.Scripts.Infrastracture.States
         private Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, AllServices services, MainMenu mainMenuPrefab, WinLevelCurtain winLevelCurtain)
+        public GameStateMachine(SceneLoader sceneLoader, AllServices services, MainMenu mainMenuPrefab, WinLevelCurtain winLevelCurtain, 
+            Services.Audio.AudioManager.Settings soundManagerSettings)
         {
             _states = new Dictionary<Type, IExitableState>
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, mainMenuPrefab),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, soundManagerSettings),
+                [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, mainMenuPrefab, services),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services, winLevelCurtain),
                 [typeof(GameLoopState)] = new GameLoopState(),

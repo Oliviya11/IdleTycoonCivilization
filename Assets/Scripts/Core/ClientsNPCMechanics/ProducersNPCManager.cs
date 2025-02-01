@@ -4,6 +4,7 @@ using Assets.Scripts.Data;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.PersistentProgress;
+using Assets.Scripts.Services.Audio;
 using Assets.Scripts.Sources;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.Utils;
@@ -26,11 +27,13 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         ISourcesManager _sourcesManager;
         IMoneyManager moneyManager;
         IGameFactory gameFactory;
+        IAudioManager _soundManager;
         Vector3 producerSpawnPoint;
         float producerRotationAngle;
 
         public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager,
-            IMoneyManager moneyManager, IGameFactory gameFactory, Vector3 producerSpawnPoint, float producerRotationAngle)
+            IMoneyManager moneyManager, IGameFactory gameFactory, Vector3 producerSpawnPoint, float producerRotationAngle,
+            IAudioManager soundManager)
         {
             _clientsNPCManager = clientsNPCManager;
             _producers = producers;
@@ -40,6 +43,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             this.gameFactory = gameFactory;
             this.producerSpawnPoint = producerSpawnPoint;
             this.producerRotationAngle = producerRotationAngle;
+            _soundManager = soundManager;
         }
 
         void Update()
@@ -192,6 +196,8 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     _producersToClients.Remove(id);
                     _producersToProduct.Remove(id);
                     _producerToPlace.Remove(id);
+
+                    _soundManager.PlayCoinsSound();
                 }
             }
         }

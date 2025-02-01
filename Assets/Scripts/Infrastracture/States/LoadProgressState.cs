@@ -28,15 +28,8 @@ namespace Assets.Scripts.Infrastracture.States
 
         void IState.Enter()
         {
-            LoadProgressOrInitNew();
             IPersistentProgressService persistentProgressService = services.Single<IPersistentProgressService>();
             gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, persistentProgressService.Progress.level + 1, false));
-        }
-
-        private void LoadProgressOrInitNew()
-        {
-            services.Single<IPersistentProgressService>().Progress =
-              services.Single<ISaveLoadService>().LoadProgress();
         }
 
         void IExitableState.Exit()

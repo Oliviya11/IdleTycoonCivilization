@@ -8,6 +8,7 @@ using Assets.Scripts.GUI;
 using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
+using Assets.Scripts.Services.Audio;
 using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Services.StaticData;
@@ -62,7 +63,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         void IExitableState.Exit()
         {
-           hud.upgradeButton.onClick.RemoveAllListeners();
+           
         }
 
         private void OnLoaded()
@@ -109,6 +110,9 @@ namespace Assets.Scripts.Infrastracture.States
         {
             hud = _services.Single<IGameFactory>().CreateHud().GetComponent<Hud>();
             hud.upgradeButton.onClick.AddListener(levelUpgradeManager.OpenPopup);
+            SettingsPopupManager settingsPopupManager = new SettingsPopupManager(_services.Single<IAudioManager>(),
+                _services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>());
+            hud.settingsButton.onClick.AddListener(settingsPopupManager.OpenPopup);
         }
 
         private ProducersNPCManager CreateProducersManager(LevelStaticData levelData, ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
@@ -116,7 +120,8 @@ namespace Assets.Scripts.Infrastracture.States
             GameObject producersManager = _services.Single<IGameFactory>().CreateProducersManager();
             ProducersNPCManager producersNPCManager = producersManager.GetComponent<ProducersNPCManager>();
             producersNPCManager.Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, 
-                sourcesManager, _services.Single<IMoneyManager>(), _services.Single<IGameFactory>(), levelData.producerPosition, levelData.producerRotationAngle);
+                sourcesManager, _services.Single<IMoneyManager>(), _services.Single<IGameFactory>(), levelData.producerPosition, levelData.producerRotationAngle,
+                _services.Single<IAudioManager>());
             return producersNPCManager;
         }
 

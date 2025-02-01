@@ -10,6 +10,7 @@ namespace Assets.Scripts.GUI
 {
     public class MainMenu : MonoBehaviour
     {
-        public Button PlayButton;
+        public Button playButton;
+        public Button settingsButton;
     }
 }

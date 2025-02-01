@@ -4,8 +4,8 @@ using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services;
 using UnityEngine;
 using Assets.Scripts.GUI.Popups;
-using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Services.SaveLoad;
+using Assets.Scripts.Services.Audio;
 
 namespace Assets.Scripts.Infrastracture
 {
@@ -13,13 +13,14 @@ namespace Assets.Scripts.Infrastracture
     {
         [SerializeField] MainMenu mainMenuPrefab;
         [SerializeField] WinLevelCurtain winLevelCurtainPrefab;
+        [SerializeField] AudioManager.Settings soundManagerSettings;
         const float START_AUTO_SAVE = 1f;
         const float AUTO_SAVE_INTERVAL = 10f;
         private Game _game;
 
         public void Awake()
         {
-            _game = new Game(this, mainMenuPrefab, Instantiate(winLevelCurtainPrefab));
+            _game = new Game(this, mainMenuPrefab, Instantiate(winLevelCurtainPrefab), soundManagerSettings);
 
             _game.StateMachine.Enter<BootstrapState>();
 

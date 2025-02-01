@@ -26,7 +26,12 @@ namespace Assets.Scripts.Sources
 
         State currentState;
         public int MaxPlacesCount => _maxPlacesCount;
-        public State CurrentState => currentState;
+        public State CurrentState { 
+            get => currentState;
+            private set { 
+                currentState = value; 
+            } 
+        }
 
         AllServices _services;
         int _maxPlacesCount;
@@ -82,16 +87,16 @@ namespace Assets.Scripts.Sources
 
         public void EnableAccordingToState(State state)
         {
-            currentState = state;
+            CurrentState = state;
 
-            if (currentState == State.Blank)
+            if (CurrentState == State.Blank)
             {
                 EnableBlank(true);
                 EnableArrow(false);
                 EnableIcon(false);
                 HideUpgrade();
             }
-            else if (currentState == State.BlankWithArrow)
+            else if (CurrentState == State.BlankWithArrow)
             {
                 EnableBlank(true);
                 EnableArrow(true);
@@ -104,19 +109,20 @@ namespace Assets.Scripts.Sources
 
                 SetProduct1State();
 
-                if (currentState == State.ProductPlace2)
+                if (CurrentState == State.ProductPlace2)
                 {
-                    SetProduct2State();
+                    SetProduct2State(false);
                 }
-                else if (currentState == State.ProductPlace3)
+                
+                if (CurrentState == State.ProductPlace3)
                 {
-                    SetProduct2State();
-                    SetProduct3State();
+                    SetProduct2State(false);
+                    SetProduct3State(false);
                 }
             }
         }
 
-        public void SetProduct1State()
+        void SetProduct1State()
         {
             EnableBlank(false);
             EnableArrow(false);
@@ -125,21 +131,20 @@ namespace Assets.Scripts.Sources
             SetIcon();
             HideUpgrade();
             ++_maxPlacesCount;
-            currentState = State.ProductPlace1;
         }
 
-        public void SetProduct2State()
+        void SetProduct2State(bool updateState)
         {
             ProduceProductPlace(1);
             ++_maxPlacesCount;
-            currentState = State.ProductPlace2;
+            if (updateState) CurrentState = State.ProductPlace2;
         }
 
-        public void SetProduct3State()
+        void SetProduct3State(bool updateState)
         {
             ProduceProductPlace(2);
             ++_maxPlacesCount;
-            currentState = State.ProductPlace3;
+            if (updateState) CurrentState = State.ProductPlace3;
         }
 
         public void SetProductPlace(int upgrade)
@@ -148,11 +153,11 @@ namespace Assets.Scripts.Sources
 
             if (upgrade == 1)
             {
-                SetProduct2State();
+                SetProduct2State(true);
             }
             else if (upgrade == 2)
             {
-                SetProduct3State();
+                SetProduct3State(true);
             }
         }
 
@@ -210,7 +215,7 @@ namespace Assets.Scripts.Sources
             return AllServices.Container.Single<IAssetProvider>().LoadProductIcon(Product.ToString());
         }
 
-        public bool ProduceProduct() => currentState == State.ProductPlace1 || currentState == State.ProductPlace2;
+        public bool ProduceProduct() => CurrentState == State.ProductPlace1 || CurrentState == State.ProductPlace2;
 
         public void SetProgress(SourceData data)
         {
@@ -219,7 +224,7 @@ namespace Assets.Scripts.Sources
 
         public  SourceState.State LoadProgress()
         {
-            return currentState;
+            return CurrentState;
         }
     }
 }

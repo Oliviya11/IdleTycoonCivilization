@@ -32,11 +32,13 @@ namespace Assets.Scripts.Infrastracture.States
         {
             public string sceneName;
             public int level;
+            public bool isLevelUp;
 
-            public Params(string sceneName, int level)
+            public Params(string sceneName, int level, bool isLevelUp)
             {
                 this.sceneName = sceneName;
                 this.level = level;
+                this.isLevelUp = isLevelUp;
             }
         }
 
@@ -51,7 +53,7 @@ namespace Assets.Scripts.Infrastracture.States
         void IPayloadedState<Params>.Enter(Params p)
         {
             @params = p;
-            if (p.level > 1)
+            if (p.level > 1 && p.isLevelUp)
             {
                 curtain.Show();
             }

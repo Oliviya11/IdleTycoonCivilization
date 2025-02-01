@@ -31,7 +31,7 @@ namespace Assets.Scripts.Infrastracture.States
             else
             {
                 persistentProgressService.Progress.sources = null;
-                _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LoadProgressState.LEVEL_SCENE_NAME, (++persistentProgressService.Progress.level) + 1));
+                _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LoadProgressState.LEVEL_SCENE_NAME, (++persistentProgressService.Progress.level) + 1, true));
             }
         }
 

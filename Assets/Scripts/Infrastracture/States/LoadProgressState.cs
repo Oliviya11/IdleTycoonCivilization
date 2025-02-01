@@ -30,7 +30,7 @@ namespace Assets.Scripts.Infrastracture.States
         {
             LoadProgressOrInitNew();
             IPersistentProgressService persistentProgressService = services.Single<IPersistentProgressService>();
-            gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, persistentProgressService.Progress.level + 1));
+            gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, persistentProgressService.Progress.level + 1, false));
         }
 
         private void LoadProgressOrInitNew()

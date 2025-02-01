@@ -5,6 +5,7 @@ namespace Assets.Scripts.Particles
    public class ParticleController : MonoBehaviour
     {
         ParticleSystem particleSystem;
+        bool isPlaying;
 
         void Awake()
         {
@@ -18,6 +19,9 @@ namespace Assets.Scripts.Particles
 
         public void Show()
         {
+            if (isPlaying) return;
+
+            isPlaying = true;
             if (particleSystem != null)
             {
                 particleSystem.Play();
@@ -26,6 +30,9 @@ namespace Assets.Scripts.Particles
 
         public void Hide()
         {
+            if (!isPlaying) return;
+
+            isPlaying = false;
             if (particleSystem != null)
             {
                 particleSystem.Stop();

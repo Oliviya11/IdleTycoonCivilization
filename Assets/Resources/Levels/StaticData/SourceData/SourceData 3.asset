@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   product: 3
   initialState: 0
-  productionTime: 1
+  productionTime: 3
   upgrades:
   - priceCurve:
       serializedVersion: 2

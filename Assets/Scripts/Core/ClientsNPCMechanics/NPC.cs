@@ -14,6 +14,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         public void Move(Vector3 destination)
         {
+            agent.isStopped = false;
             agent.destination = destination;
         }
 

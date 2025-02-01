@@ -42,7 +42,6 @@ namespace Assets.Scripts.Sources
 
         private void Awake()
         {
-            _maxPlacesCount = 1;
 
             foreach (var element in elements)
             {

@@ -136,7 +136,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                 return;
             }
 
-            Transform tr = source.places.Occupy(source.state.MaxPlacesCount - 1);
+            Transform tr = source.places.Occupy(source.state.MaxPlacesCount);
             if (tr == null)
             {
                 MoveToSleepWithOrder(producerNPC);

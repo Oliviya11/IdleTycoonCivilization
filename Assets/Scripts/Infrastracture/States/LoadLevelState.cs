@@ -9,6 +9,7 @@ using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Inputs;
+using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Services.StaticData;
 using Assets.Scripts.Sources;
 using Assets.Scripts.StaticData;
@@ -50,7 +51,10 @@ namespace Assets.Scripts.Infrastracture.States
         void IPayloadedState<Params>.Enter(Params p)
         {
             @params = p;
-            curtain.Show();
+            if (p.level > 1)
+            {
+                curtain.Show();
+            }
             _sceneLoader.Load(p.sceneName, OnLoaded);
         }
 
@@ -66,9 +70,7 @@ namespace Assets.Scripts.Infrastracture.States
             ISourcesManager sourcesManager = CreateSourcesManager();
 
             LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(@params.level);
-
-            IMoneyManager moneyManager = new MoneyManager(levelStaticData.initialMoney);
-            _services.RegisterSingle<IMoneyManager>(moneyManager);
+            IMoneyManager moneyManager = InitMoneyManager(levelStaticData);
 
             SourcesCollection sources = CreateSources(levelStaticData);
 
@@ -78,12 +80,27 @@ namespace Assets.Scripts.Infrastracture.States
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
             ProducersNPCManager producersNPCManager = CreateProducersManager(levelStaticData, sourcesManager, producer, clientsNPCManager);
 
-            LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager, 
+            LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager,
                 _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager, sources.click);
 
             InitHud(levelUpgradeManager);
 
+            InformProgressReaders();
+
             sources.levelProgress = new SourcesLevelProgress(hud.progressBar, sources, _gameStateMachine);
+        }
+
+        private IMoneyManager InitMoneyManager(LevelStaticData levelStaticData)
+        {
+            IPersistentProgressService persistentProgress = _services.Single<IPersistentProgressService>();
+            string money = persistentProgress.Progress.money;
+            if (string.IsNullOrEmpty(money))
+            {
+                money = levelStaticData.initialMoney;
+            }
+            IMoneyManager moneyManager = new MoneyManager(money, persistentProgress);
+            _services.RegisterSingle<IMoneyManager>(moneyManager);
+            return moneyManager;
         }
 
         private void InitHud(LevelUpgradeManager levelUpgradeManager)
@@ -125,11 +142,13 @@ namespace Assets.Scripts.Infrastracture.States
                 SourceState sourceState = source.state;
                 sourceState.Product = sourceStaticData.product;
                 sourceState.Construct(_services);
-                sourceState.EnableAccordingToState(sourceStaticData.initialState);
+                if (sourceState.CurrentState == SourceState.State.None)
+                {
+                    sourceState.EnableAccordingToState(sourceStaticData.initialState);
+                }
                 source.upgrade = new SourceUpgrade(sourceState, 0, 0,
                     sourceStaticData.productionTime, sourceStaticData.upgrades, 0, 0, sourceStaticData.product,
                     _services.Single<IMoneyManager>());
-                source.upgrade.UpgradeTill(0, 0);
             }
 
             return sources;
@@ -150,6 +169,15 @@ namespace Assets.Scripts.Infrastracture.States
         OrdersCollection CreateOrders(int level)
         {
             return _services.Single<IGameFactory>().CreateOrdersCollection(level);
+        }
+
+        void InformProgressReaders()
+        {
+            IGameFactory gameFactory = _services.Single<IGameFactory>();
+            IPersistentProgressService persistentProgress = _services.Single<IPersistentProgressService>();
+
+            foreach (ISavedProgressReader progressReader in gameFactory.ProgressReaders)
+                progressReader.LoadProgress(persistentProgress.Progress);
         }
     }
 }

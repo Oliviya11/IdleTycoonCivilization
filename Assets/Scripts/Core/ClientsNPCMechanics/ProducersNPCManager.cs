@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Core.Money.Services;
 using Assets.Scripts.Core.Sources.Services;
+using Assets.Scripts.Data;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
+using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Sources;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.Utils;
@@ -11,7 +13,7 @@ using Product = Assets.Scripts.Sources.Product;
 
 namespace Assets.Scripts.Core.ClientsNPCMechanics
 {
-    public class ProducersNPCManager : MonoBehaviour
+    public class ProducersNPCManager : MonoBehaviour, ISavedProgress
     {
         const float producerTargetAngle = 0f;
         private const float OrderProcessingTime = 0.5f;
@@ -250,6 +252,19 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             sleepingProducers.Shuffle();
 
             return sleepingProducers[0];
+        }
+
+        public void UpdateProgress(PlayerProgress progress)
+        {
+            for (int i = 0; i < progress.producers; ++i)
+            {
+                SpawnProducer();
+            }
+        }
+
+        public void LoadProgress(PlayerProgress progress)
+        {
+            progress.producers = _producers.Count - 1;
         }
     }
 }

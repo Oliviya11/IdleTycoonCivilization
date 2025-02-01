@@ -4,14 +4,16 @@ namespace Assets.Scripts.Particles
 {
    public class ParticleController : MonoBehaviour
     {
-        ParticleSystem particleSystem;
+        ParticleSystem effect;
         bool isPlaying;
 
         void Awake()
         {
-            particleSystem = GetComponent<ParticleSystem>();
+            isPlaying = true;
 
-            if (particleSystem == null)
+            effect = GetComponent<ParticleSystem>();
+
+            if (effect == null)
             {
                 Debug.LogError("No ParticleSystem found on " + gameObject.name);
             }
@@ -22,9 +24,9 @@ namespace Assets.Scripts.Particles
             if (isPlaying) return;
 
             isPlaying = true;
-            if (particleSystem != null)
+            if (effect != null)
             {
-                particleSystem.Play();
+                effect.Play();
             }
         }
 
@@ -33,9 +35,9 @@ namespace Assets.Scripts.Particles
             if (!isPlaying) return;
 
             isPlaying = false;
-            if (particleSystem != null)
+            if (effect != null)
             {
-                particleSystem.Stop();
+                effect.Stop();
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Core.Money.Services;
-using Assets.Scripts.Services;
+using Assets.Scripts.Data;
 using Assets.Scripts.Sources;
 using System.Collections.Generic;
 using UnityEngine;
@@ -146,6 +146,25 @@ namespace Assets.Scripts.Core.Sources
             float nextNumber = curve.Evaluate(time);
             number = BigNumber.FromFloat(nextNumber).ToString();
             return number;
+        }
+
+        public void SetProgress(SourceData data)
+        {
+            UpgradeTill(data.upgrade, data.level);
+            ProductionTime = data.time;
+            CurrentUpgradeLevel = data.upgradeLevel;
+            CurrentUpgrade = data.upgrade;
+        }
+
+        public SourceData LoadProgress()
+        {
+            SourceData data = new SourceData();
+            data.level = CurrentLevel;
+            data.upgrade = CurrentUpgrade;
+            data.time = ProductionTime;
+            data.upgradeLevel = CurrentUpgradeLevel;
+
+            return data;
         }
     }
 }

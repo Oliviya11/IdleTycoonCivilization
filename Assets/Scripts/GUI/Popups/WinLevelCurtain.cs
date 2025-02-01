@@ -21,7 +21,11 @@ namespace Assets.Scripts.GUI.Popups
             Curtain.alpha = 1;
         }
 
-        public void Hide() => StartCoroutine(DoFadeIn());
+        public void Hide()
+        {
+            if (!gameObject.activeSelf) return;
+            StartCoroutine(DoFadeIn());
+        }
 
         private IEnumerator DoFadeIn()
         {

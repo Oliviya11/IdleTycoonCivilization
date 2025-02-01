@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Core.Orders;
 using Assets.Scripts.Core.Sources.Services;
+using Assets.Scripts.Data;
 using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Sources;
 using Assets.Scripts.Utils;
 using System;
@@ -12,7 +14,7 @@ using Product = Assets.Scripts.Sources.Product;
 
 namespace Assets.Scripts.Core.ClientsNPCMechanics
 {
-    public class ClientsNPCManager : MonoBehaviour
+    public class ClientsNPCManager : MonoBehaviour, ISavedProgress
     {
         [SerializeField] int maxClients;
         [SerializeField] float processWithProducer;
@@ -183,6 +185,16 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     client.CurrentState = ClientNPC.State.ReadyToOrder;
                 }
             }
+        }
+
+        public void UpdateProgress(PlayerProgress progress)
+        {
+            progress.clients = maxClients;
+        }
+
+        public void LoadProgress(PlayerProgress progress)
+        {
+            maxClients = progress.clients;
         }
     }
 }

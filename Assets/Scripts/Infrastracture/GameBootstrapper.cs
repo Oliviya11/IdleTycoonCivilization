@@ -4,6 +4,8 @@ using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services;
 using UnityEngine;
 using Assets.Scripts.GUI.Popups;
+using Assets.Scripts.Services.PersistentProgress;
+using Assets.Scripts.Services.SaveLoad;
 
 namespace Assets.Scripts.Infrastracture
 {
@@ -11,28 +13,17 @@ namespace Assets.Scripts.Infrastracture
     {
         [SerializeField] MainMenu mainMenuPrefab;
         [SerializeField] WinLevelCurtain winLevelCurtainPrefab;
+        const float START_AUTO_SAVE = 1f;
+        const float AUTO_SAVE_INTERVAL = 10f;
         private Game _game;
 
         public void Awake()
         {
             _game = new Game(this, mainMenuPrefab, Instantiate(winLevelCurtainPrefab));
 
-            AllServices.Container.RegisterSingle<IInputService>(new InputService());
-
             _game.StateMachine.Enter<BootstrapState>();
 
-            /*
-            BigNumber a = new BigNumber("60.5M");
-            BigNumber b = new BigNumber("1.2B");
-
-            Debug.LogError($"a = {a}");   // 2.50M
-            Debug.LogError($"b = {b}");   // 1.20B
-            Debug.LogError($"a + b = {a + b}");  // 1.20B
-            Debug.LogError($"b - a = {b - a}");  // 1.20B - 2.5M = 1.1975B
-            Debug.LogError($"a * b = {a * b}");  // 2.5M * 1.2B = 3.00Qa
-            Debug.LogError($"b / a = {b / a}");  // 
-            */
-            
+            InvokeRepeating(nameof(SaveProgress), START_AUTO_SAVE, AUTO_SAVE_INTERVAL);
 
             DontDestroyOnLoad(this);
         }
@@ -41,6 +32,28 @@ namespace Assets.Scripts.Infrastracture
         {
             if (AllServices.Container.Single<IInputService>() == null) return;
             AllServices.Container.Single<IInputService>().ProcessInput();
+        }
+
+        void OnApplicationQuit()
+        {
+            SaveProgress();
+        }
+
+        void OnApplicationPause()
+        {
+            SaveProgress();
+        }
+
+        void OnApplicationFocus(bool hasFocus)
+        {
+            if (hasFocus) SaveProgress();
+        }
+
+        void SaveProgress()
+        {
+            if (AllServices.Container.Single<ISaveLoadService>() == null) return;
+            AllServices.Container.Single<ISaveLoadService>().SaveProgress();
+            Debug.LogError("Save progress");
         }
     }
 }

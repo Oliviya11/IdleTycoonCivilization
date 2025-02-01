@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastracture.AssetManagement;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Infrastracture.AssetManagement;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using System;
@@ -27,17 +28,19 @@ namespace Assets.Scripts.Sources
 
         State currentState;
         public int MaxPlacesCount => _maxPlacesCount;
+        public State CurrentState => currentState;
 
         AllServices _services;
         int _maxPlacesCount;
 
         public enum State
         {
-            Blank = 0,
-            BlankWithArrow = 1,
-            ProductPlace1 = 2,
-            ProductPlace2 = 3,
-            ProductPlace3 = 4,
+            None = 0,
+            Blank = 1,
+            BlankWithArrow = 2,
+            ProductPlace1 = 3,
+            ProductPlace2 = 4,
+            ProductPlace3 = 5,
         }
 
         private void Awake()
@@ -208,5 +211,15 @@ namespace Assets.Scripts.Sources
         }
 
         public bool ProduceProduct() => currentState == State.ProductPlace1 || currentState == State.ProductPlace2;
+
+        public void SetProgress(SourceData data)
+        {
+            EnableAccordingToState(data.state);
+        }
+
+        public  SourceState.State LoadProgress()
+        {
+            return currentState;
+        }
     }
 }

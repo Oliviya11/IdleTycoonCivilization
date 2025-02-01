@@ -1,13 +1,19 @@
 ﻿using Assets.Scripts.Core.Orders;
 using Assets.Scripts.GUI;
 using Assets.Scripts.Services;
+using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Sources;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastracture.Factory
 {
     public interface IGameFactory : IService
     {
+        List<ISavedProgressReader> ProgressReaders { get; }
+
+        List<ISavedProgress> ProgressWriters { get; }
+
         SourcesCollection CreateSourcesCollection(int level);
 
         OrdersCollection CreateOrdersCollection(int level);

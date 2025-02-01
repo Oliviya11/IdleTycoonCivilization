@@ -1,6 +1,9 @@
 ﻿using Assets.Scripts.Infrastracture.AssetManagement;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
+using Assets.Scripts.Services.Inputs;
+using Assets.Scripts.Services.PersistentProgress;
+using Assets.Scripts.Services.SaveLoad;
 using Assets.Scripts.Services.StaticData;
 using System;
 using System.Collections.Generic;
@@ -38,6 +41,8 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void RegisterServices()
         {
+            AllServices.Container.RegisterSingle<IInputService>(new InputService());
+
             IAssetProvider assetProvider = new AssetProvider();
             _services.RegisterSingle<IAssetProvider>(assetProvider);
 
@@ -45,6 +50,12 @@ namespace Assets.Scripts.Infrastracture.States
             IStaticDataService staticData = new StaticDataService();
             staticData.Load();
             _services.RegisterSingle<IStaticDataService>(staticData);
+
+            _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
+
+            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
+                _services.Single<IPersistentProgressService>(),
+                _services.Single<IGameFactory>()));
         }
 
         private void EnterMainMenu()

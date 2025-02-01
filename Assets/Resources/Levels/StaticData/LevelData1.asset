@@ -15,6 +15,6 @@ MonoBehaviour:
   initialMoney: 1.00M
   sourcesData:
   - {fileID: 11400000, guid: 418978be3400c7847b329cd639d6b450, type: 2}
-  producerPosition: {x: 0, y: 1, z: 50}
+  producerPosition: {x: 0, y: 1, z: 49.5}
   producerRotationAngle: 180
   upgradeData: {fileID: 11400000, guid: 7fd12ca2e4804e247b4f687ef6f2c269, type: 2}

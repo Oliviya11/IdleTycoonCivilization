@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SourceData 1
   m_EditorClassIdentifier: 
   product: 1
-  initialState: 1
+  initialState: 2
   productionTime: 1
   upgrades:
   - priceCurve:

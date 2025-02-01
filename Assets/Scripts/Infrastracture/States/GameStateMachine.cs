@@ -24,7 +24,7 @@ namespace Assets.Scripts.Infrastracture.States
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services, winLevelCurtain),
                 [typeof(GameLoopState)] = new GameLoopState(),
-                [typeof(LoadNextLevelState)] = new LoadNextLevelState(this),
+                [typeof(LoadNextLevelState)] = new LoadNextLevelState(this, services),
             };
         }
 

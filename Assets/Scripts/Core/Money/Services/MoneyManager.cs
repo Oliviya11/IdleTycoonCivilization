@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Services;
+using Assets.Scripts.Services.PersistentProgress;
 using System;
 
 namespace Assets.Scripts.Core.Money.Services
@@ -7,16 +8,25 @@ namespace Assets.Scripts.Core.Money.Services
     {
         public event Action<string> OnMoneyChanged;
         BigNumber _money;
+        IPersistentProgressService _persistentProgressService;
+
         public string Money => _money.ToString();
 
-        public MoneyManager(string money) { 
+        public MoneyManager(string money, IPersistentProgressService persistentProgressService) { 
             _money = new BigNumber(money);
+            _persistentProgressService = persistentProgressService;
         }
 
         public void AddMoney(string money)
         {
             _money = _money + new BigNumber(money);
+            SaveMoney();
             OnMoneyChanged?.Invoke(Money);
+        }
+
+        private void SaveMoney()
+        {
+            _persistentProgressService.Progress.money = Money;
         }
 
         public void SubtractMoney(string money)

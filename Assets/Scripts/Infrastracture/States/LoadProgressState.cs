@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using UnityEngine;
+using Assets.Scripts.Services.PersistentProgress;
+using Assets.Scripts.Services.SaveLoad;
 
 namespace Assets.Scripts.Infrastracture.States
 {
     public class LoadProgressState : IState
     {
-        const string LEVEL_SCENE_NAME = "Main";
+        public const string LEVEL_SCENE_NAME = "Main";
         readonly IGameStateMachine gameStateMachine;
         readonly AllServices services;
 
@@ -26,7 +28,15 @@ namespace Assets.Scripts.Infrastracture.States
 
         void IState.Enter()
         {
-            gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, 1));
+            LoadProgressOrInitNew();
+            IPersistentProgressService persistentProgressService = services.Single<IPersistentProgressService>();
+            gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, persistentProgressService.Progress.level + 1));
+        }
+
+        private void LoadProgressOrInitNew()
+        {
+            services.Single<IPersistentProgressService>().Progress =
+              services.Single<ISaveLoadService>().LoadProgress();
         }
 
         void IExitableState.Exit()

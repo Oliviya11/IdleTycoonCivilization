@@ -1,16 +1,24 @@
-﻿namespace Assets.Scripts.Infrastracture.States
+﻿using Assets.Scripts.Services.PersistentProgress;
+using Assets.Scripts.Services;
+
+namespace Assets.Scripts.Infrastracture.States
 {
     public class LoadNextLevelState : IState
     {
-        IGameStateMachine gameStateMachine;
-        public LoadNextLevelState(IGameStateMachine gameStateMachine)
-        {
+        AllServices _services;
+        IGameStateMachine _gameStateMachine;
 
+        public LoadNextLevelState(IGameStateMachine gameStateMachine, AllServices services)
+        {
+            _gameStateMachine = gameStateMachine;
+            _services = services;
         }
+
         public void Enter()
         {
             //increase level
-            //call LoadProgressState
+            IPersistentProgressService persistentProgressService = _services.Single<IPersistentProgressService>();
+            _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LoadProgressState.LEVEL_SCENE_NAME, (++persistentProgressService.Progress.level) + 1));
         }
 
         public void Exit()

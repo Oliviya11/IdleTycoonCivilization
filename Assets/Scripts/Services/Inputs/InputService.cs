@@ -11,7 +11,6 @@ namespace Assets.Scripts.Services.Inputs
         public event Action<float> OnDrag;
 
         private Vector2 _startPosition;
-        private bool _isDragging = false;
         private float _dragThreshold = 10f; // Minimum distance to consider a drag
         private string _colliderName;
 
@@ -25,25 +24,21 @@ namespace Assets.Scripts.Services.Inputs
                 {
                     case TouchPhase.Began:
                         _startPosition = touch.position;
-                        _isDragging = true;
                         break;
 
                     case TouchPhase.Ended:
                         HandleEndInput(touch.position);
-                        _isDragging = false;
                         break;
                 }
             }
             else if (Input.GetMouseButtonDown(0)) // Mouse Input
             {
                 _startPosition = Input.mousePosition;
-                _isDragging = true;
             }
             else if (Input.GetMouseButtonUp(0))
             {
 
                 HandleEndInput(Input.mousePosition);
-                _isDragging = false;
             }
         }
 

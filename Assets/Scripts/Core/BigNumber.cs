@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -50,6 +51,12 @@ namespace Assets.Scripts.Core
             {
                 Value *= 1000;
                 Exponent -= 3;
+            }
+
+            if (Exponent < 3)
+            {
+                double value10 = Math.Pow(10, Exponent);
+                Value = Math.Round(Value * value10);
             }
         }
 
@@ -140,18 +147,27 @@ namespace Assets.Scripts.Core
         public static BigNumber FromFloat(float logValue)
         {
             int exponent = Mathf.FloorToInt(logValue);
-            double value = Math.Pow(10, logValue);
-            value = (int)value;
-            return new BigNumber(value, exponent);
+            double mantissa = Mathf.Pow(10, logValue - exponent);
+            return new BigNumber(mantissa, exponent);
         }
 
         public override string ToString()
         {
-            int index = Exponent / 3;
-            if (index >= suffixes.Count)
-                return $"{Value:F2}e{Exponent}";
+            if (Exponent < 3)
+            {
+                return $"{(int)Value}";
+            }
+            else
+            {
+                int index = Exponent / 3;
+                if (index >= suffixes.Count)
+                    return $"{Value:F2}e{Exponent}";
 
-            return $"{Value:F2}{suffixes[index]}";
+                string result = $"{Value:F2}{suffixes[index]}";
+                result = result.Replace('.', ',');
+
+                return result;
+            }
         }
     }
 }

@@ -16,20 +16,19 @@ namespace Assets.Scripts.Core.Money.Services
         public void AddMoney(string money)
         {
             _money = _money + new BigNumber(money);
-            OnMoneyChanged?.Invoke(_money.ToString());
+            OnMoneyChanged?.Invoke(Money);
         }
 
         public void SubtractMoney(string money)
         {
             _money = _money - new BigNumber(money);
-            OnMoneyChanged?.Invoke(_money.ToString());
+            OnMoneyChanged?.Invoke(Money);
         }
 
         public bool IsEnoughMoney(string money)
         {
-            BigNumber number = new BigNumber(Money);
             BigNumber currentNumber = new BigNumber(money);
-            return number >= currentNumber;
+            return _money >= currentNumber;
         }
     }
 }

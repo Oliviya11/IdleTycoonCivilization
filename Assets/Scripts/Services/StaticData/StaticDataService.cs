@@ -20,5 +20,10 @@ namespace Assets.Scripts.Services.StaticData
             if (level > _levels.Length) return null;
             return _levels[level - 1];
         }
+
+        public int GetMaxLevels()
+        {
+            return _levels.Length;
+        }
     }
 }

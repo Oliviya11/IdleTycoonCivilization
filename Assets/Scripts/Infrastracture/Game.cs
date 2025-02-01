@@ -1,4 +1,5 @@
 using Assets.Scripts.GUI;
+using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.States;
 using Assets.Scripts.Services;
 using System.Collections;
@@ -11,9 +12,9 @@ namespace Assets.Scripts.Infrastracture
     {
         public IGameStateMachine StateMachine;
 
-        public Game(ICoroutineRunner coroutineRunner, MainMenu mainMenuPrefab)
+        public Game(ICoroutineRunner coroutineRunner, MainMenu mainMenuPrefab, WinLevelCurtain winLevelCurtain)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), AllServices.Container, mainMenuPrefab);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), AllServices.Container, mainMenuPrefab, winLevelCurtain);
         }
     }
 }

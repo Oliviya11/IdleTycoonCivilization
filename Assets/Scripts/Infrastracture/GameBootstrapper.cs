@@ -3,17 +3,19 @@ using Assets.Scripts.Infrastracture.States;
 using Assets.Scripts.Services.Inputs;
 using Assets.Scripts.Services;
 using UnityEngine;
+using Assets.Scripts.GUI.Popups;
 
 namespace Assets.Scripts.Infrastracture
 {
     public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
         [SerializeField] MainMenu mainMenuPrefab;
+        [SerializeField] WinLevelCurtain winLevelCurtainPrefab;
         private Game _game;
 
         public void Awake()
         {
-            _game = new Game(this, mainMenuPrefab);
+            _game = new Game(this, mainMenuPrefab, Instantiate(winLevelCurtainPrefab));
 
             AllServices.Container.RegisterSingle<IInputService>(new InputService());
 

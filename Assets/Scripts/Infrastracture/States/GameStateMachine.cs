@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.GUI;
+using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using System;
@@ -14,15 +15,16 @@ namespace Assets.Scripts.Infrastracture.States
         private Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, AllServices services, MainMenu mainMenuPrefab)
+        public GameStateMachine(SceneLoader sceneLoader, AllServices services, MainMenu mainMenuPrefab, WinLevelCurtain winLevelCurtain)
         {
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
                 [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, mainMenuPrefab),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services, winLevelCurtain),
                 [typeof(GameLoopState)] = new GameLoopState(),
+                [typeof(LoadNextLevelState)] = new LoadNextLevelState(this),
             };
         }
 

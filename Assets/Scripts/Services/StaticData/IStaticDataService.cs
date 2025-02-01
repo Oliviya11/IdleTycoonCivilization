@@ -1,9 +1,4 @@
 ﻿using Assets.Scripts.StaticData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Scripts.Services.StaticData
 {
@@ -11,5 +6,7 @@ namespace Assets.Scripts.Services.StaticData
     {
         void Load();
         LevelStaticData ForLevel(int level);
+
+        int GetMaxLevels();
     }
 }

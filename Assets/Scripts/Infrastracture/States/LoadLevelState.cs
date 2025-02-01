@@ -25,6 +25,7 @@ namespace Assets.Scripts.Infrastracture.States
         readonly AllServices _services;
         Hud hud;
         Params @params;
+        WinLevelCurtain curtain;
 
         public class Params
         {
@@ -38,26 +39,30 @@ namespace Assets.Scripts.Infrastracture.States
             }
         }
 
-        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
+        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services, WinLevelCurtain curtain)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
+            this.curtain = curtain;
         }
 
         void IPayloadedState<Params>.Enter(Params p)
         {
             @params = p;
+            curtain.Show();
             _sceneLoader.Load(p.sceneName, OnLoaded);
         }
 
         void IExitableState.Exit()
         {
-            //hud.upgradeButton.onClick.RemoveAllListeners();
+           hud.upgradeButton.onClick.RemoveAllListeners();
         }
 
         private void OnLoaded()
         {
+            if (curtain != null) curtain.Hide();
+
             ISourcesManager sourcesManager = CreateSourcesManager();
 
             LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(@params.level);
@@ -78,9 +83,7 @@ namespace Assets.Scripts.Infrastracture.States
 
             InitHud(levelUpgradeManager);
 
-            sources.levelProgress = new SourcesLevelProgress(hud.progressBar, sources);
-
-            _gameStateMachine.Enter<GameLoopState>();
+            sources.levelProgress = new SourcesLevelProgress(hud.progressBar, sources, _gameStateMachine);
         }
 
         private void InitHud(LevelUpgradeManager levelUpgradeManager)

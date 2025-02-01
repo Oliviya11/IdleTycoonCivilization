@@ -1,6 +1,10 @@
 ﻿using Assets.Scripts.GUI;
+using Assets.Scripts.GUI.Popups;
+using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Infrastracture.States;
 using Assets.Scripts.Sources;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace Assets.Scripts.Core.Sources
 {
@@ -8,12 +12,14 @@ namespace Assets.Scripts.Core.Sources
     {
         SourcesCollection sourcesCollection;
         ProgressBar progressBar;
+        IGameStateMachine gameStateMachine;
         int maxValue;
 
-        public SourcesLevelProgress(ProgressBar progressBar, SourcesCollection sourcesCollection)
+        public SourcesLevelProgress(ProgressBar progressBar, SourcesCollection sourcesCollection, IGameStateMachine gameStateMachine)
         {
             this.progressBar = progressBar;
             this.sourcesCollection = sourcesCollection;
+            this.gameStateMachine = gameStateMachine;
             CountMaxValue();
             Update();
         }
@@ -39,7 +45,13 @@ namespace Assets.Scripts.Core.Sources
 
         public void Update()
         {
-            progressBar.SetValue(CountCurrentValue(), maxValue);
+            int currentValue = CountCurrentValue();
+            progressBar.SetValue(currentValue, maxValue);
+
+            if (currentValue == maxValue)
+            {
+                gameStateMachine.Enter<LoadNextLevelState>();
+            }
         }
     }
 }

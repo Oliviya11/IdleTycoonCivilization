@@ -164,7 +164,7 @@ namespace Assets.Scripts.Core
                     return $"{Value:F2}e{Exponent}";
 
                 string result = $"{Value:F2}{suffixes[index]}";
-                result = result.Replace('.', ',');
+                result = result.Replace(',', '.');
 
                 return result;
             }

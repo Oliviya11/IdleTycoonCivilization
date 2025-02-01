@@ -1,5 +1,9 @@
 ﻿using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Services;
+using Assets.Scripts.Services.StaticData;
+using Assets.Scripts.GUI.Popups;
+using Assets.Scripts.Infrastracture.Factory;
+using UnityEngine;
 
 namespace Assets.Scripts.Infrastracture.States
 {
@@ -16,10 +20,19 @@ namespace Assets.Scripts.Infrastracture.States
 
         public void Enter()
         {
-            //increase level
             IPersistentProgressService persistentProgressService = _services.Single<IPersistentProgressService>();
-            persistentProgressService.Progress.sources = null;
-            _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LoadProgressState.LEVEL_SCENE_NAME, (++persistentProgressService.Progress.level) + 1));
+            IStaticDataService staticDataService = _services.Single<IStaticDataService>();
+            int level = persistentProgressService.Progress.level + 1;
+
+            if (staticDataService.GetMaxLevels() == level)
+            {
+                EndLevelsPopup.OpenPopup(_services.Single<IGameFactory>(), Vector3.zero);
+            }
+            else
+            {
+                persistentProgressService.Progress.sources = null;
+                _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LoadProgressState.LEVEL_SCENE_NAME, (++persistentProgressService.Progress.level) + 1));
+            }
         }
 
         public void Exit()

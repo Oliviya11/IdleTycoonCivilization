@@ -55,7 +55,7 @@ namespace Assets.Scripts.Infrastracture.States
             {
                 curtain.Show();
             }
-            _sceneLoader.Load(p.sceneName, OnLoaded);
+            _sceneLoader.Load(p.sceneName, true, OnLoaded);
         }
 
         void IExitableState.Exit()

@@ -26,7 +26,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         public void Enter()
         {
-            _sceneLoader.Load(MainMenu, onLoaded: OnLoaded);
+            _sceneLoader.Load(MainMenu, false, onLoaded: OnLoaded);
         }
 
         public void Exit()

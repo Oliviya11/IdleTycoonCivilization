@@ -18,6 +18,7 @@ namespace Assets.Scripts.Infrastracture.States
         {
             //increase level
             IPersistentProgressService persistentProgressService = _services.Single<IPersistentProgressService>();
+            persistentProgressService.Progress.sources = null;
             _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LoadProgressState.LEVEL_SCENE_NAME, (++persistentProgressService.Progress.level) + 1));
         }
 

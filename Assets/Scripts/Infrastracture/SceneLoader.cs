@@ -16,12 +16,12 @@ namespace Assets.Scripts.Infrastracture
         public SceneLoader(ICoroutineRunner coroutineRunner) =>
           _coroutineRunner = coroutineRunner;
 
-        public void Load(string name, Action onLoaded = null) =>
-          _coroutineRunner.StartCoroutine(LoadScene(name, onLoaded));
+        public void Load(string name, bool canLoadSame, Action onLoaded = null) =>
+          _coroutineRunner.StartCoroutine(LoadScene(name, canLoadSame, onLoaded));
 
-        public IEnumerator LoadScene(string nextScene, Action onLoaded = null)
+        public IEnumerator LoadScene(string nextScene, bool canLoadSame, Action onLoaded = null)
         {
-            if (SceneManager.GetActiveScene().name == nextScene)
+            if (!canLoadSame && SceneManager.GetActiveScene().name == nextScene)
             {
                 onLoaded?.Invoke();
                 yield break;

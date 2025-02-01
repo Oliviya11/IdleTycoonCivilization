@@ -53,7 +53,6 @@ namespace Assets.Scripts.Infrastracture
         {
             if (AllServices.Container.Single<ISaveLoadService>() == null) return;
             AllServices.Container.Single<ISaveLoadService>().SaveProgress();
-            Debug.LogError("Save progress");
         }
     }
 }

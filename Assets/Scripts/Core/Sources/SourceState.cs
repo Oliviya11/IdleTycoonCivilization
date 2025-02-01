@@ -1,12 +1,9 @@
-﻿using Assets.Scripts.Data;
+﻿using Assets.Scripts.Core.Sources.Services;
+using Assets.Scripts.Data;
 using Assets.Scripts.Infrastracture.AssetManagement;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +13,7 @@ namespace Assets.Scripts.Sources
     {
         public Product Product { get; set; }
 
+        [SerializeField] Source source;
         [SerializeField] Image productIcon;
         [SerializeField] Transform blank;
         [SerializeField] Transform arrow;
@@ -102,6 +100,8 @@ namespace Assets.Scripts.Sources
             }
             else
             {
+                _services.Single<ISourcesManager>().OpenSource(Product, source);
+
                 SetProduct1State();
 
                 if (currentState == State.ProductPlace2)

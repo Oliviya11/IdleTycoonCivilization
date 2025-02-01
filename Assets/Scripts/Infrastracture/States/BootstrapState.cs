@@ -31,7 +31,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         void IState.Enter()
         {
-            _sceneLoader.Load(Initial, onLoaded: EnterMainMenu);
+            _sceneLoader.Load(Initial, false, onLoaded: EnterMainMenu);
         }
 
         void IExitableState.Exit()

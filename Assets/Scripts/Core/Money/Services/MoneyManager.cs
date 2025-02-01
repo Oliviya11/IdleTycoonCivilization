@@ -10,7 +10,7 @@ namespace Assets.Scripts.Core.Money.Services
         BigNumber _money;
         IPersistentProgressService _persistentProgressService;
 
-        public string Money => _money.ToString();
+        public string Money {get => _money.ToString(); set => _money = new BigNumber(value); }
 
         public MoneyManager(string money, IPersistentProgressService persistentProgressService) { 
             _money = new BigNumber(money);

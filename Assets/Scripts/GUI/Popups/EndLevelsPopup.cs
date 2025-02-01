@@ -39,8 +39,8 @@ namespace Assets.Scripts.GUI.Popups
 
         public static void OpenPopup(IGameFactory gameFactory, Vector3 at)
         {
-            Popup.LoadPopUp(gameFactory, EndLevelsPopup.popupName, delegate (Popup popUp) {
-                
+            Popup.LoadPopUp(gameFactory, EndLevelsPopup.popupName, delegate (Popup popup) {
+                ((EndLevelsPopup) popup).Init();
             }, false, at);
         }
     }

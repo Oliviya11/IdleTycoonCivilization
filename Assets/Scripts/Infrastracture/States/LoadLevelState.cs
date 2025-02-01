@@ -96,7 +96,7 @@ namespace Assets.Scripts.Infrastracture.States
         {
             IPersistentProgressService persistentProgress = _services.Single<IPersistentProgressService>();
             string money = persistentProgress.Progress.money;
-            if (string.IsNullOrEmpty(money))
+            if (string.IsNullOrEmpty(money) || @params.isLevelUp)
             {
                 money = levelStaticData.initialMoney;
             }

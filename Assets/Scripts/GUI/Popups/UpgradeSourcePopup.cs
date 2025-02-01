@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using Colors = Assets.Scripts.GUI.Clolors;
 using Assets.Scripts.Utils;
+using System.Collections;
 
 namespace Assets.Scripts.GUI.Popups
 {
@@ -61,6 +62,7 @@ namespace Assets.Scripts.GUI.Popups
         void Start()
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
+            if (!group.gameObject.activeSelf) return;
             group.gameObject.SetActive(false);
             group.gameObject.SetActive(true);
         }

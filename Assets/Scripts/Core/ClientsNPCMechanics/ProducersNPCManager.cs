@@ -216,6 +216,10 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             {
                 go = source.state.ProduceProduct(producer.productPlace.position, new Vector3(0.44f, 0.6f, 0.44f));
             }
+            else if (product == Product.Tomato)
+            {
+                go = source.state.ProduceProduct(producer.productPlace.position, Vector3.one);
+            }
             go.transform.SetParent(producer.productPlace);
         }
 

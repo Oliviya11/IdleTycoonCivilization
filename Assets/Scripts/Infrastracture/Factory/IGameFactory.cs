@@ -30,6 +30,10 @@ namespace Assets.Scripts.Infrastracture.Factory
 
         GameObject CreateEgg(Vector3 at);
 
+        GameObject CreateTomato1(Vector3 at);
+
+        GameObject CreateTomato2(Vector3 at);
+
         GameObject CreatePopUp(string name);
 
         GameObject CreatePopUp(string name, Vector3 at);

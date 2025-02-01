@@ -171,6 +171,11 @@ namespace Assets.Scripts.Sources
             {
                 go = _services.Single<IGameFactory>().CreateEgg(position);
             }
+            else if (Product == Product.Tomato)
+            {
+                go = _services.Single<IGameFactory>().CreateTomato2(position);
+            }
+
             go.transform.localScale = scale;
 
             return go;
@@ -186,6 +191,10 @@ namespace Assets.Scripts.Sources
             else if (Product == Product.Egg)
             {
                 _services.Single<IGameFactory>().CreateChicken(position, Quaternion.Euler(new Vector3(0, 160, 0)));
+            }
+            else if (Product == Product.Tomato)
+            {
+                _services.Single<IGameFactory>().CreateTomato1(position);
             }
         }
 

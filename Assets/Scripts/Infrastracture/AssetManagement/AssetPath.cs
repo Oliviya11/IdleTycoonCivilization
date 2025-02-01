@@ -18,6 +18,8 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
         public const string PumpkinPath = "Easy Primitive People/Prefab/Pumpkin";
         public const string ChickenPath = "Easy Primitive Animals/FarmEdition/Prefabs/Animals/Chicken";
         public const string EggPath = "Easy Primitive Animals/FarmEdition/Prefabs/Props/Egg";
+        public const string Tomato1Path = "Low poly Farm/Prefabs/tomato";
+        public const string Tomato2Path = "Low poly Farm/Prefabs/tomato_2";
         public const string PopUpPath = "GUI/Popup/";
         public const string ProductIcon = "Product/Icon/";
         public const string LevelUpgradeItemPath = "GUI/Popup/UpgradeItem";

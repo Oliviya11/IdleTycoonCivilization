@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fcbad2cdd95e3e4fb18e1cc14cbc5e4, type: 3}
-  m_Name: SourceData2
+  m_Name: SourceData 3
   m_EditorClassIdentifier: 
   product: 3
-  initialState: 1
+  initialState: 0
   productionTime: 1
   upgrades:
   - priceCurve:
@@ -21,18 +21,18 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.85
-        inSlope: 2.9583335
-        outSlope: 2.9583335
+        value: 3
+        inSlope: 2.0833333
+        outSlope: 2.0833333
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.2
-        value: 4.4
-        inSlope: 2.9583335
-        outSlope: 2.9583335
+        value: 5.5
+        inSlope: 2.0833333
+        outSlope: 2.0833333
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -45,18 +45,18 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.9
-        inSlope: 1.05
-        outSlope: 1.05
+        value: 3.2
+        inSlope: 1.4
+        outSlope: 1.4
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
-        value: 3
-        inSlope: 1.05
-        outSlope: 1.05
+        value: 6
+        inSlope: 1.4
+        outSlope: 1.4
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -70,18 +70,18 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 1.2
-        value: 4.4
-        inSlope: 1.4285712
-        outSlope: 1.4285712
+        value: 6
+        inSlope: 1.0714285
+        outSlope: 1.0714285
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: 8.4
-        inSlope: 1.4285712
-        outSlope: 1.4285712
+        value: 9
+        inSlope: 1.0714285
+        outSlope: 1.0714285
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -94,7 +94,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 2
-        value: 3
+        value: 6
         inSlope: 1
         outSlope: 1
         tangentMode: 34
@@ -103,7 +103,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 4
-        value: 5
+        value: 8
         inSlope: 1
         outSlope: 1
         tangentMode: 34

@@ -84,5 +84,15 @@ namespace Assets.Scripts.Infrastracture.Factory
         {
             return _assetProvider.Instantiate(AssetPath.EggPath, at);
         }
+
+        public GameObject CreateTomato1(Vector3 at)
+        {
+            return _assetProvider.Instantiate(AssetPath.Tomato1Path, at);
+        }
+
+        public GameObject CreateTomato2(Vector3 at)
+        {
+            return _assetProvider.Instantiate(AssetPath.Tomato2Path, at);
+        }
     }
 }

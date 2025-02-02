@@ -24,13 +24,13 @@ namespace Assets.Scripts.Infrastracture.States
 {
     public class LoadLevelState : IPayloadedState<Params>
     {
-        IGameStateMachine _gameStateMachine;
-        SceneLoader _sceneLoader;
+        readonly IGameStateMachine _gameStateMachine;
+        readonly SceneLoader _sceneLoader;
         readonly AllServices _services;
         Hud hud;
         Params @params;
-        WinLevelCurtain _curtain;
-        BoosterRunner _boosterRunner;
+        readonly WinLevelCurtain _curtain;
+        readonly BoosterRunner _boosterRunner;
 
         public class Params
         {

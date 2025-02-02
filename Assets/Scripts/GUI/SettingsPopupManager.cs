@@ -8,9 +8,9 @@ namespace Assets.Scripts.GUI
 {
     public class SettingsPopupManager
     {
-        IAudioManager _audioManager;
-        IPersistentProgressService _persistentProgress;
-        IGameFactory _gameFactory;
+        readonly IAudioManager _audioManager;
+        readonly IPersistentProgressService _persistentProgress;
+        readonly IGameFactory _gameFactory;
 
         public SettingsPopupManager(IAudioManager audioManager, IPersistentProgressService persistentProgress, IGameFactory gameFactory) {
             _audioManager = audioManager;

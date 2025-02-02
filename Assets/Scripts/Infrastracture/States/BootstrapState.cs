@@ -16,7 +16,7 @@ namespace Assets.Scripts.Infrastracture.States
         private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
-        AudioManager.Settings _soundManagerSettings;
+        readonly AudioManager.Settings _soundManagerSettings;
 
         public BootstrapState(IGameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services, AudioManager.Settings soundManagerSettings)
         {

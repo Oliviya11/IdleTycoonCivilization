@@ -19,19 +19,19 @@ namespace Assets.Scripts.GUI.Popups
 
         public class Params : IParams
         {
-            public UnityAction OnSoundClick;
-            public UnityAction OnMusicClick;
-            public UnityAction OnNoSoundClick;
-            public UnityAction OnNoMusicClick;
-            public bool _isSound;
-            public bool _isMusic;
+            public readonly UnityAction _onSoundClick;
+            public readonly UnityAction _onMusicClick;
+            public readonly UnityAction _onNoSoundClick;
+            public readonly UnityAction _onNoMusicClick;
+            public readonly bool _isSound;
+            public readonly bool _isMusic;
 
             public Params(UnityAction onSoundClick, UnityAction onMusicClick, UnityAction onNoSoundClick, UnityAction onNoMusicClick, bool isSound, bool isMusic)
             {
-                OnSoundClick = onSoundClick;
-                OnMusicClick = onMusicClick;
-                OnNoSoundClick = onNoSoundClick;
-                OnNoMusicClick = onNoMusicClick;
+                _onSoundClick = onSoundClick;
+                _onMusicClick = onMusicClick;
+                _onNoSoundClick = onNoSoundClick;
+                _onNoMusicClick = onNoMusicClick;
                 _isSound = isSound;
                 _isMusic = isMusic;
             }
@@ -63,13 +63,13 @@ namespace Assets.Scripts.GUI.Popups
             }
 
             soundButton.onClick.AddListener(delegate {
-                p.OnSoundClick();
+                p._onSoundClick();
                 noSoundButton.gameObject.SetActive(true);
                 soundButton.gameObject.SetActive(false);
             });
 
             noSoundButton.onClick.AddListener(delegate {
-                p.OnNoSoundClick();
+                p._onNoSoundClick();
                 soundButton.gameObject.SetActive(true);
                 noSoundButton.gameObject.SetActive(false);
             });
@@ -86,13 +86,13 @@ namespace Assets.Scripts.GUI.Popups
             }
 
             musicButton.onClick.AddListener(delegate {
-                p.OnMusicClick();
+                p._onMusicClick();
                 noMusicButton.gameObject.SetActive(true);
                 musicButton.gameObject.SetActive(false);
             });
             noMusicButton.onClick.AddListener(delegate
             {
-                p.OnNoMusicClick();
+                p._onNoMusicClick();
                 musicButton.gameObject.SetActive(true);
                 noMusicButton.gameObject.SetActive(false);
             });

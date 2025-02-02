@@ -8,7 +8,7 @@ namespace Assets.Scripts.Core.Money.Services
     {
         public event Action<string> OnMoneyChanged;
         BigNumber _money;
-        IPersistentProgressService _persistentProgressService;
+        readonly IPersistentProgressService _persistentProgressService;
 
         public string Money {get => _money.ToString(); set => _money = new BigNumber(value); }
 

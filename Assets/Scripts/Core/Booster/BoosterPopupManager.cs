@@ -12,7 +12,7 @@ namespace Assets.Scripts.Core.Booster
     public class BoosterPopupManager
     {
         readonly IBoosterManager _boosterManager;
-        IGameFactory _gameFactory;
+        readonly IGameFactory _gameFactory;
 
         public BoosterPopupManager(IBoosterManager boosterManager, IGameFactory gameFactory) {
             _boosterManager = boosterManager;

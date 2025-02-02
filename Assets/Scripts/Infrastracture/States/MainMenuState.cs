@@ -22,7 +22,7 @@ namespace Assets.Scripts.Infrastracture.States
         private readonly SceneLoader _sceneLoader;
         private readonly MainMenu _mainMenuPrefab;
         private MainMenu _mainMenu;
-        private AllServices _services;
+        private readonly AllServices _services;
 
         public MainMenuState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, MainMenu mainMenuPrefab, AllServices services)
         {
@@ -71,7 +71,6 @@ namespace Assets.Scripts.Infrastracture.States
             _mainMenu.settingsButton.onClick.RemoveAllListeners();
         }
 
-        //TODO redo main menu instantiation
         private void OnLoaded()
         {
             _mainMenu = GameObject.Instantiate(_mainMenuPrefab);

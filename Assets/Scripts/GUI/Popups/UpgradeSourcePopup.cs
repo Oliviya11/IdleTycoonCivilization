@@ -28,23 +28,23 @@ namespace Assets.Scripts.GUI.Popups
 
         public class Params : IParams
         {
-            public Action<UpgradeSourcePopup> OnUpgradeClick;
-            public int _currentLevel;
-            public int _maxLevel;
-            public string _profit;
-            public string _price;
-            public float _duration;
-            public int _maxUpgrades;
-            public int _currentUpgrades;
-            public Func<bool> IsUpdateAvailable;
-            public string _title;
-            public int _currentUpgradeLevel;
-            public int _maxUpgradeLevel;
+            public readonly Action<UpgradeSourcePopup> _onUpgradeClick;
+            public readonly int _currentLevel;
+            public readonly int _maxLevel;
+            public readonly string _profit;
+            public readonly string _price;
+            public readonly float _duration;
+            public readonly int _maxUpgrades;
+            public readonly int _currentUpgrades;
+            public readonly Func<bool> IsUpdateAvailable;
+            public readonly string _title;
+            public readonly int _currentUpgradeLevel;
+            public readonly int _maxUpgradeLevel;
 
             public Params(Action<UpgradeSourcePopup> onUpgradeClick, int currentLevel, int maxLevel, string profit, string price,
                 float duration, int maxUpgrades, int currentUpgrades, Func<bool> isUpdateAvailable, string title, int currentUpgradeLevel, int maxUpgradeLevel)
             {
-                OnUpgradeClick = onUpgradeClick;
+                _onUpgradeClick = onUpgradeClick;
                 _currentLevel = currentLevel;
                 _maxLevel = maxLevel;
                 _profit = profit;
@@ -100,7 +100,7 @@ namespace Assets.Scripts.GUI.Popups
 
                 upgradeButton.onClick.AddListener(delegate ()
                 {
-                    p.OnUpgradeClick.Invoke(this);
+                    p._onUpgradeClick.Invoke(this);
                 });
 
                 UpgradeStars(p);

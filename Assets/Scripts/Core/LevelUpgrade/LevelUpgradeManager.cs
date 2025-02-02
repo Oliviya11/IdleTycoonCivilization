@@ -18,15 +18,15 @@ namespace Assets.Scripts.Core.LevelUpgrade
 {
     public class LevelUpgradeManager
     {
-        LevelUpgradeStaticData _upgradeData;
-        ISourcesManager _sourcesManager;
-        IGameFactory _gameFactory;
-        IMoneyManager _moneyManager;
-        ClientsNPCManager _clientsNPCManager;
-        ProducersNPCManager _producersNPCManager;
-        SourcesCollectionClick _sourcesCollectionClick;
-        List<UpgradeItem> _items = new List<UpgradeItem>();
-        IPersistentProgressService _persistentProgress;
+        readonly LevelUpgradeStaticData _upgradeData;
+        readonly ISourcesManager _sourcesManager;
+        readonly IGameFactory _gameFactory;
+        readonly IMoneyManager _moneyManager;
+        readonly ClientsNPCManager _clientsNPCManager;
+        readonly ProducersNPCManager _producersNPCManager;
+        readonly SourcesCollectionClick _sourcesCollectionClick;
+        readonly List<UpgradeItem> _items = new List<UpgradeItem>();
+        readonly IPersistentProgressService _persistentProgress;
 
         public LevelUpgradeManager(LevelUpgradeStaticData upgradeData, ISourcesManager sourcesManager, IGameFactory gameFactory,
             IMoneyManager moneyManager, ClientsNPCManager clientsNPCManager, ProducersNPCManager producersNPCManager,

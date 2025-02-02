@@ -18,12 +18,12 @@ namespace Assets.Scripts.GUI
 
         public class Params : IParams
         {
-            public Action OnUnlockClick;
-            public string _price;
-            public Func<bool> IsUpdateAvailable;
+            public readonly Action _onUnlockClick;
+            public readonly string _price;
+            public readonly Func<bool> IsUpdateAvailable;
             public Params(Action onUnlockClick, string price, Func<bool> isUpdateAvailable)
             {
-                OnUnlockClick = onUnlockClick;
+                _onUnlockClick = onUnlockClick;
                 _price = price;
                 IsUpdateAvailable = isUpdateAvailable;
             }
@@ -58,7 +58,7 @@ namespace Assets.Scripts.GUI
 
             unlockButton.onClick.AddListener(delegate()
             {
-                p.OnUnlockClick.Invoke();
+                p._onUnlockClick.Invoke();
                 Hide();
             });
 

@@ -7,7 +7,7 @@ namespace Assets.Scripts.Core.Sources.Services
 {
     public class SourcesManager : ISourcesManager
     {
-        Dictionary<Product, Source> _sources = new();
+        readonly Dictionary<Product, Source> _sources = new();
 
         public void OpenSource(Product product, Source source)
         {

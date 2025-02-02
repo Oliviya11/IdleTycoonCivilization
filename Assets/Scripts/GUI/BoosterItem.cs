@@ -13,10 +13,10 @@ namespace Assets.Scripts.GUI
 
         public class Params
         {
-            public UnityAction OnUseButtonClick;
-            public Sprite _sprite;
-            public string _description;
-            public int _number;
+            public readonly UnityAction OnUseButtonClick;
+            public readonly Sprite _sprite;
+            public readonly string _description;
+            public readonly int _number;
 
             public Params(UnityAction onUseButtonClick, Sprite sprite, string description, int number)
             {

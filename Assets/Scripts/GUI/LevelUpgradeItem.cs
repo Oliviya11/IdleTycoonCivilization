@@ -22,29 +22,29 @@ namespace Assets.Scripts.GUI
 
         public class Params
         {
-            public string description;
-            public string title;
-            public string price;
-            public Sprite sprite;
-            public UnityAction onButtonClick;
-            public Func<bool> isUpgradeAvaialble;
+            public readonly string _description;
+            public readonly string _title;
+            public readonly string _price;
+            public readonly Sprite _sprite;
+            public readonly UnityAction _onButtonClick;
+            public readonly Func<bool> _isUpgradeAvaialble;
 
             public Params(string description, string title, string price, Sprite sprite, UnityAction onButtonClick, Func<bool> isUpgradeAvaialble)
             {
-                this.description = description;
-                this.title = title;
-                this.price = price;
-                this.sprite = sprite;
-                this.onButtonClick = onButtonClick;
-                this.isUpgradeAvaialble = isUpgradeAvaialble;
+                _description = description;
+                _title = title;
+                _price = price;
+                _sprite = sprite;
+                _onButtonClick = onButtonClick;
+                _isUpgradeAvaialble = isUpgradeAvaialble;
             }
         }
 
         public void Update()
         {
-            if (@params.isUpgradeAvaialble == null) return;
+            if (@params._isUpgradeAvaialble == null) return;
 
-            button.enabled = @params.isUpgradeAvaialble();
+            button.enabled = @params._isUpgradeAvaialble();
             button.UpdateOnState(buttonText);
         }
 
@@ -56,11 +56,11 @@ namespace Assets.Scripts.GUI
         public void Construct(Params p)
         {
             @params = p;
-            description.text = p.description;
-            title.text = p.title;
-            buttonText.text = p.price;
-            image.sprite = p.sprite;
-            button.onClick.AddListener(p.onButtonClick);
+            description.text = p._description;
+            title.text = p._title;
+            buttonText.text = p._price;
+            image.sprite = p._sprite;
+            button.onClick.AddListener(p._onButtonClick);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace Assets.Scripts.Infrastracture.States
 {
     public class LoadNextLevelState : IState
     {
-        AllServices _services;
-        IGameStateMachine _gameStateMachine;
+        readonly AllServices _services;
+        readonly IGameStateMachine _gameStateMachine;
 
         public LoadNextLevelState(IGameStateMachine gameStateMachine, AllServices services)
         {

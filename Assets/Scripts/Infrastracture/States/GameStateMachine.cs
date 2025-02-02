@@ -5,6 +5,7 @@ using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Infrastracture.States
 {
     public class GameStateMachine : IGameStateMachine
     {
-        private Dictionary<Type, IExitableState> _states;
+        private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
         public GameStateMachine(SceneLoader sceneLoader, AllServices services, MainMenu mainMenuPrefab, WinLevelCurtain winLevelCurtain, 

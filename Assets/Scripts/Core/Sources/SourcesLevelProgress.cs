@@ -10,9 +10,9 @@ namespace Assets.Scripts.Core.Sources
 {
     public class SourcesLevelProgress
     {
-        SourcesCollection _sourcesCollection;
-        ProgressBar _progressBar;
-        IGameStateMachine _gameStateMachine;
+        readonly SourcesCollection _sourcesCollection;
+        readonly ProgressBar _progressBar;
+        readonly IGameStateMachine _gameStateMachine;
         int _maxValue;
 
         public SourcesLevelProgress(ProgressBar progressBar, SourcesCollection sourcesCollection, IGameStateMachine gameStateMachine)

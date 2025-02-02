@@ -16,7 +16,7 @@ namespace Assets.Scripts.Core.Booster.Service
         public event Action<Booster> OnBoosterActivated;
         public event Action<Booster> OnBoosterDeactivated;
         Booster activatedBooster;
-        IPersistentProgressService _persistentProgressService;
+        readonly IPersistentProgressService _persistentProgressService;
 
         public BoosterManager(List<BoosterStaticData> staticData, IPersistentProgressService persistentProgressService)
         {

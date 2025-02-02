@@ -73,8 +73,6 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         void OnBoosterActivated(BoosterType booster)
         {
-            Debug.LogError("Producers: " + booster.ToString());
-
             if (booster == BoosterType.BoostProfit_x2)
             {
                 _profitModifier = "2";
@@ -87,7 +85,6 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         void OnBoosterDeactivated(BoosterType booster)
         {
-            Debug.LogError("Deactivate Producers: " + booster.ToString());
             if (booster == BoosterType.BoostProfit_x2)
             {
                 _profitModifier = "1";

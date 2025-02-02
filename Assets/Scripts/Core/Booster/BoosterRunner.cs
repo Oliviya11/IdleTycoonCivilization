@@ -36,7 +36,6 @@ namespace Assets.Scripts.Core.Booster
 
         void OnBoosterActivated(Booster booster) {
             _duration = _boosterManager.boostersStaticData[booster].duration;
-            Debug.LogError(_duration);
         }
     }
 }

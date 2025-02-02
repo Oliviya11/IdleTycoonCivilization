@@ -30,7 +30,6 @@ namespace Assets.Scripts.Core.Booster
 
         void OnBoosterActivated(Booster booster)
         {
-            Debug.LogError("Booster icon: " + booster.ToString());
             icon.gameObject.SetActive(true);
             BoosterStaticData data = _boosterManager.boostersStaticData[booster];
             icon.sprite = data.icon;
@@ -38,7 +37,6 @@ namespace Assets.Scripts.Core.Booster
 
         void OnBoosterDeactivated(Booster booster)
         {
-            Debug.LogError("Deactivate Booster icon: " + booster.ToString());
             icon.gameObject.SetActive(false);
         }
     }

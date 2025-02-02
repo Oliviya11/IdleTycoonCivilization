@@ -9,5 +9,6 @@ namespace Assets.Scripts.StaticData
         public Booster booster;
         public Sprite icon;
         public string description;
+        public float duration;
     }
 }

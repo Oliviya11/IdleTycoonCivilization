@@ -6,6 +6,7 @@ using UnityEngine;
 using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Services.SaveLoad;
 using Assets.Scripts.Services.Audio;
+using Assets.Scripts.Core.Booster;
 
 namespace Assets.Scripts.Infrastracture
 {
@@ -14,12 +15,13 @@ namespace Assets.Scripts.Infrastracture
         [SerializeField] MainMenu mainMenuPrefab;
         [SerializeField] WinLevelCurtain winLevelCurtainPrefab;
         [SerializeField] AudioManager.Settings soundManagerSettings;
+        [SerializeField] BoosterRunner boosterRunner;
         
         private Game _game;
 
         public void Awake()
         {
-            _game = new Game(this, mainMenuPrefab, Instantiate(winLevelCurtainPrefab), soundManagerSettings);
+            _game = new Game(this, mainMenuPrefab, Instantiate(winLevelCurtainPrefab), soundManagerSettings, boosterRunner);
 
             _game.StateMachine.Enter<BootstrapState>();
 

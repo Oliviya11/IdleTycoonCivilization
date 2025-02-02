@@ -124,5 +124,10 @@ namespace Assets.Scripts.Infrastracture.Factory
             ProgressReaders.Clear();
             ProgressWriters.Clear();
         }
+
+        public BoosterItem CreateBoosterItem(Transform parent)
+        {
+            return _assetProvider.Instantiate(AssetPath.BoosterItemPath).GetComponent<BoosterItem>();
+        }
     }
 }

@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.GUI.Popups
 {
-    public class LevelUpgradePopup : Popup
+    public class BoosterPopup : Popup
     {
         [SerializeField] List<Button> closeButtons;
         public RectTransform content;
 
-        const string popupName = "LevelUpgradePopup";
+        const string popupName = "BoosterPopup";
 
         public override void OnDestroy()
         {
@@ -19,7 +19,7 @@ namespace Assets.Scripts.GUI.Popups
             {
                 closeButton.onClick.RemoveAllListeners();
             }
- 
+
             base.OnDestroy();
         }
 
@@ -39,12 +39,12 @@ namespace Assets.Scripts.GUI.Popups
             return popupName;
         }
 
-        public static void OpenPopup(IGameFactory gameFactory, Vector3 at, Action<LevelUpgradePopup> onPopupCreated)
+        public static void OpenPopup(IGameFactory gameFactory, Vector3 at, Action<BoosterPopup> onPopupCreated)
         {
-            Popup.LoadPopUp(gameFactory, LevelUpgradePopup.popupName, delegate (Popup popUp) {
-                LevelUpgradePopup levelUpgradePopup = popUp as LevelUpgradePopup;
-                levelUpgradePopup.Init();
-                onPopupCreated(levelUpgradePopup);
+            Popup.LoadPopUp(gameFactory, BoosterPopup.popupName, delegate(Popup popUp) {
+                BoosterPopup boosterPopup = popUp as BoosterPopup;
+                boosterPopup.Init();
+                onPopupCreated(boosterPopup);
             }, false, at);
         }
     }

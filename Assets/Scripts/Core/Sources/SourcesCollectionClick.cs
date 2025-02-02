@@ -161,7 +161,7 @@ namespace Assets.Scripts.Sources
 
         private void AddBooster(SourceUpgrade u)
         {
-            if (u.CurrentUpgradeLevel == u.GetUpgradeLevels())
+            if (u.CurrentUpgradeLevel == 0)
             {
                 _services.Single<IBoosterManager>().AddBooster();
             }

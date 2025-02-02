@@ -878,7 +878,7 @@ MonoBehaviour:
   settingsButton: {fileID: 5588313770158796732}
   progressBar: {fileID: 6113809280531727480}
   presentButton: {fileID: 3382416764658349959}
-  booster: {fileID: 2003035024455502607}
+  booster: {fileID: 7421040464232773915}
 --- !u!1 &7285704106694133165
 GameObject:
   m_ObjectHideFlags: 0

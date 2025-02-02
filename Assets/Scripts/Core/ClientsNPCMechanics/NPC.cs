@@ -12,9 +12,10 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             agent.updateRotation = true;
         }
 
-        public void Move(Vector3 destination)
+        public void Move(Vector3 destination, float speed)
         {
             agent.isStopped = false;
+            agent.speed = speed;
             agent.destination = destination;
         }
 

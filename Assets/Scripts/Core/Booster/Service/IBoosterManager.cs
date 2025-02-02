@@ -13,5 +13,8 @@ namespace Assets.Scripts.Core.Booster.Service
         event Action<Booster> OnBoosterActivated;
         event Action<Booster> OnBoosterDeactivated;
         void AddBooster();
+
+        void ActivateBooster(Booster booster);
+        void DeactivateBooster();
     }
 }

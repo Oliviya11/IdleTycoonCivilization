@@ -9,8 +9,8 @@ namespace Assets.Scripts.Core.Booster.Service
 {
     public class BoosterManager : IBoosterManager
     {
-        public Dictionary<Booster, BoosterStaticData> boostersStaticData { get; }
-        public Dictionary<Booster, int> boosterToNumber { get;  }
+        public Dictionary<Booster, BoosterStaticData> boostersStaticData { get; } = new();
+        public Dictionary<Booster, int> boosterToNumber { get; } = new();
         public event Action<Booster> OnBoosterActivated;
         public event Action<Booster> OnBoosterDeactivated;
         Booster activatedBooster;
@@ -34,19 +34,20 @@ namespace Assets.Scripts.Core.Booster.Service
             }
             else
             {
-                boosterToNumber[booster] = 0;
+                boosterToNumber[booster] = 1;
             }
         }
 
         public void ActivateBooster(Booster booster)
         {
             activatedBooster = booster;
+            --boosterToNumber[booster];
             OnBoosterActivated?.Invoke(booster);
         }
 
-        public void Deactivte(Booster booster)
+        public void DeactivateBooster()
         {
-            OnBoosterDeactivated?.Invoke(booster);
+            OnBoosterDeactivated?.Invoke(activatedBooster);
             activatedBooster = Booster.None;
         }
 

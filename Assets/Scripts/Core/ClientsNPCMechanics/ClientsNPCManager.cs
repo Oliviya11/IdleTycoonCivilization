@@ -16,6 +16,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 {
     public class ClientsNPCManager : MonoBehaviour, ISavedProgress
     {
+        float _clientSpeed = 5;
         [SerializeField] int maxClients;
         [SerializeField] float processWithProducer;
         [SerializeField] List<Transform> spawnPoints;
@@ -67,7 +68,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                 var client = _pool.Get();
                 int id = client.gameObject.GetInstanceID();
                 PlacesPair pair = _clientToPlace[id];
-                client.Move(pair.clientPlace.position);
+                client.Move(pair.clientPlace.position, _clientSpeed);
                 client.Product = p;
                 _clients.Add(client);
             }
@@ -96,7 +97,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         public void Leave(ClientNPC clientNPC)
         {
             clientNPC.CurrentState = ClientNPC.State.Leave;
-            clientNPC.Move(ChooseRandomStartPosition());
+            clientNPC.Move(ChooseRandomStartPosition(), _clientSpeed);
             clientNPC.productVisualizer.Hide();
         }
 

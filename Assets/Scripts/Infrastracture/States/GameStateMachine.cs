@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GUI;
+﻿using Assets.Scripts.Core.Booster;
+using Assets.Scripts.GUI;
 using Assets.Scripts.GUI.Popups;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
@@ -16,14 +17,14 @@ namespace Assets.Scripts.Infrastracture.States
         private IExitableState _activeState;
 
         public GameStateMachine(SceneLoader sceneLoader, AllServices services, MainMenu mainMenuPrefab, WinLevelCurtain winLevelCurtain, 
-            Services.Audio.AudioManager.Settings soundManagerSettings)
+            Services.Audio.AudioManager.Settings soundManagerSettings, BoosterRunner boosterRunner)
         {
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, soundManagerSettings),
                 [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, mainMenuPrefab, services),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services, winLevelCurtain),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services, winLevelCurtain, boosterRunner),
                 [typeof(GameLoopState)] = new GameLoopState(),
                 [typeof(LoadNextLevelState)] = new LoadNextLevelState(this, services),
             };

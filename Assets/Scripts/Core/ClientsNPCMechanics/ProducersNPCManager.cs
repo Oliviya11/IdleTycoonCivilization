@@ -18,6 +18,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 {
     public class ProducersNPCManager : MonoBehaviour, ISavedProgress
     {
+        float _producersSpeed = 5;
         const float producerTargetAngle = 0f;
         private const float OrderProcessingTime = 0.5f;
         List<ProducerNPC> _producers;
@@ -72,6 +73,8 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         void OnBoosterActivated(BoosterType booster)
         {
+            Debug.LogError("Producers: " + booster.ToString());
+
             if (booster == BoosterType.BoostProfit_x2)
             {
                 _profitModifier = "2";
@@ -84,6 +87,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         void OnBoosterDeactivated(BoosterType booster)
         {
+            Debug.LogError("Deactivate Producers: " + booster.ToString());
             if (booster == BoosterType.BoostProfit_x2)
             {
                 _profitModifier = "1";
@@ -163,7 +167,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     producer.sleepingParticles.Hide();
                     Vector3 destination = _clientsNPCManager.GetProducerPlace(clientNPC.gameObject.GetInstanceID());
                     producer.CurrentState = ProducerNPC.State.MoveToClientForOrder;
-                    producer.Move(destination);
+                    producer.Move(destination, _producersSpeed * _producerSpeedModifier);
                     _producersToClients[producer.gameObject.GetInstanceID()] = clientNPC;
                 }
             }
@@ -190,7 +194,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
             producerNPC.sleepingParticles.Hide();
             _producerToPlace[id] = tr;
-            producerNPC.Move(tr.position);
+            producerNPC.Move(tr.position, _producersSpeed * _producerSpeedModifier);
         }
 
         private static void MoveToSleepWithOrder(ProducerNPC producerNPC)
@@ -205,7 +209,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             producerNPC.CurrentState = ProducerNPC.State.MoveToClientWithOrder;
             ClientNPC clientNPC = _producersToClients[producerNPC.gameObject.GetInstanceID()];
             Vector3 place = _clientsNPCManager.GetProducerPlace(clientNPC.gameObject.GetInstanceID());
-            producerNPC.Move(place);
+            producerNPC.Move(place, _producersSpeed * _producerSpeedModifier);
             Source source = GetSource(producerNPC.gameObject.GetInstanceID());
             producerNPC.profitVisualizer.SourceUpgrade = source.upgrade;
             producerNPC.profitVisualizer.Show();

@@ -23,5 +23,6 @@ namespace Assets.Scripts.Infrastracture.AssetManagement
         public const string PopUpPath = "GUI/Popup/";
         public const string ProductIcon = "Product/Icon/";
         public const string LevelUpgradeItemPath = "GUI/Popup/UpgradeItem";
+        public const string BoosterItemPath = "GUI/Popup/BoosterItem";
     }
 }

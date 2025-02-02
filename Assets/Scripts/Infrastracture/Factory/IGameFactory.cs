@@ -30,6 +30,8 @@ namespace Assets.Scripts.Infrastracture.Factory
 
         LevelUpgradeItem CreateLevelUpgradeItem(Transform parent);
 
+        BoosterItem CreateBoosterItem(Transform parent);
+
         GameObject CreatePumpkin(Vector3 at);
 
         GameObject CreateChicken(Vector3 at, Quaternion rotation);

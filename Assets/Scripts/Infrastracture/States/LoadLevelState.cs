@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.Booster.Service;
+﻿using Assets.Scripts.Core.Booster;
+using Assets.Scripts.Core.Booster.Service;
 using Assets.Scripts.Core.ClientsNPCMechanics;
 using Assets.Scripts.Core.LevelUpgrade;
 using Assets.Scripts.Core.Money.Services;
@@ -28,7 +29,8 @@ namespace Assets.Scripts.Infrastracture.States
         readonly AllServices _services;
         Hud hud;
         Params @params;
-        WinLevelCurtain curtain;
+        WinLevelCurtain _curtain;
+        BoosterRunner _boosterRunner;
 
         public class Params
         {
@@ -44,12 +46,13 @@ namespace Assets.Scripts.Infrastracture.States
             }
         }
 
-        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services, WinLevelCurtain curtain)
+        public LoadLevelState(IGameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services, WinLevelCurtain curtain, BoosterRunner boosterRunner)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
-            this.curtain = curtain;
+            _curtain = curtain;
+            _boosterRunner = boosterRunner;
         }
 
         void IPayloadedState<Params>.Enter(Params p)
@@ -57,7 +60,7 @@ namespace Assets.Scripts.Infrastracture.States
             @params = p;
             if (p.level > 1 && p.isLevelUp)
             {
-                curtain.Show();
+                _curtain.Show();
             }
             _sceneLoader.Load(p.sceneName, true, OnLoaded);
         }
@@ -69,7 +72,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void OnLoaded()
         {
-            if (curtain != null) curtain.Hide();
+            if (_curtain != null) _curtain.Hide();
 
             ISourcesManager sourcesManager = CreateSourcesManager();
 
@@ -84,8 +87,7 @@ namespace Assets.Scripts.Infrastracture.States
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
 
             IStaticDataService staticData = _services.Single<IStaticDataService>();
-            IBoosterManager boosterManager = new BoosterManager(staticData.GetBoosters());
-            _services.RegisterSingle<IBoosterManager>(boosterManager);
+            InitBoosterManager(staticData);
 
             ProducersNPCManager producersNPCManager = CreateProducersManager(levelStaticData, sourcesManager, producer, clientsNPCManager);
 
@@ -97,6 +99,14 @@ namespace Assets.Scripts.Infrastracture.States
             InformProgressReaders();
 
             sources.levelProgress = new SourcesLevelProgress(hud.progressBar, sources, _gameStateMachine);
+
+            _boosterRunner.Construct(_services.Single<IBoosterManager>());
+        }
+
+        private void InitBoosterManager(IStaticDataService staticData)
+        {
+            IBoosterManager boosterManager = new BoosterManager(staticData.GetBoosters());
+            _services.RegisterSingle<IBoosterManager>(boosterManager);
         }
 
         private IMoneyManager InitMoneyManager(LevelStaticData levelStaticData)
@@ -120,6 +130,8 @@ namespace Assets.Scripts.Infrastracture.States
                 _services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>());
             hud.settingsButton.onClick.AddListener(settingsPopupManager.OpenPopup);
             hud.booster.Construct(_services.Single<IBoosterManager>());
+            BoosterPopupManager boosterPopupManager = new BoosterPopupManager(_services.Single<IBoosterManager>(), _services.Single<IGameFactory>());
+            hud.presentButton.onClick.AddListener(boosterPopupManager.OpenPoup);
         }
 
         private ProducersNPCManager CreateProducersManager(LevelStaticData levelData, ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)

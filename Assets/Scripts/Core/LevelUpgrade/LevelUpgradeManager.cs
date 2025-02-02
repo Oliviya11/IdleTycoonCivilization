@@ -46,7 +46,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
         public void OpenPopup()
         {
             List<UpgradeItem> itemsToIterate = new List<UpgradeItem>(items);
-            LevelUpgradePopup.OpenPopup(new LevelUpgradePopup.Params(), gameFactory, Vector3.zero, delegate (LevelUpgradePopup p) {
+            LevelUpgradePopup.OpenPopup(gameFactory, Vector3.zero, delegate (LevelUpgradePopup p) {
                 foreach (UpgradeItem item in itemsToIterate)
                 {
                     LevelUpgradeItem upgrade = gameFactory.CreateLevelUpgradeItem(p.content);

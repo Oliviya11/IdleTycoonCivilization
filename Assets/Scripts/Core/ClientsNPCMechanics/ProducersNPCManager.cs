@@ -2,11 +2,9 @@
 using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.Data;
 using Assets.Scripts.Infrastracture.Factory;
-using Assets.Scripts.Services;
 using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Services.Audio;
 using Assets.Scripts.Sources;
-using Assets.Scripts.StaticData;
 using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +41,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         }
 
         ProfitModifier _profitModifier = new ProfitModifier();
+        BoosterType _booster;
 
         public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager,
             IMoneyManager moneyManager, IGameFactory gameFactory, Vector3 producerSpawnPoint, float producerRotationAngle,
@@ -80,6 +79,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         void OnBoosterActivated(BoosterType booster)
         {
+            _booster = booster;
             if (booster == BoosterType.BoostProfit_x2)
             {
                 _profitModifier.modifier = "2";
@@ -92,6 +92,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
 
         void OnBoosterDeactivated(BoosterType booster)
         {
+            _booster = BoosterType.None;
             if (booster == BoosterType.BoostProfit_x2)
             {
                 _profitModifier.modifier = "1";
@@ -318,6 +319,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         public void UpdateProgress(PlayerProgress progress)
         {
             progress.producers = _producers.Count - 1;
+            progress.booster = _booster;
         }
 
         public void LoadProgress(PlayerProgress progress)
@@ -325,6 +327,12 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             for (int i = 0; i < progress.producers; ++i)
             {
                 SpawnProducer();
+            }
+
+            _booster = progress.booster;
+            if (_booster != BoosterType.None)
+            {
+                _boosterManager.ActivateBooster(_booster);
             }
         }
     }

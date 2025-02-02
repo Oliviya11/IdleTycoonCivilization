@@ -91,13 +91,19 @@ namespace Assets.Scripts.Infrastracture.States
             LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager,
                 _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager, sources.click);
 
-            InitHud(levelUpgradeManager);
+            Booster booster = _services.Single<IPersistentProgressService>().Progress.booster;
+            InitHud(levelUpgradeManager, booster);
 
             InformProgressReaders();
 
             sources.levelProgress = new SourcesLevelProgress(hud.progressBar, sources, _gameStateMachine);
 
-            _boosterRunner.Construct(_services.Single<IBoosterManager>());
+            _boosterRunner.Construct(_services.Single<IBoosterManager>(), _services.Single<IPersistentProgressService>());
+
+            if (booster != Booster.None)
+            {
+                _boosterRunner.OnBoosterActivated(booster);
+            }
         }
 
         private IMoneyManager InitMoneyManager(LevelStaticData levelStaticData)
@@ -113,7 +119,7 @@ namespace Assets.Scripts.Infrastracture.States
             return moneyManager;
         }
 
-        private void InitHud(LevelUpgradeManager levelUpgradeManager)
+        private void InitHud(LevelUpgradeManager levelUpgradeManager, Booster booster)
         {
             hud = _services.Single<IGameFactory>().CreateHud().GetComponent<Hud>();
             hud.upgradeButton.onClick.AddListener(levelUpgradeManager.OpenPopup);
@@ -121,6 +127,10 @@ namespace Assets.Scripts.Infrastracture.States
                 _services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>());
             hud.settingsButton.onClick.AddListener(settingsPopupManager.OpenPopup);
             hud.booster.Construct(_services.Single<IBoosterManager>());
+            if (booster != Booster.None)
+            {
+                hud.booster.OnBoosterActivated(booster);
+            }
             BoosterPopupManager boosterPopupManager = new BoosterPopupManager(_services.Single<IBoosterManager>(), _services.Single<IGameFactory>());
             hud.presentButton.onClick.AddListener(boosterPopupManager.OpenPoup);
         }

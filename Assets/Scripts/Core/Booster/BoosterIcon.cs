@@ -10,13 +10,6 @@ namespace Assets.Scripts.Core.Booster
         [SerializeField] Image icon;
         IBoosterManager _boosterManager;
 
-        void Start()
-        {
-            _boosterManager.OnBoosterActivated += OnBoosterActivated;
-            _boosterManager.OnBoosterDeactivated += OnBoosterDeactivated;
-            OnBoosterDeactivated(Booster.None);
-        }
-
         void OnDestroy()
         {
             _boosterManager.OnBoosterActivated -= OnBoosterActivated;
@@ -26,9 +19,12 @@ namespace Assets.Scripts.Core.Booster
         public void Construct(IBoosterManager boosterManager)
         {
             _boosterManager = boosterManager;
+            _boosterManager.OnBoosterActivated += OnBoosterActivated;
+            _boosterManager.OnBoosterDeactivated += OnBoosterDeactivated;
+            OnBoosterDeactivated(Booster.None);
         }
 
-        void OnBoosterActivated(Booster booster)
+        public void OnBoosterActivated(Booster booster)
         {
             icon.gameObject.SetActive(true);
             BoosterStaticData data = _boosterManager.boostersStaticData[booster];

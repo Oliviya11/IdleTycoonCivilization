@@ -11,6 +11,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Assets.Scripts.Services.Audio;
 using Assets.Scripts.Infrastracture.Factory;
+using Assets.Scripts.Core.Booster.Service;
 
 namespace Assets.Scripts.Infrastracture.States
 {
@@ -37,6 +38,7 @@ namespace Assets.Scripts.Infrastracture.States
             SetAudio();
 
             _sceneLoader.Load(MainMenu, false, onLoaded: OnLoaded);
+            _services.Single<IBoosterManager>().Load();
         }
 
         private void SetAudio()

@@ -16,5 +16,9 @@ namespace Assets.Scripts.Core.Booster.Service
 
         void ActivateBooster(Booster booster);
         void DeactivateBooster();
+
+        void Save();
+
+        void Load();
     }
 }

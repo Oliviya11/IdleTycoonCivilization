@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Services;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Services;
+using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.Utils;
 using System;
@@ -14,14 +16,49 @@ namespace Assets.Scripts.Core.Booster.Service
         public event Action<Booster> OnBoosterActivated;
         public event Action<Booster> OnBoosterDeactivated;
         Booster activatedBooster;
+        IPersistentProgressService _persistentProgressService;
 
-        public BoosterManager(List<BoosterStaticData> staticData)
+        public BoosterManager(List<BoosterStaticData> staticData, IPersistentProgressService persistentProgressService)
+        {
+            Init(staticData);
+
+            _persistentProgressService = persistentProgressService;
+        }
+
+        private void Init(List<BoosterStaticData> staticData)
         {
             for (int i = 0; i < staticData.Count; i++)
             {
                 BoosterStaticData s = staticData[i];
                 boostersStaticData[s.booster] = s;
                 boosterToNumber[s.booster] = 0;
+            }
+        }
+
+        public void Load()
+        {
+            if (_persistentProgressService.Progress.boosters != null)
+            {
+                for (int i = 0; i < _persistentProgressService.Progress.boosters.Count; i++)
+                {
+                    BoosterData boosterData = _persistentProgressService.Progress.boosters[i];
+                    boosterToNumber[boosterData.booster] = boosterData.number;
+                }
+            }
+        }
+
+        public void Save()
+        {
+            _persistentProgressService.Progress.boosters = new();
+            foreach (KeyValuePair<Booster, int> pair in boosterToNumber)
+            {
+                if (pair.Value > 0)
+                {
+                    BoosterData data = new BoosterData();
+                    data.booster = pair.Key;
+                    data.number = pair.Value;
+                    _persistentProgressService.Progress.boosters.Add(data);
+                }
             }
         }
 

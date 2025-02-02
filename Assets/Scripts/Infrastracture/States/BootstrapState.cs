@@ -63,7 +63,8 @@ namespace Assets.Scripts.Infrastracture.States
 
         private void InitBoosterManager(IStaticDataService staticData)
         {
-            IBoosterManager boosterManager = new BoosterManager(staticData.GetBoosters());
+            IBoosterManager boosterManager = new BoosterManager(staticData.GetBoosters(), 
+                _services.Single<IPersistentProgressService>());
             _services.RegisterSingle<IBoosterManager>(boosterManager);
         }
 

@@ -16,5 +16,6 @@ namespace Assets.Scripts.Data
         public bool music = true;
         public Booster booster;
         public float remainingBoosterTime;
+        public List<BoosterData> boosters;
     }
 }

@@ -320,6 +320,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         {
             progress.producers = _producers.Count - 1;
             progress.booster = _booster;
+            _boosterManager.Save();
         }
 
         public void LoadProgress(PlayerProgress progress)

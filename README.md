@@ -19,7 +19,7 @@ Each present you receive can contain booster of one of the next two types (you c
 1.5 times for 2 minutes. You can use boosters through "Booster" popup. "Booster" and "Upgrades" popups can be empty.
 To move to the next level you must upgrade sources to the maximum level on the current level. Progression of the current level is shown in the
 progress bar in the lower middle part of the screen. After you finish second level, "EndPopup" is shown.
-In the lower right corner of the screen settings button is located. You can enable/disable sounds and music there.
+In the lower right corner of the screen settings button is located. You can enable/disable sounds and music there. The game automatically saves each 5 seconds and on quit and not focused.
 
 ![image](https://github.com/user-attachments/assets/3cb4d99f-3bc5-43d9-8bec-d2df0d92f854)
 ![image](https://github.com/user-attachments/assets/6e213c08-e0a5-4b92-99d2-c6067023a293)

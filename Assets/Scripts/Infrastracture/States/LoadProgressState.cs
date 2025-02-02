@@ -17,19 +17,19 @@ namespace Assets.Scripts.Infrastracture.States
     public class LoadProgressState : IState
     {
         public const string LEVEL_SCENE_NAME = "Main";
-        readonly IGameStateMachine gameStateMachine;
-        readonly AllServices services;
+        readonly IGameStateMachine _gameStateMachine;
+        readonly AllServices _services;
 
         public LoadProgressState(IGameStateMachine gameStateMachine, AllServices services)
         {
-            this.gameStateMachine = gameStateMachine;
-            this.services = services;
+            _gameStateMachine = gameStateMachine;
+            _services = services;
         }
 
         void IState.Enter()
         {
-            IPersistentProgressService persistentProgressService = services.Single<IPersistentProgressService>();
-            gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, persistentProgressService.Progress.level + 1, false));
+            IPersistentProgressService persistentProgressService = _services.Single<IPersistentProgressService>();
+            _gameStateMachine.Enter<LoadLevelState, LoadLevelState.Params>(new LoadLevelState.Params(LEVEL_SCENE_NAME, persistentProgressService.Progress.level + 1, false));
         }
 
         void IExitableState.Exit()

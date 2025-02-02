@@ -29,33 +29,33 @@ namespace Assets.Scripts.GUI.Popups
         public class Params : IParams
         {
             public Action<UpgradeSourcePopup> OnUpgradeClick;
-            public int currentLevel;
-            public int maxLevel;
-            public string profit;
-            public string price;
-            public float duration;
-            public int maxUpgrades;
-            public int currentUpgrades;
+            public int _currentLevel;
+            public int _maxLevel;
+            public string _profit;
+            public string _price;
+            public float _duration;
+            public int _maxUpgrades;
+            public int _currentUpgrades;
             public Func<bool> IsUpdateAvailable;
-            public string title;
-            public int currentUpgradeLevel;
-            public int maxUpgradeLevel;
+            public string _title;
+            public int _currentUpgradeLevel;
+            public int _maxUpgradeLevel;
 
             public Params(Action<UpgradeSourcePopup> onUpgradeClick, int currentLevel, int maxLevel, string profit, string price,
                 float duration, int maxUpgrades, int currentUpgrades, Func<bool> isUpdateAvailable, string title, int currentUpgradeLevel, int maxUpgradeLevel)
             {
                 OnUpgradeClick = onUpgradeClick;
-                this.currentLevel = currentLevel;
-                this.maxLevel = maxLevel;
-                this.profit = profit;
-                this.price = price;
-                this.duration = duration;
-                this.maxUpgrades = maxUpgrades;
-                this.currentUpgrades = currentUpgrades;
+                _currentLevel = currentLevel;
+                _maxLevel = maxLevel;
+                _profit = profit;
+                _price = price;
+                _duration = duration;
+                _maxUpgrades = maxUpgrades;
+                _currentUpgrades = currentUpgrades;
                 IsUpdateAvailable = isUpdateAvailable;
-                this.title = title;
-                this.currentUpgradeLevel = currentUpgradeLevel;
-                this.maxUpgradeLevel = maxUpgradeLevel;
+                _title = title;
+                _currentUpgradeLevel = currentUpgradeLevel;
+                _maxUpgradeLevel = maxUpgradeLevel;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Assets.Scripts.GUI.Popups
         {
             @params = p;
 
-            if (p.maxUpgrades == p.currentUpgrades)
+            if (p._maxUpgrades == p._currentUpgrades)
             {
                 done.SetActive(true);
                 upgradeButton.gameObject.SetActive(false);
@@ -105,12 +105,12 @@ namespace Assets.Scripts.GUI.Popups
 
                 UpgradeStars(p);
 
-                upgradeBar.SetValue(p.currentUpgradeLevel, p.maxUpgradeLevel);
-                profit.text = p.profit;
-                duration.text = $"{p.duration.ToString()} s";
-                level.text = $"Level {(p.currentLevel + 1).ToString()}";
-                buttonText.text = p.price;
-                titleText.text = p.title;
+                upgradeBar.SetValue(p._currentUpgradeLevel, p._maxUpgradeLevel);
+                profit.text = p._profit;
+                duration.text = $"{p._duration.ToString()} s";
+                level.text = $"Level {(p._currentLevel + 1).ToString()}";
+                buttonText.text = p._price;
+                titleText.text = p._title;
             }
         }
 
@@ -118,8 +118,8 @@ namespace Assets.Scripts.GUI.Popups
         {
             for (int i = 0; i < stars.Count; ++i)
             {
-                stars[i].gameObject.SetActive(i < p.maxUpgrades);
-                if (i < p.currentUpgrades)
+                stars[i].gameObject.SetActive(i < p._maxUpgrades);
+                if (i < p._currentUpgrades)
                 {
                     stars[i].ShowFull();
                 }

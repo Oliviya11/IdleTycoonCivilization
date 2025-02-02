@@ -34,15 +34,15 @@ namespace Assets.Scripts.Infrastracture.States
 
         public class Params
         {
-            public string sceneName;
-            public int level;
-            public bool isLevelUp;
+            public string _sceneName;
+            public int _level;
+            public bool _isLevelUp;
 
             public Params(string sceneName, int level, bool isLevelUp)
             {
-                this.sceneName = sceneName;
-                this.level = level;
-                this.isLevelUp = isLevelUp;
+                _sceneName = sceneName;
+                _level = level;
+                _isLevelUp = isLevelUp;
             }
         }
 
@@ -58,11 +58,11 @@ namespace Assets.Scripts.Infrastracture.States
         void IPayloadedState<Params>.Enter(Params p)
         {
             @params = p;
-            if (p.level > 1 && p.isLevelUp)
+            if (p._level > 1 && p._isLevelUp)
             {
                 _curtain.Show();
             }
-            _sceneLoader.Load(p.sceneName, true, OnLoaded);
+            _sceneLoader.Load(p._sceneName, true, OnLoaded);
         }
 
         void IExitableState.Exit()
@@ -76,12 +76,12 @@ namespace Assets.Scripts.Infrastracture.States
 
             ISourcesManager sourcesManager = CreateSourcesManager();
 
-            LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(@params.level);
+            LevelStaticData levelStaticData = _services.Single<IStaticDataService>().ForLevel(@params._level);
             IMoneyManager moneyManager = InitMoneyManager(levelStaticData);
 
             SourcesCollection sources = CreateSources(levelStaticData);
 
-            OrdersCollection ordersCollection = CreateOrders(@params.level);
+            OrdersCollection ordersCollection = CreateOrders(@params._level);
             GameObject producer = PlaceProducers(levelStaticData);
 
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
@@ -111,7 +111,7 @@ namespace Assets.Scripts.Infrastracture.States
         {
             IPersistentProgressService persistentProgress = _services.Single<IPersistentProgressService>();
             string money = persistentProgress.Progress.money;
-            if (string.IsNullOrEmpty(money) || @params.isLevelUp)
+            if (string.IsNullOrEmpty(money) || @params._isLevelUp)
             {
                 money = levelStaticData.initialMoney;
             }
@@ -161,7 +161,7 @@ namespace Assets.Scripts.Infrastracture.States
 
         private SourcesCollection CreateSources(LevelStaticData levelStaticData)
         {
-            SourcesCollection sources = CreateSources(@params.level, levelStaticData);
+            SourcesCollection sources = CreateSources(@params._level, levelStaticData);
             sources.click.Construct(_services);
 
             for (int i = 0; i < levelStaticData.sourcesData.Count; ++i) {

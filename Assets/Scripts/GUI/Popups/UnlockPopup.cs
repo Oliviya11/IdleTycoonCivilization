@@ -19,12 +19,12 @@ namespace Assets.Scripts.GUI
         public class Params : IParams
         {
             public Action OnUnlockClick;
-            public string price;
+            public string _price;
             public Func<bool> IsUpdateAvailable;
             public Params(Action onUnlockClick, string price, Func<bool> isUpdateAvailable)
             {
                 OnUnlockClick = onUnlockClick;
-                this.price = price;
+                _price = price;
                 IsUpdateAvailable = isUpdateAvailable;
             }
         }
@@ -62,7 +62,7 @@ namespace Assets.Scripts.GUI
                 Hide();
             });
 
-            price.text = p.price;
+            price.text = p._price;
         }
 
         protected override string GetPrefabName()

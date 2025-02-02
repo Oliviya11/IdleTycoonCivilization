@@ -10,32 +10,32 @@ namespace Assets.Scripts.Core.Sources
 {
     public class SourcesLevelProgress
     {
-        SourcesCollection sourcesCollection;
-        ProgressBar progressBar;
-        IGameStateMachine gameStateMachine;
-        int maxValue;
+        SourcesCollection _sourcesCollection;
+        ProgressBar _progressBar;
+        IGameStateMachine _gameStateMachine;
+        int _maxValue;
 
         public SourcesLevelProgress(ProgressBar progressBar, SourcesCollection sourcesCollection, IGameStateMachine gameStateMachine)
         {
-            this.progressBar = progressBar;
-            this.sourcesCollection = sourcesCollection;
-            this.gameStateMachine = gameStateMachine;
+            _progressBar = progressBar;
+            _sourcesCollection = sourcesCollection;
+            _gameStateMachine = gameStateMachine;
             CountMaxValue();
             Update();
         }
 
         void CountMaxValue()
         {
-            foreach (var source in sourcesCollection.sources)
+            foreach (var source in _sourcesCollection.sources)
             {
-                maxValue += source.upgrade.MaxLevels();
+                _maxValue += source.upgrade.MaxLevels();
             }
         }
 
         int CountCurrentValue()
         {
             int currentValue = 0;
-            foreach (var source in sourcesCollection.sources)
+            foreach (var source in _sourcesCollection.sources)
             {
                 currentValue += source.upgrade.CurrentLevel;
             }
@@ -46,11 +46,11 @@ namespace Assets.Scripts.Core.Sources
         public void Update()
         {
             int currentValue = CountCurrentValue();
-            progressBar.SetValue(currentValue, maxValue);
+            _progressBar.SetValue(currentValue, _maxValue);
 
-            if (currentValue == maxValue)
+            if (currentValue == _maxValue)
             {
-                gameStateMachine.Enter<LoadNextLevelState>();
+                _gameStateMachine.Enter<LoadNextLevelState>();
             }
         }
     }

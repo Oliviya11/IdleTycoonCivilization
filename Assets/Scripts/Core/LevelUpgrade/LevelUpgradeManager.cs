@@ -18,28 +18,28 @@ namespace Assets.Scripts.Core.LevelUpgrade
 {
     public class LevelUpgradeManager
     {
-        LevelUpgradeStaticData upgradeData;
-        ISourcesManager sourcesManager;
-        IGameFactory gameFactory;
-        IMoneyManager moneyManager;
-        ClientsNPCManager clientsNPCManager;
-        ProducersNPCManager producersNPCManager;
-        SourcesCollectionClick sourcesCollectionClick;
-        List<UpgradeItem> items = new List<UpgradeItem>();
+        LevelUpgradeStaticData _upgradeData;
+        ISourcesManager _sourcesManager;
+        IGameFactory _gameFactory;
+        IMoneyManager _moneyManager;
+        ClientsNPCManager _clientsNPCManager;
+        ProducersNPCManager _producersNPCManager;
+        SourcesCollectionClick _sourcesCollectionClick;
+        List<UpgradeItem> _items = new List<UpgradeItem>();
         IPersistentProgressService _persistentProgress;
 
         public LevelUpgradeManager(LevelUpgradeStaticData upgradeData, ISourcesManager sourcesManager, IGameFactory gameFactory,
             IMoneyManager moneyManager, ClientsNPCManager clientsNPCManager, ProducersNPCManager producersNPCManager,
             SourcesCollectionClick sourcesCollectionClick, IPersistentProgressService persistentProgress)
         {
-            this.upgradeData = upgradeData;
-            this.sourcesManager = sourcesManager;
-            this.gameFactory = gameFactory;
-            this.moneyManager = moneyManager;
-            this.clientsNPCManager = clientsNPCManager;
-            this.producersNPCManager = producersNPCManager;
-            items = new List<UpgradeItem>(upgradeData.items);
-            this.sourcesCollectionClick = sourcesCollectionClick;
+            _upgradeData = upgradeData;
+            _sourcesManager = sourcesManager;
+            _gameFactory = gameFactory;
+            _moneyManager = moneyManager;
+            _clientsNPCManager = clientsNPCManager;
+            _producersNPCManager = producersNPCManager;
+            _items = new List<UpgradeItem>(upgradeData.items);
+            _sourcesCollectionClick = sourcesCollectionClick;
             _persistentProgress = persistentProgress;
             for (int i = 0; i < upgradeData.items.Count; i++)
             {
@@ -49,12 +49,12 @@ namespace Assets.Scripts.Core.LevelUpgrade
 
         public void OpenPopup()
         {
-            LevelUpgradePopup.OpenPopup(gameFactory, Vector3.zero, delegate (LevelUpgradePopup p) {
-                foreach (UpgradeItem item in items)
+            LevelUpgradePopup.OpenPopup(_gameFactory, Vector3.zero, delegate (LevelUpgradePopup p) {
+                foreach (UpgradeItem item in _items)
                 {
                     if (_persistentProgress.Progress.appliedLevelUpgrades != null &&
                     _persistentProgress.Progress.appliedLevelUpgrades.Contains(item.id)) continue;
-                    LevelUpgradeItem upgrade = gameFactory.CreateLevelUpgradeItem(p.content);
+                    LevelUpgradeItem upgrade = _gameFactory.CreateLevelUpgradeItem(p.content);
                     upgrade.transform.SetParent(p.content, false);
                     Func<bool> isUpdateAvailable = delegate () { return IsUpgradeAvailable(item.price, item.product); };
                     LevelUpgradeItem.Params @params = new LevelUpgradeItem.Params(
@@ -71,21 +71,21 @@ namespace Assets.Scripts.Core.LevelUpgrade
         void OnUpgradeClick(UpgradeItem item) {
             if (item.type == LevelUpgradeType.IncreaseClients)
             {
-                clientsNPCManager.MaxClients += item.additiver;
+                _clientsNPCManager.MaxClients += item.additiver;
             }
             else if (item.type == LevelUpgradeType.IncreaseProducers)
             {
                 for (int i = 0; i < item.additiver; ++i) {
-                    producersNPCManager.SpawnProducer();
+                    _producersNPCManager.SpawnProducer();
                 }
             }
             else 
             {
-                Source source = sourcesManager.GetSource(item.product);
+                Source source = _sourcesManager.GetSource(item.product);
                 if (item.type == LevelUpgradeType.DecreaseProductionTime)
                 {
                     source.upgrade.ProductionTime /= item.multiplier;
-                    sourcesCollectionClick.UpdateUpgradeSourcePopup();
+                    _sourcesCollectionClick.UpdateUpgradeSourcePopup();
                 }
                 else if (item.type == LevelUpgradeType.IncreaseProfit)
                 {
@@ -93,7 +93,7 @@ namespace Assets.Scripts.Core.LevelUpgrade
                     BigNumber multiplierBN = new BigNumber(item.multiplier.ToString());
                     BigNumber result = currentProfitBN * multiplierBN;
                     source.upgrade.CurrentProfit = result.ToString();
-                    sourcesCollectionClick.UpdateUpgradeSourcePopup();
+                    _sourcesCollectionClick.UpdateUpgradeSourcePopup();
                 }
             }
 
@@ -106,10 +106,10 @@ namespace Assets.Scripts.Core.LevelUpgrade
 
         bool IsUpgradeAvailable(string price, Product product)
         {
-            if (!moneyManager.IsEnoughMoney(price)) return false;
+            if (!_moneyManager.IsEnoughMoney(price)) return false;
             if (product != Product.None)
             {
-                Source source = sourcesManager.GetSource(product);
+                Source source = _sourcesManager.GetSource(product);
      
                 if (source != null) return true;
                 return false;

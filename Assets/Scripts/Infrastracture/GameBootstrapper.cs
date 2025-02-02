@@ -1,10 +1,7 @@
 ﻿using Assets.Scripts.GUI;
 using Assets.Scripts.Infrastracture.States;
-using Assets.Scripts.Services.Inputs;
-using Assets.Scripts.Services;
 using UnityEngine;
 using Assets.Scripts.GUI.Popups;
-using Assets.Scripts.Services.SaveLoad;
 using Assets.Scripts.Services.Audio;
 using Assets.Scripts.Core.Booster;
 

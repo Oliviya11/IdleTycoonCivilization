@@ -23,8 +23,8 @@ namespace Assets.Scripts.GUI.Popups
             public UnityAction OnMusicClick;
             public UnityAction OnNoSoundClick;
             public UnityAction OnNoMusicClick;
-            public bool isSound;
-            public bool isMusic;
+            public bool _isSound;
+            public bool _isMusic;
 
             public Params(UnityAction onSoundClick, UnityAction onMusicClick, UnityAction onNoSoundClick, UnityAction onNoMusicClick, bool isSound, bool isMusic)
             {
@@ -32,8 +32,8 @@ namespace Assets.Scripts.GUI.Popups
                 OnMusicClick = onMusicClick;
                 OnNoSoundClick = onNoSoundClick;
                 OnNoMusicClick = onNoMusicClick;
-                this.isSound = isSound;
-                this.isMusic = isMusic;
+                _isSound = isSound;
+                _isMusic = isMusic;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Assets.Scripts.GUI.Popups
                 noSoundButton.gameObject.SetActive(false);
             });
 
-            if (p.isSound)
+            if (p._isSound)
             {
                 noSoundButton.gameObject.SetActive(false);
                 soundButton.gameObject.SetActive(true);
@@ -97,7 +97,7 @@ namespace Assets.Scripts.GUI.Popups
                 noMusicButton.gameObject.SetActive(false);
             });
 
-            if (p.isMusic)
+            if (p._isMusic)
             {
                 noMusicButton.gameObject.SetActive(false);
                 musicButton.gameObject.SetActive(true);

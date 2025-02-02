@@ -60,10 +60,10 @@ namespace Assets.Scripts.Core.Sources
                     for (int j = 0; j < u.levelsToNextUpgrade; ++j)
                     {
                         // price
-                        CalculateNewBigNumber(u, u.priceCurve, ref currentPrice, ref priceTime);
+                        CalculateNewBigNumber(u, u.priceCurve, ref currentPrice, ref priceTime, false);
 
                         // profit
-                        CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref profitTime);
+                        CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref profitTime, true);
 
                         if (l >= level) return;
                     }
@@ -97,10 +97,10 @@ namespace Assets.Scripts.Core.Sources
             Upgrade u = Upgrades[CurrentUpgrade];
 
             // price
-            CalculateNewBigNumber(u, u.priceCurve, ref currentPrice, ref priceTime);
+            CalculateNewBigNumber(u, u.priceCurve, ref currentPrice, ref priceTime, false);
 
             // profit
-            CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref profitTime);
+            CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref profitTime, true);
         }
 
         int GetActualLevel(int currentUpgrade)
@@ -134,18 +134,31 @@ namespace Assets.Scripts.Core.Sources
             return 0;
         }
 
-        private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, ref float time)
+        private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, ref float time, bool canModifyTime)
         {
             time += STEP;
-            /*
-            BigNumber bigNumber = new BigNumber(number);
-            float previousTime = bigNumber.ToFloat();
-            if (time < previousTime)
-            {
-                time = previousTime;
-            }
-            */
+
+            string previousNumber = number;
+            
             number = CalculateBigNumber(curve, time);
+
+            if (canModifyTime && !string.IsNullOrEmpty(previousNumber))
+            {
+                number = Normalize(number, previousNumber);
+            }
+        }
+
+        private static string Normalize(string number, string previousNumber)
+        {
+            BigNumber bigPreviousNumber = new BigNumber(previousNumber);
+            BigNumber bigNumber = new BigNumber(number);
+            if (bigNumber < bigPreviousNumber)
+            {
+                bigNumber = bigNumber + bigPreviousNumber;
+                number = bigNumber.ToString();
+            }
+
+            return number;
         }
 
         private static string CalculateBigNumber(AnimationCurve curve, float time)

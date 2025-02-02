@@ -17,5 +17,6 @@ namespace Assets.Scripts.Data
         public Booster booster;
         public float remainingBoosterTime;
         public List<BoosterData> boosters;
+        public List<int> appliedLevelUpgrades;
     }
 }

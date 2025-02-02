@@ -137,6 +137,14 @@ namespace Assets.Scripts.Core.Sources
         private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, ref float time)
         {
             time += STEP;
+            /*
+            BigNumber bigNumber = new BigNumber(number);
+            float previousTime = bigNumber.ToFloat();
+            if (time < previousTime)
+            {
+                time = previousTime;
+            }
+            */
             number = CalculateBigNumber(curve, time);
         }
 

@@ -11,10 +11,8 @@ using Product = Assets.Scripts.Sources.Product;
 using Object = UnityEngine.Object;
 using System.Collections.Generic;
 using Assets.Scripts.GUI.Popups;
-using Assets.Scripts.Services;
 using UnityEngine;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
-using UnityEditorInternal.Profiling.Memory.Experimental;
+using Assets.Scripts.Services.PersistentProgress;
 
 namespace Assets.Scripts.Core.LevelUpgrade
 {
@@ -28,10 +26,11 @@ namespace Assets.Scripts.Core.LevelUpgrade
         ProducersNPCManager producersNPCManager;
         SourcesCollectionClick sourcesCollectionClick;
         List<UpgradeItem> items = new List<UpgradeItem>();
+        IPersistentProgressService _persistentProgress;
 
         public LevelUpgradeManager(LevelUpgradeStaticData upgradeData, ISourcesManager sourcesManager, IGameFactory gameFactory,
             IMoneyManager moneyManager, ClientsNPCManager clientsNPCManager, ProducersNPCManager producersNPCManager,
-            SourcesCollectionClick sourcesCollectionClick)
+            SourcesCollectionClick sourcesCollectionClick, IPersistentProgressService persistentProgress)
         {
             this.upgradeData = upgradeData;
             this.sourcesManager = sourcesManager;
@@ -41,14 +40,20 @@ namespace Assets.Scripts.Core.LevelUpgrade
             this.producersNPCManager = producersNPCManager;
             items = new List<UpgradeItem>(upgradeData.items);
             this.sourcesCollectionClick = sourcesCollectionClick;
+            _persistentProgress = persistentProgress;
+            for (int i = 0; i < upgradeData.items.Count; i++)
+            {
+                upgradeData.items[i].id = i;
+            }
         }
 
         public void OpenPopup()
         {
-            List<UpgradeItem> itemsToIterate = new List<UpgradeItem>(items);
             LevelUpgradePopup.OpenPopup(gameFactory, Vector3.zero, delegate (LevelUpgradePopup p) {
-                foreach (UpgradeItem item in itemsToIterate)
+                foreach (UpgradeItem item in items)
                 {
+                    if (_persistentProgress.Progress.appliedLevelUpgrades != null &&
+                    _persistentProgress.Progress.appliedLevelUpgrades.Contains(item.id)) continue;
                     LevelUpgradeItem upgrade = gameFactory.CreateLevelUpgradeItem(p.content);
                     upgrade.transform.SetParent(p.content, false);
                     Func<bool> isUpdateAvailable = delegate () { return IsUpgradeAvailable(item.price, item.product); };
@@ -57,7 +62,6 @@ namespace Assets.Scripts.Core.LevelUpgrade
                         {
                             OnUpgradeClick(item);
                             Object.Destroy(upgrade.gameObject);
-                            items.Remove(item);
                         }, isUpdateAvailable);
                     upgrade.Construct(@params);
                 }
@@ -92,6 +96,12 @@ namespace Assets.Scripts.Core.LevelUpgrade
                     sourcesCollectionClick.UpdateUpgradeSourcePopup();
                 }
             }
+
+            if (_persistentProgress.Progress.appliedLevelUpgrades == null)
+            {
+                _persistentProgress.Progress.appliedLevelUpgrades = new();
+            }
+            _persistentProgress.Progress.appliedLevelUpgrades.Add(item.id); 
         }
 
         bool IsUpgradeAvailable(string price, Product product)

@@ -89,7 +89,8 @@ namespace Assets.Scripts.Infrastracture.States
             ProducersNPCManager producersNPCManager = CreateProducersManager(levelStaticData, sourcesManager, producer, clientsNPCManager);
 
             LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager,
-                _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager, sources.click);
+                _services.Single<IGameFactory>(), moneyManager, clientsNPCManager, producersNPCManager, sources.click,
+                _services.Single<IPersistentProgressService>());
 
             Booster booster = _services.Single<IPersistentProgressService>().Progress.booster;
             InitHud(levelUpgradeManager, booster);

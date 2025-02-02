@@ -11,8 +11,9 @@ namespace Assets.Scripts.StaticData
     public class LevelUpgradeStaticData : ScriptableObject
     {
         [Serializable]
-        public struct UpgradeItem
+        public class UpgradeItem
         {
+            public int id;
             public LevelUpgradeType type;
             public Product product;
             public string price;

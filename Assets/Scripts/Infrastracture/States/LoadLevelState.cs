@@ -86,9 +86,6 @@ namespace Assets.Scripts.Infrastracture.States
 
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
 
-            IStaticDataService staticData = _services.Single<IStaticDataService>();
-            InitBoosterManager(staticData);
-
             ProducersNPCManager producersNPCManager = CreateProducersManager(levelStaticData, sourcesManager, producer, clientsNPCManager);
 
             LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager,
@@ -101,12 +98,6 @@ namespace Assets.Scripts.Infrastracture.States
             sources.levelProgress = new SourcesLevelProgress(hud.progressBar, sources, _gameStateMachine);
 
             _boosterRunner.Construct(_services.Single<IBoosterManager>());
-        }
-
-        private void InitBoosterManager(IStaticDataService staticData)
-        {
-            IBoosterManager boosterManager = new BoosterManager(staticData.GetBoosters());
-            _services.RegisterSingle<IBoosterManager>(boosterManager);
         }
 
         private IMoneyManager InitMoneyManager(LevelStaticData levelStaticData)

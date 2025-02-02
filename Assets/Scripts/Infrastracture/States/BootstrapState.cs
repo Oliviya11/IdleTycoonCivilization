@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastracture.AssetManagement;
+﻿using Assets.Scripts.Core.Booster.Service;
+using Assets.Scripts.Infrastracture.AssetManagement;
 using Assets.Scripts.Infrastracture.Factory;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.Audio;
@@ -50,11 +51,20 @@ namespace Assets.Scripts.Infrastracture.States
             staticData.Load();
             _services.RegisterSingle<IStaticDataService>(staticData);
 
+
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
 
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentProgressService>(),
                 _services.Single<IGameFactory>()));
+
+            InitBoosterManager(staticData);
+        }
+
+        private void InitBoosterManager(IStaticDataService staticData)
+        {
+            IBoosterManager boosterManager = new BoosterManager(staticData.GetBoosters());
+            _services.RegisterSingle<IBoosterManager>(boosterManager);
         }
 
         private void EnterMainMenu()

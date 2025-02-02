@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 3352448665724633113}
   - component: {fileID: 9160104100451183876}
   - component: {fileID: 4086181021976639482}
+  - component: {fileID: 2389355250892525190}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -374,6 +375,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2389355250892525190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6927192419900983461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426cef3b2c2807243b7762e670ffdee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRectTransform: {fileID: 7491175182060550435}
+  minSize: {x: 250, y: 250}
+  maxSize: {x: 300, y: 300}
+  speed: 2
 --- !u!1 &7535901061400929229
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,10 +423,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7491175182060550435}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 18, y: 6}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: -150, y: -150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8311310743529403514
 CanvasRenderer:

@@ -34,8 +34,15 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         IBoosterManager _boosterManager;
         Vector3 _producerSpawnPoint;
         float _producerRotationAngle;
-        string _profitModifier = "1";
+        
         float _producerSpeedModifier = 1;
+
+        public class ProfitModifier
+        {
+            public string modifier = "1";
+        }
+
+        ProfitModifier _profitModifier = new ProfitModifier();
 
         public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager,
             IMoneyManager moneyManager, IGameFactory gameFactory, Vector3 producerSpawnPoint, float producerRotationAngle,
@@ -75,7 +82,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         {
             if (booster == BoosterType.BoostProfit_x2)
             {
-                _profitModifier = "2";
+                _profitModifier.modifier = "2";
             }
             else if (booster == BoosterType.BoostProducerSpeed_x1_5)
             {
@@ -87,7 +94,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         {
             if (booster == BoosterType.BoostProfit_x2)
             {
-                _profitModifier = "1";
+                _profitModifier.modifier = "1";
             }
             else if (booster == BoosterType.BoostProducerSpeed_x1_5)
             {
@@ -209,6 +216,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             producerNPC.Move(place, _producersSpeed * _producerSpeedModifier);
             Source source = GetSource(producerNPC.gameObject.GetInstanceID());
             producerNPC.profitVisualizer.SourceUpgrade = source.upgrade;
+            producerNPC.profitVisualizer.ProfitModifier = _profitModifier;
             producerNPC.profitVisualizer.Show();
         }
 
@@ -244,7 +252,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         private void AddProfit(Source source)
         {
             BigNumber profit = new BigNumber(source.upgrade.CurrentProfit);
-            BigNumber modifier = new BigNumber(_profitModifier);
+            BigNumber modifier = new BigNumber(_profitModifier.modifier);
             BigNumber result = profit * modifier;
             _moneyManager.AddMoney(result.ToString());
         }

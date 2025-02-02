@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Core.Booster;
+using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Data
@@ -13,5 +14,7 @@ namespace Assets.Scripts.Data
         public int level;
         public bool sound = true;
         public bool music = true;
+        public Booster booster;
+        public long boosterTimestamp;
     }
 }

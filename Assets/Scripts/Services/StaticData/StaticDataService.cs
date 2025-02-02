@@ -8,11 +8,14 @@ namespace Assets.Scripts.Services.StaticData
     public class StaticDataService : IStaticDataService
     {
         const string LevelsDataPath = "Levels/StaticData";
-        private LevelStaticData[] _levels;
+        const string BoostersDataPath = "Boosters/StaticData";
+        LevelStaticData[] _levels;
+        BoosterStaticData[] _boosters;
 
         public void Load()
         {
             _levels = Resources.LoadAll<LevelStaticData>(LevelsDataPath);
+            _boosters = Resources.LoadAll<BoosterStaticData>(BoostersDataPath);
         }
 
         public LevelStaticData ForLevel(int level)
@@ -24,6 +27,11 @@ namespace Assets.Scripts.Services.StaticData
         public int GetMaxLevels()
         {
             return _levels.Length;
+        }
+
+        public List<BoosterStaticData> GetBoosters()
+        {
+            return _boosters.ToList();
         }
     }
 }

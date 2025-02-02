@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5128602756677971084}
   - component: {fileID: 921178778434163265}
   - component: {fileID: 9112407712765358490}
+  - component: {fileID: -4560131875638327015}
+  - component: {fileID: 4261718451255577454}
   m_Layer: 0
   m_Name: GameBootstrapper
   m_TagString: Untagged
@@ -245,3 +247,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4560131875638327015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729065220341363403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a112c38944f0d4983f6813c2da3afa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4261718451255577454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729065220341363403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a6f918598e7c740b630ff824541b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Core.Booster;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace Assets.Scripts.GUI
         public Button upgradeButton;
         public Button settingsButton;
         public ProgressBar progressBar;
+        public Button presentButton;
+        public BoosterIcon booster;
     }
 }

@@ -11,6 +11,8 @@ using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using Product = Assets.Scripts.Sources.Product;
+using Assets.Scripts.Core.Booster.Service;
+using BoosterType = Assets.Scripts.Core.Booster.Booster;
 
 namespace Assets.Scripts.Core.ClientsNPCMechanics
 {
@@ -25,25 +27,31 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         Dictionary<int, Product> _producersToProduct = new();
         Dictionary<int, Transform> _producerToPlace = new();
         ISourcesManager _sourcesManager;
-        IMoneyManager moneyManager;
-        IGameFactory gameFactory;
+        IMoneyManager _moneyManager;
+        IGameFactory _gameFactory;
         IAudioManager _soundManager;
-        Vector3 producerSpawnPoint;
-        float producerRotationAngle;
+        IBoosterManager _boosterManager;
+        Vector3 _producerSpawnPoint;
+        float _producerRotationAngle;
+        string _profitModifier = "1";
+        float _producerSpeedModifier = 1;
 
         public void Construct(ClientsNPCManager clientsNPCManager, List<ProducerNPC> producers, ISourcesManager sourcesManager,
             IMoneyManager moneyManager, IGameFactory gameFactory, Vector3 producerSpawnPoint, float producerRotationAngle,
-            IAudioManager soundManager)
+            IAudioManager soundManager, IBoosterManager boosterManager)
         {
             _clientsNPCManager = clientsNPCManager;
             _producers = producers;
             _isConstructed = true;
             _sourcesManager = sourcesManager;
-            this.moneyManager = moneyManager;
-            this.gameFactory = gameFactory;
-            this.producerSpawnPoint = producerSpawnPoint;
-            this.producerRotationAngle = producerRotationAngle;
+            _moneyManager = moneyManager;
+            _gameFactory = gameFactory;
+            _producerSpawnPoint = producerSpawnPoint;
+            _producerRotationAngle = producerRotationAngle;
             _soundManager = soundManager;
+            _boosterManager = boosterManager;
+            _boosterManager.OnBoosterActivated += OnBoosterActivated;
+            _boosterManager.OnBoosterDeactivated += OnBoosterDeactivated;
         }
 
         void Update()
@@ -55,9 +63,40 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
             ProduceProduct();
             GiveProduct();
         }
+
+        void OnDestroy()
+        {
+            _boosterManager.OnBoosterActivated -= OnBoosterActivated;
+            _boosterManager.OnBoosterDeactivated -= OnBoosterDeactivated;
+        }
+
+        void OnBoosterActivated(BoosterType booster)
+        {
+            if (booster == BoosterType.BoostProfit_x2)
+            {
+                _profitModifier = "2";
+            }
+            else if (booster == BoosterType.BoostProducerSpeed_x1_5)
+            {
+                _producerSpeedModifier = 1.5f;
+            }
+        }
+
+        void OnBoosterDeactivated(BoosterType booster)
+        {
+            if (booster == BoosterType.BoostProfit_x2)
+            {
+                _profitModifier = "1";
+            }
+            else if (booster == BoosterType.BoostProducerSpeed_x1_5)
+            {
+                _producerSpeedModifier = 1;
+            }
+        }
+
         public void SpawnProducer()
         {
-            ProducerNPC producerNPC = gameFactory.CreateProducer(producerSpawnPoint, producerRotationAngle).GetComponent<ProducerNPC>();
+            ProducerNPC producerNPC = _gameFactory.CreateProducer(_producerSpawnPoint, _producerRotationAngle).GetComponent<ProducerNPC>();
             _producers.Add(producerNPC);
         }
 
@@ -188,8 +227,7 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     producerNPC.profitVisualizer.SourceUpgrade = null;
                     producerNPC.sleepingParticles.Show();
                     Source source = GetSource(id);
-
-                    moneyManager.AddMoney(source.upgrade.CurrentProfit);
+                    AddProfit(source);
 
                     source.places.Deoccupy(_producerToPlace[id]);
 
@@ -200,6 +238,14 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
                     _soundManager.PlayCoinsSound();
                 }
             }
+        }
+
+        private void AddProfit(Source source)
+        {
+            BigNumber profit = new BigNumber(source.upgrade.CurrentProfit);
+            BigNumber modifier = new BigNumber(_profitModifier);
+            BigNumber result = profit * modifier;
+            _moneyManager.AddMoney(result.ToString());
         }
 
         private Source GetSource(int id)

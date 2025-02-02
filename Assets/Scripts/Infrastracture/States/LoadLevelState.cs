@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.ClientsNPCMechanics;
+﻿using Assets.Scripts.Core.Booster.Service;
+using Assets.Scripts.Core.ClientsNPCMechanics;
 using Assets.Scripts.Core.LevelUpgrade;
 using Assets.Scripts.Core.Money.Services;
 using Assets.Scripts.Core.Orders;
@@ -81,6 +82,11 @@ namespace Assets.Scripts.Infrastracture.States
             GameObject producer = PlaceProducers(levelStaticData);
 
             ClientsNPCManager clientsNPCManager = CreateSourcesManager(ordersCollection);
+
+            IStaticDataService staticData = _services.Single<IStaticDataService>();
+            IBoosterManager boosterManager = new BoosterManager(staticData.GetBoosters());
+            _services.RegisterSingle<IBoosterManager>(boosterManager);
+
             ProducersNPCManager producersNPCManager = CreateProducersManager(levelStaticData, sourcesManager, producer, clientsNPCManager);
 
             LevelUpgradeManager levelUpgradeManager = new LevelUpgradeManager(levelStaticData.upgradeData, sourcesManager,
@@ -113,6 +119,7 @@ namespace Assets.Scripts.Infrastracture.States
             SettingsPopupManager settingsPopupManager = new SettingsPopupManager(_services.Single<IAudioManager>(),
                 _services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>());
             hud.settingsButton.onClick.AddListener(settingsPopupManager.OpenPopup);
+            hud.booster.Construct(_services.Single<IBoosterManager>());
         }
 
         private ProducersNPCManager CreateProducersManager(LevelStaticData levelData, ISourcesManager sourcesManager, GameObject producer, ClientsNPCManager clientsNPCManager)
@@ -121,7 +128,7 @@ namespace Assets.Scripts.Infrastracture.States
             ProducersNPCManager producersNPCManager = producersManager.GetComponent<ProducersNPCManager>();
             producersNPCManager.Construct(clientsNPCManager, new List<ProducerNPC>() { producer.GetComponent<ProducerNPC>() }, 
                 sourcesManager, _services.Single<IMoneyManager>(), _services.Single<IGameFactory>(), levelData.producerPosition, levelData.producerRotationAngle,
-                _services.Single<IAudioManager>());
+                _services.Single<IAudioManager>(), _services.Single<IBoosterManager>());
             return producersNPCManager;
         }
 

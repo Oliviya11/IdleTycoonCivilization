@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.Money.Services;
+﻿using Assets.Scripts.Core.Booster.Service;
+using Assets.Scripts.Core.Money.Services;
 using Assets.Scripts.Core.Sources;
 using Assets.Scripts.Core.Sources.Services;
 using Assets.Scripts.GUI;
@@ -149,12 +150,21 @@ namespace Assets.Scripts.Sources
                     u.Upgrade();
                     popup.Init(GetUpgradeSourcePopup(u, true));
                     sourcesCollection.levelProgress.Update();
+                    AddBooster(u);
                 };
             }
 
             return new UpgradeSourcePopup.Params(onUpgrade, u.CurrentLevel, u.MaxLevels(), u.CurrentProfit, u.CurrentPrice,
                 u.ProductionTime, u.MaxUpgrades, u.CurrentUpgrade, isUpdateAvailable, u.Product.ToString(),
                 u.CurrentUpgradeLevel, u.GetUpgradeLevels());
+        }
+
+        private void AddBooster(SourceUpgrade u)
+        {
+            if (u.CurrentUpgradeLevel == u.GetUpgradeLevels())
+            {
+                _services.Single<IBoosterManager>().AddBooster();
+            }
         }
 
         bool IsUpdateAvailable(SourceUpgrade upgradeSource)

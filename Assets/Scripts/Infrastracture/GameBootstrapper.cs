@@ -14,8 +14,7 @@ namespace Assets.Scripts.Infrastracture
         [SerializeField] MainMenu mainMenuPrefab;
         [SerializeField] WinLevelCurtain winLevelCurtainPrefab;
         [SerializeField] AudioManager.Settings soundManagerSettings;
-        const float START_AUTO_SAVE = 1f;
-        const float AUTO_SAVE_INTERVAL = 10f;
+        
         private Game _game;
 
         public void Awake()
@@ -24,36 +23,7 @@ namespace Assets.Scripts.Infrastracture
 
             _game.StateMachine.Enter<BootstrapState>();
 
-            InvokeRepeating(nameof(SaveProgress), START_AUTO_SAVE, AUTO_SAVE_INTERVAL);
-
             DontDestroyOnLoad(this);
-        }
-
-        public void Update()
-        {
-            if (AllServices.Container.Single<IInputService>() == null) return;
-            AllServices.Container.Single<IInputService>().ProcessInput();
-        }
-
-        void OnApplicationQuit()
-        {
-            SaveProgress();
-        }
-
-        void OnApplicationPause()
-        {
-            SaveProgress();
-        }
-
-        void OnApplicationFocus(bool hasFocus)
-        {
-            if (hasFocus) SaveProgress();
-        }
-
-        void SaveProgress()
-        {
-            if (AllServices.Container.Single<ISaveLoadService>() == null) return;
-            AllServices.Container.Single<ISaveLoadService>().SaveProgress();
         }
     }
 }

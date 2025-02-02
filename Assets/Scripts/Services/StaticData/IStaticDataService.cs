@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.StaticData;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Services.StaticData
 {
@@ -6,6 +7,8 @@ namespace Assets.Scripts.Services.StaticData
     {
         void Load();
         LevelStaticData ForLevel(int level);
+
+        List<BoosterStaticData> GetBoosters();
 
         int GetMaxLevels();
     }

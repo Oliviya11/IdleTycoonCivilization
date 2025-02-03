@@ -22,6 +22,10 @@ namespace Assets.Scripts.Infrastracture.States
         {
             IPersistentProgressService persistentProgressService = _services.Single<IPersistentProgressService>();
             IStaticDataService staticDataService = _services.Single<IStaticDataService>();
+
+            persistentProgressService.Progress.clients = 1;
+            persistentProgressService.Progress.producers = 0;
+
             int level = persistentProgressService.Progress.level + 1;
 
             if (staticDataService.GetMaxLevels() == level)

@@ -116,7 +116,6 @@ namespace Assets.Scripts.Core.ClientsNPCMechanics
         ClientNPC CreatePooledItem()
         {
             var go = _gameFactory.CreateClient(ChooseRandomStartPosition());
-            OnCreate(go.GetComponent<ClientNPC>());
             return go.GetComponent<ClientNPC>();
         }
 

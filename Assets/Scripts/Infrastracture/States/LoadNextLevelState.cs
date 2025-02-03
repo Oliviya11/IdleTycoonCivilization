@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Services.PersistentProgress;
+using Assets.Scripts.Services.PersistentProgress;
 using Assets.Scripts.Services;
 using Assets.Scripts.Services.StaticData;
 using Assets.Scripts.GUI.Popups;
@@ -25,6 +25,7 @@ namespace Assets.Scripts.Infrastracture.States
 
             persistentProgressService.Progress.clients = 1;
             persistentProgressService.Progress.producers = 0;
+            persistentProgressService.Progress.appliedLevelUpgrades.Clear();
 
             int level = persistentProgressService.Progress.level + 1;
 

@@ -51,7 +51,6 @@ namespace Assets.Scripts.Core.Sources
             CurrentLevel = level;
 
             int l = 0;
-
             for (int i = 0; i < Upgrades.Count; ++i)
             {
                 if (i <= upgrade)
@@ -66,6 +65,8 @@ namespace Assets.Scripts.Core.Sources
                         CalculateNewBigNumber(u, u.profitCurve, ref currentProfit, ref _profitTime, true);
 
                         if (l >= level) return;
+
+                        ++l;
                     }
                 }
             }
@@ -134,7 +135,8 @@ namespace Assets.Scripts.Core.Sources
             return 0;
         }
 
-        private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, ref float time, bool canModifyTime)
+        private void CalculateNewBigNumber(Upgrade u, AnimationCurve curve, ref string number, 
+            ref float time, bool canModifyTime)
         {
             time += STEP;
 

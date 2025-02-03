@@ -101,7 +101,9 @@ namespace Assets.Scripts.Core.LevelUpgrade
             {
                 _persistentProgress.Progress.appliedLevelUpgrades = new();
             }
-            _persistentProgress.Progress.appliedLevelUpgrades.Add(item.id); 
+            _persistentProgress.Progress.appliedLevelUpgrades.Add(item.id);
+
+            _moneyManager.SubtractMoney(item.price);
         }
 
         bool IsUpgradeAvailable(string price, Product product)

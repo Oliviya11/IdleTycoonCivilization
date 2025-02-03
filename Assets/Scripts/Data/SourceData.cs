@@ -11,5 +11,7 @@ namespace Assets.Scripts.Data
         public float time;
         public SourceState.State state;
         public int upgradeLevel;
+        public string profit;
+        public float profitTime;
     }
 }

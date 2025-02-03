@@ -175,6 +175,8 @@ namespace Assets.Scripts.Core.Sources
             ProductionTime = data.time;
             CurrentUpgradeLevel = data.upgradeLevel;
             CurrentUpgrade = data.upgrade;
+            CurrentProfit = data.profit;
+            _profitTime = data.profitTime;
         }
 
         public SourceData LoadProgress()
@@ -184,6 +186,8 @@ namespace Assets.Scripts.Core.Sources
             data.upgrade = CurrentUpgrade;
             data.time = ProductionTime;
             data.upgradeLevel = CurrentUpgradeLevel;
+            data.profit = CurrentProfit;
+            data.profitTime = _profitTime;
 
             return data;
         }
